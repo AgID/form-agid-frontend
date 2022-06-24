@@ -1,0 +1,34 @@
+.custom-max-width-1200 {
+  max-width: 1200px;
+}
+
+.it-header-slim-wrapper {
+  // height: 56px;
+  background: #003183;
+}
+
+.it-header-slim-wrapper .it-header-slim-wrapper-content {
+  // height: 56px;
+  > a {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em !important;
+  }
+
+  .link-list-wrapper li {
+    position: relative;
+
+    a.list-item:hover:not(.active) {
+      text-decoration: none;
+    }
+    &:hover::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: -3px;
+      background-color: white;
+      left: 0;
+    }
+  }
+}

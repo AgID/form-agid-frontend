@@ -1,0 +1,17 @@
+<nav
+  class="breadcrumb-container mt-4 pl-4"
+  aria-label="Percorso di navigazione"
+  style="font-size: 18px"
+>
+  <ol class="breadcrumb">
+    <li>
+      <i class="fa fa-home custom-color-home" style="width: 18px; height: 16px"></i>
+    </li>
+    <li *ngFor="let breadcrumb of breadcrumbs$ | async" class="breadcrumb-item">
+      <span class="separator" aria-hidden="true" style="padding-right: 16px"
+        >/</span
+      >
+      <a [attr.href]="breadcrumb.url ?? undefined">{{ breadcrumb.label }} </a>
+    </li>
+  </ol>
+</nav>

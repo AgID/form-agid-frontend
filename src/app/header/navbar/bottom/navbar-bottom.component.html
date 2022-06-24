@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg has-megamenu">
+  <button
+    class="custom-navbar-toggler"
+    type="button"
+    aria-controls="nav1"
+    aria-expanded="false"
+    aria-label="Mostra/Nascondi la navigazione"
+    data-target="#nav1"
+  >
+    <svg class="icon">
+      <use href="/assets/svg/sprite.svg#it-burger"></use>
+    </svg>
+  </button>
+  <div class="navbar-collapsable" id="nav1">
+    <div class="overlay"></div>
+    <div class="close-div">
+      <button class="btn close-menu" type="button">
+        <span class="sr-only">Nascondi la navigazione</span>
+        <svg class="icon">
+          <use href="/assets/svg/sprite.svg#it-close-big"></use>
+        </svg>
+      </button>
+    </div>
+    <div class="menu-wrapper">
+      <ul
+        class="navbar-nav justify-content-start ml-auto mr-auto px-0 custom-max-width-1200"
+      >
+        <li>
+          <a
+            class="nav-item"
+            class="custom-overwrite-border nav-link"
+            routerLink="/form"
+            routerLinkActive="active"
+            ><span>Form</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            id="builder_link"
+            class="custom-overwrite-border nav-link"
+            routerLink="/builder"
+            routerLinkActive="active"
+          >
+            <span>Builder</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            id="render_link"
+            class="custom-overwrite-border nav-link"
+            routerLink="/render"
+            routerLinkActive="active"
+          >
+            <span>Render</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

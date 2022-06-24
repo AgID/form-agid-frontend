@@ -1,0 +1,76 @@
+/* ANIMATION FOR NAVBAR MENU */
+
+/* Top and Bottom borders go out */
+.textdec:hover {
+  text-decoration: none !important;
+}
+
+ul.containerAnimation {
+  margin: 0 auto;
+  text-align: center;
+}
+
+ul.containerAnimation li {
+  color: #fff;
+  text-decoration: none !important;
+  /* top right bottom left */
+  margin: 5px 5px 5px 5px !important;
+  padding: 3px 3px;
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
+  height: fit-content;
+}
+
+ul.topBotomBordersOut li:after {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  content: "";
+  opacity: 0;
+  transition: all 0.3s;
+  text-decoration: none !important;
+}
+
+ul.topBotomBordersOut li:after {
+  bottom: 0px;
+  transform: translateY(-10px);
+}
+
+ul.topBotomBordersOut li:hover:after {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.custom-max-width-1200 {
+  max-width: 1200px;
+}
+
+a.active#builder_link,
+a.active#render_link {
+  border-color: #fff !important;
+}
+
+.navbar .navbar-collapsable .menu-wrapper {
+  background: #0059b3;
+}
+
+// .nav-item {
+//   &:hover::after {
+//     content: "";
+//     position: absolute;
+//     width: 100%;
+//     height: 2px;
+//     bottom: -3px;
+//     background-color: white;
+//     left: 0;
+//   }
+// }
+
+// a.nav-link {
+//   &:hover:not(.active) {
+//     text-decoration: none !important;
+//   }
+// }

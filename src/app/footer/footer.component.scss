@@ -1,0 +1,24 @@
+.custom-footer-title {
+  font-size: 1.25em;
+  margin-bottom: 0;
+  letter-spacing: unset;
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.it-footer-main,
+.it-footer-small-prints {
+  background-color: #00264d !important;
+}
+
+.list-inline-item a {
+  color: #fff;
+  font-weight: 600;
+  margin-right: 3.2rem !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.app .list-inline-item:not(:last-child) {
+  margin-right: 3.2rem !important;
+}

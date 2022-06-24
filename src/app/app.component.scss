@@ -1,0 +1,12 @@
+.app {
+  @import "node_modules/bootstrap-italia/dist/css/bootstrap-italia.min";
+  
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+  .content {
+    flex: 1;
+  }
+}

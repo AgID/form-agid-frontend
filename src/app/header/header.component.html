@@ -1,0 +1,61 @@
+<app-navbar-top></app-navbar-top>
+
+<div class="it-header-center-wrapper">
+  <div
+    class="it-header-center-content-wrapper ml-auto mr-auto custom-max-width-1200"
+  >
+    <div class="dropdown mr-2 d-block d-lg-none">
+      <button
+        class="btn btn-dropdown dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <svg class="icon custom-icon-hamburger-menu">
+          <use href="/assets/svg/sprite.svg#it-burger"></use>
+        </svg>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="link-list-wrapper">
+          <ul class="link-list">
+            <li>
+              <a
+                class="list-item"
+                routerLink="/form"
+                routerLinkActive="active"
+                ><span>Form</span></a
+              >
+            </li>
+            <li>
+              <a
+                class="list-item"
+                routerLink="/builder"
+                routerLinkActive="active"
+                ><span>Builder</span></a
+              >
+            </li>
+            <li>
+              <a class="list-item" routerLink="/render" routerLinkActive="active"
+                ><span>Render</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="it-brand-wrapper w-100">
+      <a class="button"
+        ><svg class="icon cursor-pointer" (click)="goToHome()">
+          <use href="/assets/svg/sprite.svg#it-designers-italia"></use>
+        </svg>
+        <div class="it-brand-text">
+          <h1 class="custom-header-size">Forms</h1>
+        </div></a
+      >
+    </div>
+  </div>
+</div>
+
+<app-navbar-bottom class="d-none d-lg-block"></app-navbar-bottom>
