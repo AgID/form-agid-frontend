@@ -1,0 +1,38 @@
+<div class="d-flex">
+  <div class="col-md-3 pt-2">
+    <nav class="sidebar-wrapper it-line-right-side">
+      <div class="sidebar-linklist-wrapper">
+        <div class="link-list-wrapper">
+          <h2 class="display-3 no_toc mb-4">
+            <a class="primary-color-a12 text-decoration-none" href="/"
+              ><span class="primary-color-a9">&lt;</span> Form</a
+            >
+          </h2>
+          <ul class="link-list">
+            <li class="mb-md-2" style="border-left: 4px solid blue">
+              <a
+                class="list-item large py-2 font-weight-bold neutral-1-color-b5"
+                [routerLink]="['./', id]"
+                ><span>Dichiarazione di accessibilità</span></a
+              >
+            </li>
+            <li class="mb-md-2 pl-3">
+              <a
+                aria-current="page"
+                class="list-item large py-2 font-weight-bold primary-color-a11"
+                [routerLink]="['./', id, 'ricerca']"
+                ><span>Gestione delle dichiarazioni</span></a
+              >
+            </li>
+            <li class="mb-md-2 pl-3">
+              <a class="list-item large py-2" [routerLink]="['./', id, 'faq']"
+                ><span>FAQ</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <router-outlet></router-outlet>
+</div>

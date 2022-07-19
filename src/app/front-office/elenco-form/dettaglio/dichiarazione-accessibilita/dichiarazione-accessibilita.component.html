@@ -1,0 +1,14 @@
+<div *ngIf="!sezioneInformativaHome" class="progress-spinner progress-spinner-double progress-spinner-active">
+  <div class="progress-spinner-inner"></div>
+  <div class="progress-spinner-inner"></div>
+  <span class="sr-only">Caricamento...</span>
+</div>
+<div class="main-content pl-md-4 w-100">
+  <h1>Dichiarazione di accessibilità</h1>
+  <div [innerHTML]="sezioneInformativaHome"></div>
+  <!-- <ul class="my-4">
+    <li class="my-4">
+      <a [routerLink]="['./', id, 'ricerca']">Gestione delle dichiarazioni</a>
+    </li>
+  </ul> -->
+</div>

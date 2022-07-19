@@ -1,0 +1,9 @@
+Dockerfile
+.dockerignore
+.git
+.angular
+.husky
+.vscode
+node_modules
+npm-debug.log
+dist

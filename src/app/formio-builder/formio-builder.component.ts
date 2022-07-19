@@ -1,21 +1,58 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormioOptions } from '@formio/angular';
 import uswds from '@formio/uswds';
 import { Formio } from 'formiojs';
+import { AGID_THEME } from '../common/formiojs/agid-theme';
 import { HashService } from '../common/hash.service';
-import { AGID_THEME } from './agid-theme';
 @Component({
   selector: 'app-formio-builder',
   templateUrl: './formio-builder.component.html',
   styleUrls: ['./formio-builder.component.scss'],
 })
-export class FormioBuilderComponent {
+export class FormioBuilderComponent implements OnInit {
   public form: Object = {
+    _id: {
+      $oid: '62b04699593fd1b6d605ac94',
+    },
+    titolo: 'Primo form',
+    descrizione: 'Esempio modifica',
+    stato: 'string',
+    versione: 0,
+    codiceUtente: 'string',
+    dataInserimento: {
+      $date: {
+        $numberLong: '1655718596486',
+      },
+    },
+    aggiornamentoCodiceUtente: {
+      $date: {
+        $numberLong: '1655718596486',
+      },
+    },
+    dataAggiornamento: {
+      $date: {
+        $numberLong: '1655718596486',
+      },
+    },
+    acl: {
+      tipo: 'Pubblico',
+      valore: '',
+    },
+    dataInizioValidità: {
+      $date: {
+        $numberLong: '1655718596486',
+      },
+    },
+    dataFineValidità: {
+      $date: {
+        $numberLong: '1655718596486',
+      },
+    },
+    scheduling: {
+      giorni_attesa: 1,
+      dataInizio: '2022-06-20T09:49:56.486Z',
+      dataFine: '2022-06-20T09:49:56.486Z',
+    },
     components: [
       {
         label: 'HTML',
@@ -6462,8 +6499,7 @@ export class FormioBuilderComponent {
         id: 'elifedi',
       },
     ],
-    display: 'form',
-    page: 0,
+    __v: 0,
   };
   public formOptions: FormioOptions = {};
 
@@ -6483,5 +6519,6 @@ export class FormioBuilderComponent {
 
   onChange(event?: any) {
     this.hashService.form = this.form;
+    console.log(this.form);
   }
 }

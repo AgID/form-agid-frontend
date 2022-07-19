@@ -1,0 +1,20 @@
+version: "3.4"
+
+services:
+  agid-forms-frontend:
+    container_name: agid-forms-frontend
+    image: node/agid-forms-frontend:local
+    env_file:
+      - .env
+    build:
+      context: .
+    ports:
+      - 80:80
+    networks:
+      - app-tier
+    restart: unless-stopped
+
+networks:
+  app-tier:
+    driver: bridge
+    name: agid-app-network

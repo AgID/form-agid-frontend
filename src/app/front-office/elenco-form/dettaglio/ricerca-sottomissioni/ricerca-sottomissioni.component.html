@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-end">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="goToInserimentoSottomissione()"
+  >
+    Nuovo
+  </button>
+</div>
+<table class="table w-100" style="table-layout: fixed">
+  <thead>
+    <tr>
+      <th scope="col">Descrizione</th>
+      <th scope="col">Stato</th>
+      <th scope="col">Data ultima modifica</th>
+      <th scope="col">Azioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of elencoForm">
+      <td>
+        {{ item.descrizione }}
+        <!-- Dichiarazione accessibilità -->
+      </td>
+      <td>
+        {{ item.stato }}
+        <!-- Ministero dell'Economia e delle Finanze si impegna a rendere il proprio
+        sito web accessibile, conformemente al D.lgs 10 agosto 2018, n. 106 che
+        ha recepito la direttiva UE 2016/2102 del Parlamento europeo e del
+        Consiglio. -->
+      </td>
+      <td>{{ item.dataUltimaModifica }}</td>
+      <td>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
+        </svg>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-minus-circle"></use>
+        </svg>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-note"></use>
+        </svg>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
+        </svg>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Paginazione -->
+<!-- <app-paginator [elementsForPage]="10" [(selectedPage)]="selectedPage" [totalElements]="60"></app-paginator> -->

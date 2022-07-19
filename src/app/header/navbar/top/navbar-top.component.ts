@@ -1,12 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-navbar-top',
   templateUrl: './navbar-top.component.html',
   styleUrls: ['./navbar-top.component.scss'],
 })
-export class NavbarTopComponent implements OnInit {
-
+export class NavbarTopComponent {
   @Input()
   public titolo: string;
 
@@ -14,10 +13,6 @@ export class NavbarTopComponent implements OnInit {
   public user: string;
 
   public showHamburgerMenu = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   public setShowHamburgerMenu() {}
   public onClickGoToHome() {}

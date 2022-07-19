@@ -6,5 +6,6 @@ import { GestioneDichiarazioniComponent } from './gestione-dichiarazioni.compone
 @NgModule({
   declarations: [GestioneDichiarazioniComponent],
   imports: [CommonModule, FormioModule],
+  exports: [GestioneDichiarazioniComponent],
 })
 export class GestioneDichiarazioniModule {}

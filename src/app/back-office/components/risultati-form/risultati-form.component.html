@@ -1,0 +1,58 @@
+<div *ngIf="elencoForm.length === 0" class="progress-spinner progress-spinner-double progress-spinner-active">
+  <div class="progress-spinner-inner"></div>
+  <div class="progress-spinner-inner"></div>
+  <span class="sr-only">Caricamento...</span>
+</div>
+<div class="d-flex justify-content-end" *ngIf="elencoForm.length > 0">
+  <button type="button" class="btn btn-primary" (click)="goToInserimentoForm()">
+    Nuovo
+  </button>
+</div>
+<table class="table" *ngIf="elencoForm.length > 0">
+  <thead>
+    <tr>
+      <th scope="col" style="width: 35%;">Titolo</th>
+      <th scope="col" style="width: 40%;">Descrizione</th>
+      <th scope="col" style="width: 10%;">Stato</th>
+      <th scope="col" style="width: 15%;">Opzioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of elencoForm">
+      <td>
+        {{ item.titolo }}
+        <!-- Dichiarazione accessibilità -->
+      </td>
+      <td>
+        {{ item.descrizione }}
+        <!-- Ministero dell'Economia e delle Finanze si impegna a rendere il proprio
+        sito web accessibile, conformemente al D.lgs 10 agosto 2018, n. 106 che
+        ha recepito la direttiva UE 2016/2102 del Parlamento europeo e del
+        Consiglio. -->
+      </td>
+      <td>{{ item.stato }}</td>
+      <td>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
+        </svg>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-minus-circle"></use>
+        </svg>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-note"></use>
+        </svg>
+        <svg class="icon cursor-pointer">
+          <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
+        </svg>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Paginazione -->
+<app-paginator
+  *ngIf="totalElements"
+  [elementsForPage]="filters.pagination.elementsForPage"
+  [(selectedPage)]="selectedPage"
+  [totalElements]="totalElements"
+  (selectedPageChange)="onChangePage($event)"
+></app-paginator>

@@ -5,27 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
 import { FooterModule } from './footer/footer.module';
-import { FormModule } from './form/form.module';
 import { FormioBuilderModule } from './formio-builder/formio-builder.module';
-import { GestioneDichiarazioniModule } from './gestione-dichiarazioni/gestione-dichiarazioni.module';
 import { HeaderModule } from './header/header.module';
-import { HomeModule } from './home/home.module';
-import { RenderModule } from './render/render.module';
+import { FormModule } from './back-office/form.module';
+import { CommonModule } from '@angular/common';
+import { FormFoModule } from './front-office/form-fo.module';
 
 const AppConfig = {};
-
 @NgModule({
   declarations: [AppComponent, BreadcrumbComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HomeModule,
     FormioBuilderModule,
     FormModule,
-    GestioneDichiarazioniModule,
-    RenderModule,
+    FormFoModule,
     HeaderModule,
     FooterModule,
+    CommonModule,
   ],
   providers: [{ provide: FormioAppConfig, useValue: AppConfig }],
   bootstrap: [AppComponent],

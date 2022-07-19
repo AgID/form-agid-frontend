@@ -25,33 +25,23 @@
       <ul
         class="navbar-nav justify-content-start ml-auto mr-auto px-0 custom-max-width-1200"
       >
-        <li>
+        <li class="nav-item">
           <a
-            class="nav-item"
+            id="front_link"
             class="custom-overwrite-border nav-link"
-            routerLink="/form"
+            routerLink="/elenco-form"
             routerLinkActive="active"
-            ><span>Form</span></a
+            ><span>Front office</span></a
           >
         </li>
         <li class="nav-item">
           <a
-            id="builder_link"
+            id="admin_link"
             class="custom-overwrite-border nav-link"
-            routerLink="/builder"
+            routerLink="/admin"
             routerLinkActive="active"
           >
-            <span>Builder</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            id="render_link"
-            class="custom-overwrite-border nav-link"
-            routerLink="/render"
-            routerLinkActive="active"
-          >
-            <span>Render</span>
+            <span>Back office</span>
           </a>
         </li>
       </ul>

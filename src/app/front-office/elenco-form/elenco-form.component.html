@@ -1,0 +1,34 @@
+<div *ngIf="elencoForm.length === 0" class="progress-spinner progress-spinner-double progress-spinner-active">
+  <div class="progress-spinner-inner"></div>
+  <div class="progress-spinner-inner"></div>
+  <span class="sr-only">Caricamento...</span>
+</div>
+<div class="row">
+  <div class="col-12 col-lg-4 mb-3" *ngFor="let item of elencoForm">
+    <div class="card-wrapper">
+      <div class="card card-bg">
+        <div class="card-body position-relative">
+          <h5 class="card-title">
+            <a
+              class="cursor-pointer"
+              style="color: #06c; text-decoration: underline"
+              (click)="goToRender(item._id)"
+              >{{ item.titolo }}</a
+            >
+          </h5>
+          <p class="card-text mb-5">
+            <span>{{ item.descrizione }}</span>
+          </p>
+          <p class="position-absolute mb-0" style="bottom: 20px; right: 20px">
+            <a
+              class="card-title cursor-pointer"
+              aria-label="Accedi al modulo: Obiettivi di accessibilità"
+              (click)="goToRender(item._id)"
+              >Accedi al modulo</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormComponent } from './form/form.component';
+import { DettaglioFormComponent } from './back-office/dettaglio/dettaglio-form.component';
+import { ElencoFormComponent } from './back-office/elenco-form/elenco-form.component';
+import { InserimentoFormComponent } from './back-office/inserimento/inserimento-form.component';
+import { ModificaFormComponent } from './back-office/modifica/modifica-form.component';
 import { FormioBuilderComponent } from './formio-builder/formio-builder.component';
-import { GestioneDichiarazioniComponent } from './gestione-dichiarazioni/gestione-dichiarazioni.component';
-import { HomeComponent } from './home/home.component';
-import { RenderComponent } from './render/render.component';
+import { DichiarazioneComponent } from './front-office/dichiarazione/dichiarazione.component';
+import { HomeComponent } from './front-office/home/home.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: '',
+    path: 'home',
     component: HomeComponent,
-    pathMatch: 'full',
     data: { breadcrumb: 'Home' },
   },
   {
@@ -19,18 +21,38 @@ const routes: Routes = [
     data: { breadcrumb: 'Builder' },
   },
   {
-    path: 'render',
-    component: RenderComponent,
-    data: { breadcrumb: 'Render' },
+    path: 'dichiarazione',
+    component: DichiarazioneComponent,
+    data: { breadcrumb: 'Dichiarazione' },
+  },
+  {
+    path: 'elenco-form',
+    loadChildren: () =>
+      import('./front-office/form-fo.module').then((m) => m.FormFoModule),
+    data: { breadcrumb: 'Elenco Form' },
+  },
+  {
+    path: 'admin',
+    component: ElencoFormComponent,
+    data: { breadcrumb: 'Elenco Form BO' },
     children: [
       {
-        path: 'gestione-dichiarazioni',
-        component: GestioneDichiarazioniComponent,
-        data: { breadcrumb: 'Gestione dichiarazioni' },
+        path: 'inserimento-form',
+        component: InserimentoFormComponent,
+        data: { breadcrumb: 'Inserimento' },
+      },
+      {
+        path: 'modifica-form',
+        component: ModificaFormComponent,
+        data: { breadcrumb: 'Modifica' },
+      },
+      {
+        path: 'dettaglio-form',
+        component: DettaglioFormComponent,
+        data: { breadcrumb: 'Dettaglio' },
       },
     ],
   },
-  { path: 'form', component: FormComponent, data: { breadcrumb: 'Form' } },
 ];
 
 @NgModule({

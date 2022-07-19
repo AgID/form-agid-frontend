@@ -19,6 +19,21 @@
   margin-bottom: 0 !important;
 }
 
+.progress-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+}
+
 input {
   margin-top: 1.2rem !important;
+}
+
+svg {
+  fill: #06c !important;
+}
+
+* {
+  font-family: Titillium Web, FontAwesome, sans-serif !important;
 }

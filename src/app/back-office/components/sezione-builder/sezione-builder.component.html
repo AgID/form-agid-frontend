@@ -1,0 +1,55 @@
+<div class="row mb-3">
+  <div class="col-12">
+    <h2>Sezione builder</h2>
+  </div>
+</div>
+
+<ul class="nav nav-tabs auto" id="builder-render" role="tablist">
+  <li class="nav-item">
+    <a
+      class="nav-link active"
+      id="builder"
+      data-toggle="tab"
+      href="#builder-tab"
+      role="tab"
+      aria-controls="builder-tab"
+      aria-selected="true"
+      >Builder</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="render"
+      data-toggle="tab"
+      href="#render-tab"
+      role="tab"
+      aria-controls="render-tab"
+      aria-selected="false"
+      >Anteprima</a
+    >
+  </li>
+  <li class="nav-item-filler"></li>
+</ul>
+<div class="tab-content" id="builder-renderContent">
+  <div
+    class="tab-pane py-4 fade show active"
+    id="builder-tab"
+    role="tabpanel"
+    aria-labelledby="builder"
+  >
+    <form-builder
+      [form]="form"
+      [options]="formOptions"
+      (change)="onChange($event)"
+    ></form-builder>
+  </div>
+  <div
+    class="tab-pane py-4 fade"
+    id="render-tab"
+    role="tabpanel"
+    aria-labelledby="render"
+  >
+    <formio [form]="form"></formio>
+  </div>
+</div>

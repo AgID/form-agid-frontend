@@ -5,13 +5,7 @@ import { FormioModule } from '@formio/angular';
 import { FormioBuilderComponent } from './formio-builder.component';
 
 @NgModule({
-  declarations: [
-    FormioBuilderComponent,
-  ],
-  imports: [
-    BrowserModule, 
-    CommonModule,
-    FormioModule,
-  ]
+  declarations: [FormioBuilderComponent],
+  imports: [BrowserModule, CommonModule, FormioModule],
 })
-export class FormioBuilderModule { }
+export class FormioBuilderModule {}

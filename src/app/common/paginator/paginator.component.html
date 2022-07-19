@@ -1,0 +1,57 @@
+<nav
+  class="pagination-wrapper justify-content-end"
+  [attr.aria-label]="ariaLabel"
+  *ngIf="_pagingArray.length > 1"
+>
+  <ul class="pagination">
+    <!-- FRECCIA A SINISTRA -->
+    <li
+      class="page-item"
+      [ngClass]="{
+        disabled: selectedPage === 1
+      }"
+    >
+      <a class="page-link" (click)="changePage(selectedPage - 1)" tabindex="-1" aria-hidden="true">
+        <svg class="icon icon-primary">
+          <use href="/assets/svg/sprite.svg#it-chevron-left"></use>
+        </svg>
+        <span class="sr-only">Pagina precedente</span>
+      </a>
+    </li>
+
+    <!-- CONTENUTO -->
+    <ng-container *ngFor="let page of _pagingArray; let i = index">
+      <li class="page-item" *ngIf="isPageButtonVisible(i)">
+        <a
+          class="page-link"
+          [ngClass]="{
+            'd-none d-sm-flex': i + 1 !== selectedPage,
+            active: i + 1 === selectedPage
+          }"
+          (click)="changePage(i + 1)"
+          [attr.aria-current]="i + 1 === selectedPage ? 'page' : null"
+        >
+          <span *ngIf="i + 1 === selectedPage" class="d-inline-block d-sm-none"
+            >Pagina </span
+          >{{ i + 1 }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- FRECCIA A DESTRA -->
+    <li class="page-item">
+      <a
+        class="page-link"
+        [ngClass]="{
+          disabled: selectedPage - 1 === lastPageIndex
+        }"
+        (click)="changePage(selectedPage + 1)"
+      >
+        <span class="sr-only">Pagina successiva</span>
+        <svg class="icon icon-primary">
+          <use href="/assets/svg/sprite.svg#it-chevron-right"></use>
+        </svg>
+      </a>
+    </li>
+  </ul>
+</nav>

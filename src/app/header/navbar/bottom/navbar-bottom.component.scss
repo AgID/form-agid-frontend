@@ -48,8 +48,9 @@ ul.topBotomBordersOut li:hover:after {
   max-width: 1200px;
 }
 
-a.active#builder_link,
-a.active#render_link {
+a.active#admin_link,
+a.active#front_link
+{
   border-color: #fff !important;
 }
 

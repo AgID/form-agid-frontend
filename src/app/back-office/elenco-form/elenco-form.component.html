@@ -1,0 +1,10 @@
+<div *ngIf="route.children.length === 0">
+  <app-ricerca-form #ricercaFormComponent></app-ricerca-form>
+  <div class="form-row">
+    <div class="form-group col text-right">
+      <button type="submit" class="btn btn-primary" (click)="searchForm()">Cerca</button>
+    </div>
+  </div>
+  <app-risultati-form *ngIf="filters" [filters]="filters"></app-risultati-form>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12">
+    <h2>Sezione metadati</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-4">
+    <div class="form-group">
+      <label for="titolo">Titolo dello schema</label>
+      <input type="text" class="form-control mb-1" id="titolo" value="{{titolo}}" (keyup)="onKeyUpTitolo($event)" />
+      <app-alert *ngIf="!inserimentoForm.isValidTitoloForm" [messaggio]="errorMessage" [type]="typeAlert"></app-alert>
+    </div>
+  </div>
+  <div class="w-100"></div>
+  <div class="col-12 col-md-8">
+    <div class="form-group">
+      <label for="descrizione">Descrizione</label>
+      <textarea id="descrizione" rows="3" value="{{descrizione}}" (keyup)="onKeyUpDescrizione($event)"></textarea>
+      <app-alert *ngIf="!inserimentoForm.isValidDescrizioneForm" [messaggio]="errorMessage" [type]="typeAlert"></app-alert>
+    </div>
+  </div>
+  <div class="w-100"></div>
+  <div class="col-12 col-md-4">
+    <div class="it-datepicker-wrapper">
+      <div class="form-group">
+        <label for="dataInizio">Data inizio</label>
+        <input
+          class="form-control it-date-datepicker"
+          id="dataInizio"
+          type="text"
+          placeholder="inserisci la data in formato gg/mm/aaaa"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="it-datepicker-wrapper">
+      <div class="form-group">
+        <label for="dataFine">Data fine</label>
+        <input
+          class="form-control it-date-datepicker"
+          id="dataFine"
+          type="text"
+          placeholder="inserisci la data in formato gg/mm/aaaa"
+        />
+      </div>
+    </div>
+  </div>
+</div>
