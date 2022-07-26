@@ -24,8 +24,8 @@ export class RisultatiFormComponent implements OnInit {
     this.risultatiFormService
       .findFormForParams(this.filters)
       .subscribe((response: any) => {
-        this.elencoForm = response[0].extraParams;
-        this.totalElements = response[0].totalElements[0].totalElements;
+        this.elencoForm = response.extraParams;
+        this.totalElements = response.totalElements[0].totalElements;
       });
   }
 

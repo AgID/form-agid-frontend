@@ -37,3 +37,11 @@ svg {
 * {
   font-family: Titillium Web, FontAwesome, sans-serif !important;
 }
+
+formio div[role="form"] > div:first-child {
+  display: none;
+}
+
+.alert {
+  background-color: white;
+}

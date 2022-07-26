@@ -7,19 +7,22 @@
     Nuovo
   </button>
 </div>
-<table class="table w-100" style="table-layout: fixed">
+<table
+  style="width: 100%; table-layout: fixed"
+  class="table table-responsive-xl table-hover mt-4"
+>
   <thead>
     <tr>
-      <th scope="col">Descrizione</th>
-      <th scope="col">Stato</th>
-      <th scope="col">Data ultima modifica</th>
-      <th scope="col">Azioni</th>
+      <th style="width: 40%" scope="col">Titolo</th>
+      <th style="width: 20%" scope="col">Stato</th>
+      <th style="width: 25%" scope="col">Data ultima modifica</th>
+      <th style="width: 15%" scope="col">Azioni</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of elencoForm">
       <td>
-        {{ item.descrizione }}
+        {{ titolo }}
         <!-- Dichiarazione accessibilità -->
       </td>
       <td>
@@ -31,22 +34,40 @@
       </td>
       <td>{{ item.dataUltimaModifica }}</td>
       <td>
-        <svg class="icon cursor-pointer">
+        <svg
+          class="icon cursor-pointer"
+          (click)="goToModificaSottomissione(item)"
+        >
+          <title id="modifica">Modifica</title>
           <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
         </svg>
-        <svg class="icon cursor-pointer">
-          <use href="../../../../assets/svg/sprite.svg#it-minus-circle"></use>
-        </svg>
-        <svg class="icon cursor-pointer">
+        <svg
+          *ngIf="item.stato === 'Pubblicato'"
+          class="icon cursor-pointer"
+          (click)="goToDettaglioSottomissione(item)"
+        >
+          <title id="dettaglio">Dettaglio</title>
           <use href="../../../../assets/svg/sprite.svg#it-note"></use>
         </svg>
-        <svg class="icon cursor-pointer">
+        <svg class="icon cursor-pointer" (click)="eliminaSottomissione(item)">
+          <title id="elimina">Elimina</title>
           <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
         </svg>
       </td>
     </tr>
   </tbody>
 </table>
-
-<!-- Paginazione -->
-<!-- <app-paginator [elementsForPage]="10" [(selectedPage)]="selectedPage" [totalElements]="60"></app-paginator> -->
+<tbody *ngIf="!elencoForm?.length">
+  <tr>
+    <div class="ml-3">
+      <p>Nessun risultato disponibile per la ricerca effettuata.</p>
+    </div>
+  </tr>
+</tbody>
+<app-paginator
+  *ngIf="totalElements"
+  [elementsForPage]="filters.pagination.elementsForPage"
+  [(selectedPage)]="selectedPage"
+  [totalElements]="totalElements"
+  (selectedPageChange)="onPageChange($event)"
+></app-paginator>

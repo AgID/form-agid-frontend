@@ -10,8 +10,11 @@ import { HeaderModule } from './header/header.module';
 import { FormModule } from './back-office/form.module';
 import { CommonModule } from '@angular/common';
 import { FormFoModule } from './front-office/form-fo.module';
+import { AppCommonModule } from './common/app-common.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const AppConfig = {};
+
 @NgModule({
   declarations: [AppComponent, BreadcrumbComponent],
   imports: [
@@ -23,6 +26,8 @@ const AppConfig = {};
     HeaderModule,
     FooterModule,
     CommonModule,
+    AppCommonModule,
+    NoopAnimationsModule,
   ],
   providers: [{ provide: FormioAppConfig, useValue: AppConfig }],
   bootstrap: [AppComponent],

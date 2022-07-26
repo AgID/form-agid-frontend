@@ -1,6 +1,17 @@
-<div *ngIf="!form" class="progress-spinner progress-spinner-double progress-spinner-active">
-    <div class="progress-spinner-inner"></div>
-    <div class="progress-spinner-inner"></div>
-    <span class="sr-only">Caricamento...</span>
-  </div>
-<formio [form]="form"></formio>
+<formio
+  [form]="form"
+  [renderOptions]="renderOptions"
+  (change)="onChangeFormio($event)"
+  [submission]="data"
+></formio>
+<div class="d-flex justify-content-end mb-3">
+  <button
+    *ngIf="form._id"
+    type="button"
+    class="btn btn-primary"
+    (click)="salvaBozza()"
+    [disabled]="!dataForm.isValid"
+  >
+    Salva bozza
+  </button>
+</div>

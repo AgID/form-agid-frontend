@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionStorageService } from '../../../common/session-storage.service';
 
 @Component({
   selector: 'app-dettaglio-form',
@@ -8,10 +9,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DettaglioFormFoComponent implements OnInit {
   public id = '';
+  public titoloSottomissione: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private sessionStorageService: SessionStorageService
+  ) {}
 
   ngOnInit(): void {
-    this.id = this.route.firstChild.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];
+    this.titoloSottomissione = this.sessionStorageService.getItem(
+      'titoloSottomissione'
+    );
   }
 }

@@ -11,4 +11,7 @@ export class AlertComponent {
 
   @Input()
   public type: string;
+
+  @Input()
+  public htmlString: string;
 }

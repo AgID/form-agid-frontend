@@ -1,0 +1,104 @@
+<app-alert
+  *ngIf="typeAlert"
+  [messaggio]="statusMessage"
+  [type]="typeAlert"
+  [htmlString]="htmlMessage"
+></app-alert>
+<div>
+  <p *ngIf="!isModifica && modifyEqualsPublish">
+    Redatta il {{ DataInserimentoForm }}
+  </p>
+</div>
+<formio
+  [form]="formSchema"
+  [submission]="{ data: formData }"
+  [renderOptions]="renderOptions"
+  (change)="onChangeFormio($event)"
+></formio>
+<div class="d-flex justify-content-center gap-35 mb-3">
+  <ng-container *ngIf="isModifica; else isVisualizzazione">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="onClickVisualizza()"
+      *ngIf="response?.stato === 'Pubblicato'"
+    >
+      Visualizza
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onClickSalvaBozza()">
+      Salva bozza
+    </button>
+  </ng-container>
+  <ng-template #isVisualizzazione>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="onClickModifica()"
+    >
+      Modifica
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onClickPubblica()">
+      Pubblica
+    </button>
+  </ng-template>
+</div>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Attenzione</strong> Alcuni campi inseriti sono da controllare.
+  <button
+    type="button"
+    class="close"
+    data-dismiss="alert"
+    aria-label="Chiudi avviso"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="publishModal"
+  aria-labelledby="publishModalTitle"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content rounded">
+      <div class="modal-header">
+        <h2 class="modal-title">Pubblica il link sul sito istituzionale</h2>
+        <button
+          class="close"
+          type="button"
+          aria-label="Close"
+          (click)="redirectPage()"
+        >
+          <svg class="icon">
+            <use href="/assets/svg/sprite.svg#it-close"></use>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="px-5 pb-5 modal-body">
+          <div class="d-flex">
+            <div>
+              <p
+                class="pb-4"
+                style="border-bottom: 1px solid rgb(204, 204, 204)"
+              >
+                Copia e incolla il link nella apposita sezione del tuo sito web.
+              </p>
+              <p class="font-weight-bold pt-4">UUID_PLACEHOLDER</p>
+            </div>
+            <div style="width: 150px">
+              <img
+                src="../../../../../assets/svg/uuid_modal_image.svg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

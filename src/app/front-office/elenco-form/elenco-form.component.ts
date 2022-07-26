@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ElencoFormService } from './elenco-form.service';
+import { SessionStorageService } from '../../common/session-storage.service';
 
 @Component({
   selector: 'app-elenco-form',
@@ -13,7 +14,8 @@ export class ElencoFormFoComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private elencoFormService: ElencoFormService
+    private elencoFormService: ElencoFormService,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -22,8 +24,16 @@ export class ElencoFormFoComponent implements OnInit {
     });
   }
 
-  public goToRender(id: any) {
-    this.router.navigate([`./dettaglio/${id}`], {
+  public goToRender(item: any) {
+    this.sessionStorageService.setItem('titoloSottomissione', item.titolo);
+    this.router.navigate([`./${item._id}`], {
+      relativeTo: this.route,
+    });
+  }
+
+  public goToNuovaSottomissione(item: any) {
+    this.sessionStorageService.setItem('titoloSottomissione', item.titolo);
+    this.router.navigate([`./${item._id}/nuova-sottomissione`], {
       relativeTo: this.route,
     });
   }

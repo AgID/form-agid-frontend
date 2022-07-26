@@ -1,12 +1,13 @@
 <div
-class="alert"
-[ngClass]="{
+  class="alert"
+  [ngClass]="{
     'alert-info': type === 'INFO',
     'alert-success': type === 'SUCCESS',
     'alert-warning': type === 'WARNING',
     'alert-danger': type === 'DANGER'
-}"
-role="alert"
+  }"
+  role="alert"
 >
   {{ messaggio }}
+  <div *ngIf="htmlString" [innerHTML]="htmlString"></div>
 </div>

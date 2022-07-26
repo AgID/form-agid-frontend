@@ -6,6 +6,7 @@ import { AppCommonModule } from '../common/app-common.module';
 import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
 import { DichiarazioneComponent } from './dichiarazione/dichiarazione.component';
 import { DettaglioFormFoComponent } from './elenco-form/dettaglio/dettaglio-form.component';
+import { DettaglioSottomissioneComponent } from './elenco-form/dettaglio/dettaglio-sottomissione/dettaglio-sottomissione.component';
 import { FormDichiarazioneAccessibilitaComponent } from './elenco-form/dettaglio/dichiarazione-accessibilita/dichiarazione-accessibilita.component';
 import { FaqComponent } from './elenco-form/dettaglio/faq/faq.component';
 import { NuovaSottomissioneComponent } from './elenco-form/dettaglio/nuova-sottomissione/nuova-sottomissione.component';
@@ -23,6 +24,7 @@ import { HomeComponent } from './home/home.component';
     DettaglioFormFoComponent,
     NuovaSottomissioneComponent,
     RicercaSottomissioniComponent,
+    DettaglioSottomissioneComponent,
     FaqComponent,
     FormDichiarazioneAccessibilitaComponent,
   ],

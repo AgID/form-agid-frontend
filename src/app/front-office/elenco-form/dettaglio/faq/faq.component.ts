@@ -12,15 +12,17 @@ export class FaqComponent implements OnInit {
   public id = '';
   public faq = '';
 
-  constructor(private router: Router, private route: ActivatedRoute, private hashService: HashService,
-    private elencoFormService: ElencoFormService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private hashService: HashService,
+    private elencoFormService: ElencoFormService
+  ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.elencoFormService
-      .getFormsById(this.id)
-      .subscribe((res) => {
-        this.faq = res.sezioniInformative.faq;
-      });
+    this.id = this.route.parent.snapshot.paramMap.get('id');
+    this.elencoFormService.getFormsById(this.id).subscribe((res) => {
+      this.faq = res.sezioniInformative.faq;
+    });
   }
 }

@@ -42,12 +42,12 @@ const routes: Routes = [
         data: { breadcrumb: 'Inserimento' },
       },
       {
-        path: 'modifica-form',
+        path: 'modifica-form/:id',
         component: ModificaFormComponent,
         data: { breadcrumb: 'Modifica' },
       },
       {
-        path: 'dettaglio-form',
+        path: 'dettaglio-form/:id',
         component: DettaglioFormComponent,
         data: { breadcrumb: 'Dettaglio' },
       },

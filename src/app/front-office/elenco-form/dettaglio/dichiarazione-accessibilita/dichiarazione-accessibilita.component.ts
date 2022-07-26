@@ -11,6 +11,7 @@ import { ElencoFormService } from '../../elenco-form.service';
 export class FormDichiarazioneAccessibilitaComponent implements OnInit {
   public id = '';
   public sezioneInformativaHome = '';
+  public titoloSottomissione: string;
 
   constructor(
     private router: Router,
@@ -20,11 +21,10 @@ export class FormDichiarazioneAccessibilitaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.elencoFormService
-      .getFormsById(this.id)
-      .subscribe((res) => {
-        this.sezioneInformativaHome = res.sezioniInformative.home;
-      });
+    this.id = this.route.parent.snapshot.paramMap.get('id');
+    this.elencoFormService.getFormsById(this.id).subscribe((res) => {
+      this.titoloSottomissione = res.titolo;
+      this.sezioneInformativaHome = res.sezioniInformative.home;
+    });
   }
 }
