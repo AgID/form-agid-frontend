@@ -1,4 +1,16 @@
-<p>modifica-form works!</p>
-<app-sezione-metadati></app-sezione-metadati>
-<app-sezione-builder></app-sezione-builder>
+<app-sezione-metadati #sezioneMetadatiComponent></app-sezione-metadati>
+<app-sezione-builder
+  [form]="form"
+  #sezioneBuilderComponent
+></app-sezione-builder>
 <app-contenuti-dinamici></app-contenuti-dinamici>
+<div class="row mb-3">
+  <button
+    class="btn btn-primary mt-3"
+    type="submit"
+    data-focus-mouse="false"
+    (click)="onClickSalvaSchemaRilevazione()"
+  >
+    Salva
+  </button>
+</div>

@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 export class DettaglioSottomissioneComponent implements OnInit {
   public id: string;
   public DataInserimentoForm: string;
+  public uuidLink: string = 'UUID_PLACEHOLDER';
 
   public isModifica: boolean;
   public isPublished: boolean;
@@ -29,7 +30,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   public renderOptions: any = {};
 
   //Alert
-  public statusMessage: string;
+  public statusMessage: Array<any> = [];
   public htmlMessage: string;
   public typeAlert: AlertType;
 
@@ -91,33 +92,45 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   private initStatusPage() {
-    if (this.isPublished && !this.modifyEqualsPublish) {
-      //pubblicato con bozza
-      this.typeAlert = 'WARNING';
-      this.statusMessage = `Alcune modifiche al contenuto non sono ancora state pubblicate.`;
-      this.htmlMessage = `<a [routerLink]="['./']" [queryParams]="{isPublished: true}">visualizza il contenuto con le ultime modifiche</a>`;
-    } else if (
-      this.isModifica &&
+    if (
+      this.isPublished &&
       this.response.dati_pubblicati &&
       !this.modifyEqualsPublish
     ) {
+      //pubblicato con bozza
+      this.typeAlert = 'WARNING';
+      this.statusMessage.push({
+        label: `Alcune modifiche al contenuto non sono ancora state pubblicate.`,
+      });
+      this.statusMessage.push({
+        label: `visualizza il contenuto con le ultime modifiche`,
+        routerlink: true,
+        link: './',
+      });
+    } else if (this.response.dati_pubblicati && !this.modifyEqualsPublish) {
       //Bozza ma è pubblicata
       this.typeAlert = 'WARNING';
-      this.statusMessage = `Il contenuto visualizzato presenta alcune modifiche rispetto alla versione pubblicata.`;
-      this.htmlMessage = `<a [routerLink]="['./']" [queryParams]="{isModifica: true}">visualizza la versione pubblicata del contenuto</a>`;
+      this.statusMessage.push({
+        label: `Il contenuto visualizzato presenta alcune modifiche rispetto alla versione pubblicata.`,
+        routerlink: false,
+      });
+      this.statusMessage.push({
+        label: `visualizza la versione pubblicata del contenuto`,
+        routerlink: true,
+        link: './',
+        params: { isPublished: true },
+      });
     } else if (this.isPublished && this.modifyEqualsPublish) {
       //pubblicato senza bozza
       this.DataInserimentoForm = this.datePipe.transform(
         this.response.dataInserimento,
         'dd/MM/yyyy'
       );
-    } else if (
-      !this.isModifica &&
-      !this.isPublished &&
-      !this.response.dati_pubblicati
-    ) {
+    } else if (!this.isModifica && !this.response.dati_pubblicati) {
       this.typeAlert = 'WARNING';
-      this.statusMessage = `Il contenuto visualizzato risulta ancora in bozza.`;
+      this.statusMessage.push({
+        label: `Il contenuto visualizzato risulta ancora in bozza.`,
+      });
     }
   }
 
@@ -139,12 +152,18 @@ export class DettaglioSottomissioneComponent implements OnInit {
     this.elencoFormService
       .updateSottomissione(this.id, updateBody)
       .subscribe(() => {
-        this.router.navigate([`./`], {
-          queryParams: {
-            isPublished: true,
-          },
-          relativeTo: this.route,
-        });
+        if (this.response.dati_pubblicati) {
+          this.router.navigate([`./`], {
+            queryParams: {
+              isPublished: true,
+            },
+            relativeTo: this.route,
+          });
+        } else {
+          this.router.navigate([`./`], {
+            relativeTo: this.route,
+          });
+        }
       });
   }
 
@@ -164,6 +183,8 @@ export class DettaglioSottomissioneComponent implements OnInit {
       .updateSottomissione(this.id, updateBody)
       .subscribe((response) => {
         if (!this.response.dati_pubblicati) {
+          // TODO da generare lato BE
+          this.uuidLink = `https://form.agid.gov.it/view/${updateBody.idPubblicazione}`;
           // Modale
           this.myModal = new (<any>window).bootstrap.Modal(
             document.getElementById('publishModal'),

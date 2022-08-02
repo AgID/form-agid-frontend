@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
 import { AlertComponent } from './alert/alert.component';
@@ -6,10 +6,16 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpinnerInterceptor } from './spinner.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [PaginatorComponent, AlertComponent],
-  imports: [CommonModule, GestioneDichiarazioniModule, NgxSpinnerModule],
+  imports: [
+    CommonModule,
+    GestioneDichiarazioniModule,
+    NgxSpinnerModule,
+    RouterModule,
+  ],
   exports: [PaginatorComponent, AlertComponent, NgxSpinnerModule],
   providers: [
     {
@@ -17,7 +23,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       useClass: SpinnerInterceptor,
       multi: true,
     },
-    DatePipe,
   ],
 })
 export class AppCommonModule {}

@@ -2,11 +2,10 @@
   *ngIf="typeAlert"
   [messaggio]="statusMessage"
   [type]="typeAlert"
-  [htmlString]="htmlMessage"
 ></app-alert>
 <div>
   <p *ngIf="!isModifica && modifyEqualsPublish">
-    Redatta il {{ DataInserimentoForm }}
+    Redatta il {{ DataInserimentoForm }} sotto al titolo
   </p>
 </div>
 <formio
@@ -88,11 +87,13 @@
               >
                 Copia e incolla il link nella apposita sezione del tuo sito web.
               </p>
-              <p class="font-weight-bold pt-4">UUID_PLACEHOLDER</p>
+              <p class="font-weight-bold pt-4">
+                <a href="{{ uuidLink }}">{{ uuidLink }}</a>
+              </p>
             </div>
             <div style="width: 150px">
               <img
-                src="../../../../../assets/svg/uuid_modal_image.svg"
+                src="../../../../../assets/svg/uuid_modal_image_codice.svg"
                 alt=""
               />
             </div>

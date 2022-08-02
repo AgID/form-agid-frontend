@@ -1,20 +1,19 @@
-<div *ngIf="elencoForm.length === 0" class="progress-spinner progress-spinner-double progress-spinner-active">
-  <div class="progress-spinner-inner"></div>
-  <div class="progress-spinner-inner"></div>
-  <span class="sr-only">Caricamento...</span>
-</div>
 <div class="d-flex justify-content-end" *ngIf="elencoForm.length > 0">
   <button type="button" class="btn btn-primary" (click)="goToInserimentoForm()">
     Nuovo
   </button>
 </div>
-<table class="table" *ngIf="elencoForm.length > 0">
+<table
+  style="width: 100%; table-layout: fixed"
+  class="table table-responsive-xl table-hover mt-4"
+  *ngIf="elencoForm.length > 0"
+>
   <thead>
     <tr>
-      <th scope="col" style="width: 35%;">Titolo</th>
-      <th scope="col" style="width: 40%;">Descrizione</th>
-      <th scope="col" style="width: 10%;">Stato</th>
-      <th scope="col" style="width: 15%;">Opzioni</th>
+      <th scope="col" style="width: 35%">Titolo</th>
+      <th scope="col" style="width: 40%">Descrizione</th>
+      <th scope="col" style="width: 10%">Stato</th>
+      <th scope="col" style="width: 15%">Opzioni</th>
     </tr>
   </thead>
   <tbody>
@@ -32,22 +31,29 @@
       </td>
       <td>{{ item.stato }}</td>
       <td>
-        <svg class="icon cursor-pointer">
+        <svg class="icon cursor-pointer" (click)="goToModificaForm(item)">
+          <title id="modifica">Modifica</title>
           <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
         </svg>
-        <svg class="icon cursor-pointer">
-          <use href="../../../../assets/svg/sprite.svg#it-minus-circle"></use>
-        </svg>
-        <svg class="icon cursor-pointer">
+        <svg class="icon cursor-pointer" (click)="goToDettaglioForm(item)">
+          <title id="dettaglio">Dettaglio</title>
           <use href="../../../../assets/svg/sprite.svg#it-note"></use>
         </svg>
-        <svg class="icon cursor-pointer">
+        <svg class="icon cursor-pointer" (click)="onClickEliminaForm(item)">
+          <title id="elimina">Elimina</title>
           <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
         </svg>
       </td>
     </tr>
   </tbody>
 </table>
+<tbody *ngIf="!elencoForm?.length">
+  <tr>
+    <div class="ml-3">
+      <p>Nessun risultato disponibile per la ricerca effettuata.</p>
+    </div>
+  </tr>
+</tbody>
 <!-- Paginazione -->
 <app-paginator
   *ngIf="totalElements"

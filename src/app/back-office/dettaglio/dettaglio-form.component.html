@@ -1,3 +1,102 @@
-<p>dettaglio-form works!</p>
-<app-ricerca-form></app-ricerca-form>
-<app-gestione-dichiarazioni></app-gestione-dichiarazioni>
+<h2 class="ml-3">Gestione sottomissioni</h2>
+<table
+  style="width: 100%; table-layout: fixed"
+  class="table table-responsive-xl table-hover mt-4"
+>
+  <thead>
+    <tr>
+      <th style="width: 20%" scope="col">Stato</th>
+      <th style="width: 25%" scope="col">Data ultima modifica</th>
+      <th style="width: 15%" scope="col">Azioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of elencoForm">
+      <td>
+        {{ item.stato }}
+      </td>
+      <td>{{ item.dataUltimaModifica }}</td>
+      <td>
+        <svg
+          class="icon cursor-pointer"
+          (click)="goToModificaSottomissione(item)"
+        >
+          <title id="modifica">Modifica</title>
+          <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
+        </svg>
+        <svg
+          class="icon cursor-pointer"
+          (click)="goToDettaglioSottomissione(item)"
+        >
+          <title id="dettaglio">Dettaglio</title>
+          <use href="../../../../assets/svg/sprite.svg#it-note"></use>
+        </svg>
+        <svg class="icon cursor-pointer" (click)="esportaSottomissione(item)">
+          <title id="esporta">Esporta</title>
+          <use href="../../../../assets/svg/sprite.svg#it-files"></use>
+        </svg>
+        <svg class="icon cursor-pointer" (click)="eliminaSottomissione(item)">
+          <title id="elimina">Elimina</title>
+          <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
+        </svg>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<tbody *ngIf="!elencoForm?.length">
+  <tr>
+    <div class="ml-3">
+      <p>Nessun risultato disponibile per la ricerca effettuata.</p>
+    </div>
+  </tr>
+</tbody>
+<app-paginator
+  *ngIf="totalElements"
+  [elementsForPage]="filters.pagination.elementsForPage"
+  [(selectedPage)]="selectedPage"
+  [totalElements]="totalElements"
+  (selectedPageChange)="onPageChange($event)"
+></app-paginator>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="exportModal"
+  aria-labelledby="exportModalTitle"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content rounded">
+      <div class="modal-header">
+        <h2 class="modal-title">Scegli il formato di esportazione</h2>
+        <button
+          class="close"
+          type="button"
+          aria-label="Close"
+          (click)="redirectPage()"
+        >
+          <svg class="icon">
+            <use href="/assets/svg/sprite.svg#it-close"></use>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <select
+          id="defaultSelect"
+          (change)="onChangeFormato($event)"
+          class="mb-3"
+        >
+          <option selected="" value="">Scegli un'opzione</option>
+          <option value="CSV">CSV</option>
+          <option value="XLSX">XLSX</option>
+        </select>
+        <div class="d-flex justify-content-end mb-3">
+          <button type="button" class="btn btn-primary" (click)="Export()">
+            Esporta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

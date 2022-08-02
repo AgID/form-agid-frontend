@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ModificaFormComponent } from './modifica/modifica-form.component';
 import { SezioneBuilderComponent } from './components/sezione-builder/sezione-builder.component';
@@ -37,6 +37,6 @@ import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-
     FormioModule,
     GestioneDichiarazioniModule,
   ],
-  providers: [HttpClient],
+  providers: [HttpClient, DatePipe],
 })
 export class FormModule {}

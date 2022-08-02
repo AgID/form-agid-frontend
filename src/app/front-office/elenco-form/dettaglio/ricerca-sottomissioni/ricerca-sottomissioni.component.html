@@ -42,8 +42,8 @@
           <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
         </svg>
         <svg
-          *ngIf="item.stato === 'Pubblicato'"
           class="icon cursor-pointer"
+          [ngClass]="{ 'icon-disabled': item.stato !== 'Pubblicato' }"
           (click)="goToDettaglioSottomissione(item)"
         >
           <title id="dettaglio">Dettaglio</title>

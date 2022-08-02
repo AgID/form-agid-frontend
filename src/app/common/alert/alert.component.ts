@@ -7,11 +7,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class AlertComponent {
   @Input()
-  public messaggio: string;
+  public messaggio: Array<{
+    label: '';
+    routerlink: false;
+    link: '';
+    params: {};
+  }>;
 
   @Input()
   public type: string;
-
-  @Input()
-  public htmlString: string;
 }

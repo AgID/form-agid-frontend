@@ -1,5 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione-metadati.component';
+import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.service';
+import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-builder.component';
+import { IForm } from '../types/form.type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inserimento-form',
@@ -8,24 +12,67 @@ import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione
 })
 export class InserimentoFormComponent {
   @ViewChild('sezioneMetadatiComponent')
-  sezioneMetadatiComponent: SezioneMetadatiComponent;
+  public sezioneMetadatiComponent: SezioneMetadatiComponent;
 
-  public isValidTitoloForm = true;
-  public isValidDescrizioneForm = true;
-  public metadati = {};
-  public form = {};
+  @ViewChild('sezioneBuilderComponent')
+  public sezioneBuilderComponent: SezioneBuilderComponent;
+
+  public form: IForm = {};
+
+  constructor(
+    private elencoFormService: ElencoFormService,
+    private router: Router
+  ) {}
 
   public onClickSalvaSchemaRilevazione() {
-    this.isValidTitoloForm = this.sezioneMetadatiComponent.titolo
-      ? true
-      : false;
-    this.isValidDescrizioneForm = this.sezioneMetadatiComponent.descrizione
-      ? true
-      : false;
-
-    //Scroll Top
-    if (!this.isValidTitoloForm || !this.isValidDescrizioneForm) {
-      document.documentElement.scrollTop = 0;
+    if (!this.sezioneMetadatiComponent.validate()) {
+      this.scrollToTop();
+      return;
     }
+
+    this.buildFormRequest();
+
+    this.elencoFormService.createForm(this.form).subscribe((response) => {
+      this.router.navigate([`/admin/dettaglio-form/${response._id}`]);
+    });
+  }
+
+  public buildFormRequest() {
+    this.form.titolo = this.sezioneMetadatiComponent.metadati.titoloSchema;
+    this.form.descrizione = this.sezioneMetadatiComponent.metadati.descrizione;
+    this.form.dataInizioValidita = new Date(
+      this.sezioneMetadatiComponent.metadati.dataInizio
+    );
+    this.form.dataFineValidita = new Date(
+      this.sezioneMetadatiComponent.metadati.dataFine
+    );
+    this.form.components = this.sezioneBuilderComponent.form.components;
+    this.form.dataInserimento = new Date();
+    this.form.dataUltimaModifica = new Date();
+
+    //TODO: MOCK
+    this.form.acl = { tipo: 'pubblico', valore: 'true' };
+    this.form.codiceUtenteInserimento = 'string';
+    this.form.codiceUtenteModifica = 'string';
+    this.form.sezioniInformative = {
+      home: 'home',
+      faq: '<h1 style="max-width: 12em">FAQ</h1>\n  <h2 style="max-width: 15em">Accesso all’applicazione online</h2>\n  <h3>\n    Come ottengo la chiave di accesso per entrare nell’applicazione online ?\n  </h3>\n  <p class="w-paragraph my-4">\n    La chiave di accesso viene inviata all’e-mail del Responsabile per la\n    Transizione Digitale (RTD) indicata nel portale Indice delle Pubbliche\n    Amministrazioni (indice IPA), pertanto verificarne la correttezza; qualora\n    l’indirizzo email fosse sbagliato, fare l’accesso al portale indice IPA e\n    modificarne i dati.\n  </p>\n  <h3>\n    Non è stata ricevuta la chiave di accesso per entrare nell’applicazione\n    online <a href="https://form.agid.gov.it/">https://form.agid.gov.it/</a> per\n    procedere con la compilazione della Dichiarazione di Accessibilità.\n  </h3>\n  <p class="w-paragraph my-4">\n    Verificare la correttezza dell’indirizzo email del Responsabile per la\n    Transizione Digitale (RTD) sul portale Indice delle Pubbliche\n    Amministrazioni (indice IPA), se sbagliato fare l’accesso al portale indice\n    IPA e modificare i dati.\n  </p>\n  <h2 style="max-width: 15em">Applicazione delle Linee Guida</h2>\n  <h3>\n    I contenuti presenti in un’area riservata di un sito web o nella intranet\n    sono soggetti a verifica?\n  </h3>\n  <p class="w-paragraph my-4">\n    I contenuti a cui si accede previa autenticazione devono comunque rispettare\n    i requisiti di accessibilità. AGID può in ogni modo richiedere ai soggetti\n    erogatori l’accesso ai contenuti di extranet o intranet.\n  </p>\n  <h2 style="max-width: 15em">Dichiarazione di accessibilità</h2>\n  <h3>Qual è la differenza tra parzialmente conforme e non conforme?</h3>\n  <p class="w-paragraph my-4">\n    Per parzialmente conforme si intende rispettata la maggior parte delle\n    prescrizioni della norma o della specifica tecnica, seppure con qualche\n    eccezione. Ciò significa che il sito o l’applicazione non sono ancora\n    pienamente conformi e che devono essere adottate le misure necessarie per\n    raggiungere la piena conformità. Per non conforme si intende quando non è\n    rispettata la maggior parte delle prescrizioni della norma o della specifica\n    tecnica.\n  </p>\n  <h3>Cosa si intende per data di "pubblicazione del sito”?</h3>\n  <p class="w-paragraph my-4">\n    Con data di pubblicazione di un sito web si intende la data in cui è stato\n    ufficialmente reso disponibile online il sito web all’utenza destinataria,\n    sia nel caso di un nuovo sito che di un intervento di aggiornamento\n    strutturale al back end o front-end.\n  </p>\n  <h3>Chi ha l’obbligo di pubblicare la dichiarazione di accessibilità?</h3>\n  <p class="w-paragraph my-4">\n    Sono tenute alla compilazione della Dichiarazione di Accessibilità tutte le\n    Amministrazioni richiamate dall’art. 2 comma 2 del Codice\n    dell’Amministrazione Digitale (CAD).\n  </p>\n  <p class="w-paragraph my-4">\n    Si veda il paragrafo 1.4 - Soggetti Destinatari.\n  </p>\n  <h3>Quando si applica l’onere sproporzionato?</h3>\n  <p class="w-paragraph my-4">\n    Quando ricorre almeno uno dei seguenti casi: 1. un onere organizzativo\n    eccessivo; 2. un onere finanziario eccessivo; 3. il rischio di non poter\n    adempiere agli scopi prefissati. 4. rischio di pregiudicare la capacità di\n    pubblicare le informazioni necessarie o pertinenti per i propri compiti e\n    servizi.\n  </p>\n  <p class="w-paragraph my-4">\n    Per approfondire si veda il capitolo 6 - Onere sproporzionato.\n  </p>\n  <h3>\n    La dichiarazione di accessibilità deve essere compilata e pubblicata per\n    ogni sito web e per ogni applicazione web dell’amministrazione?\n  </h3>\n  <p class="w-paragraph my-4">\n    Sì, per ogni sito web e applicazione si necessita di una dichiarazione di\n    accessibilità.\n  </p>\n  <h3>\n    Come faccio ad essere sicura di aver redatto correttamente la dichiarazione\n    di accessibilità?\n  </h3>\n  <p class="w-paragraph my-4">\n    Per essere conformi al modello di dichiarazione a livello europeo è\n    necessario utilizzare l\'applicazione online di AGID.\n  </p>\n  <h3>\n    Quando deve essere prevista la figura del "Responsabile dei processi di\n    inserimento" all\'interno della PA?\n  </h3>\n  <p class="w-paragraph my-4">\n    Al fine di garantire un’efficace inserimento nell’ambiente di lavoro delle\n    persone con disabilità, le amministrazioni pubbliche con più di 200\n    dipendenti, senza nuovi o maggiori oneri per la finanza pubblica e\n    nell’ambito delle risorse umane, finanziarie e strumentali disponibili a\n    legislazione vigente, nominano un responsabile dei processi di inserimento."\n    (art. 39-ter del D.lgs n. 165/2001).\n  </p>\n  <h3>\n    La percentuale di spesa prevista nel piano di bilancio di previsione in\n    materia di accessibilità deve far riferimento all\'anno in cui la\n    dichiarazione viene compilata/pubblicata?\n  </h3>\n  <p class="w-paragraph my-4">\n    La percentuale di spesa da riportare è da riferirsi all\' anno corrente.\n  </p>\n  <h3>Cosa si intende per software accessibile?</h3>\n  <p class="w-paragraph my-4">\n    Tecnicamente un software è accessibile quando è sviluppato nel rispetto dei\n    requisiti previsti dalla norma tecnica EN 301549, ovvero possiede\n    caratteristiche che consentono il suo utilizzo da parte di persone con\n    disabilità in modo diretto, con personalizzazioni o con l\'ausilio di\n    tecnologie assistive.\n  </p>\n  <h2 style="max-width: 15em">Difensore civico per il digitale</h2>\n  <h3>\n    Cosa può fare il cittadino che rileva ulteriori casi di inaccessibilità\n    rispetto a quelli presenti nella dichiarazione di accessibilità?\n  </h3>\n  <p class="w-paragraph my-4">\n    In prima istanza, chiunque può richiedere informazioni al soggetto erogatore\n    utilizzando la procedura presente nella sezione "meccanismo di feedback"\n    della dichiarazione di accessibilità pubblicata. Se il soggetto erogatore\n    non risponde entro 30 giorni dalla ricezione della richiesta oppure risponde\n    in modo insoddisfacente, chiunque può rivolgersi al Difensore civico per il\n    digitale tramite l’apposito riferimento presente nella sezione "procedura di\n    attuazione" della dichiarazione.\n  </p>\n  <h2 style="max-width: 15em">Meccanismo di feedback</h2>\n  <h3>Cosa si intende per meccanismo di feedback?</h3>\n  <p class="w-paragraph my-4">\n    Il meccanismo di feedback è lo strumento messo a disposizione degli utenti\n    per segnalare direttamente al soggetto erogatore i casi di inaccessibilità.\n  </p>\n  <h3>Dove si trova il link per avere accesso al meccanismo di feedback?</h3>\n  <p class="w-paragraph my-4">\n    Il link per il meccanismo di feedback è presente all\'interno della\n    dichiarazione di accessibilità del sito web o dell\'applicazione mobile\n    dell\'amministrazione.\n  </p>\n  <h2 style="max-width: 15em">Modello di autovalutazione</h2>\n  <h3>\n    Come stabilire la conformità ai requisiti di accessibilità di un sito o di\n    un’applicazione mobile?\n  </h3>\n  <p class="w-paragraph my-4">Attraverso:</p>\n  <ul class="my-4">\n    <li class="my-4">\n      un’autovalutazione effettuata direttamente dal soggetto erogatore;\n    </li>\n    <li class="my-4">una valutazione effettuata da terzi;</li>\n    <li class="my-4">\n      una valutazione effettuata con il “Modello di autovalutazione”, reso\n      disponibile online da AGID e riportato nell’Allegato 2 delle presenti\n      Linee Guida.\n    </li>\n  </ul>\n  <p class="w-paragraph my-4">\n    In generale, è possibile desumere “la conformità”, “la parziale conformità”\n    o la “non conformità” attraverso il conteggio dei punti di controlli\n    soddisfatti e non (“Si/No”).\n  </p>\n  <h2 style="max-width: 15em">Modello di autovalutazione</h2>\n  <h3>Come si desume la conformità di un singolo criterio?</h3>\n  <p class="w-paragraph my-4">\n    La conformità di un singolo criterio si basa sul campione di pagine\n    ispezionate, il requisito è soddisfatto se tutte le pagine analizzate\n    rispettano il punto di controllo.\n  </p>\n  <h3>Nel caso di un sito web, le sezioni del modello di autovalutazione:</h3>\n  <ul class="my-4">\n    <li class="my-4">Generici</li>\n    <li class="my-4">ICT con comunicazione bidirezionale,</li>\n    <li class="my-4">ICT con funzionalità video,</li>\n    <li class="my-4">Documentazione e servizi di supporto,</li>\n    <li class="my-4">Ulteriori funzioni di accessibilità</li>\n  </ul>\n  <h3>\n    Vanno compilate e prodotte solo nel caso in cui nel sito siano presenti le\n    funzionalità a cui si riferiscono queste sezioni oppure vanno compilate e\n    prodotte sempre e, in caso di assenza della funzionalità, va indicato come\n    “non applicabili” ?\n  </h3>\n  <p class="w-paragraph my-4">\n    Vanno compilate solo le sezioni che competono le caratteristiche del sito\n    web. Per tutte le altre che prevedono requisiti non applicabili, vanno\n    contrassegnate come tali nel campo predisposto per l\'intera sezione.\n  </p>\n  <h3>\n    Il modello di autovalutazione fornito da AGID, una volta compilato e\n    utilizzato per redigere la Dichiarazione di Accessibilità, va\n    successivamente reso disponibile all’Agenzia?\n  </h3>\n  <p class="w-paragraph my-4">Va conservato ed esibito solo su richiesta.</p>\n  <h3>\n    Quali strumenti è possibile utilizzare per agevolare le verifiche di\n    accessibilità?\n  </h3>\n  <p class="w-paragraph my-4">\n    Di seguito alcuni strumenti open source per poter effettuare alcuni test di\n    accessibilità:\n  </p>\n  <ul class="my-4">\n    <li class="my-4"><a href="http://validator.w3.org/">Validatore W3C</a></li>\n    <li class="my-4">\n      <a href="https://developer.paciellogroup.com/resources/contrastanalyser/"\n        >Colour Contrast Analyzer</a\n      >\n      (tool da scaricare)\n    </li>\n    <li class="my-4">\n      <a href="https://webaim.org/resources/contrastchecker/">WebAIM</a>\n    </li>\n    <li class="my-4">Web Developer Toolbar: estensione per il browser</li>\n    <li class="my-4">\n      Siteimprove Browser Extensions: estensione per il browser\n    </li>\n    <li class="my-4"><a href="http://www.nvda.it/">Nvda Screen Reader</a></li>\n    <li class="my-4">\n      Ulteriori strumenti sono elencati all’interno del sito del W3C alla pagina\n      <a href="https://www.w3.org/WAI/ER/tools/"\n        >https://www.w3.org/WAI/ER/tools/</a\n      >\n    </li>\n  </ul>\n  <h2 style="max-width: 15em">Monitoraggio</h2>\n  <h3>\n    Cosa si intende per “revisione sostanziale” del sito o dell\'applicazione?\n  </h3>\n  <p class="w-paragraph my-4">\n    Per revisione sostanziale si intende che l’amministrazione, previa\n    un’analisi qualitativa, ha apportato modifiche di tipo strutturale,\n    funzionale, tecnologico o di layout che potrebbero incidere sul rispetto dei\n    requisiti di accessibilità.\n  </p>\n  <h2 style="max-width: 15em">Onere sproporzionato</h2>\n  <h3>Cosa si intende per “Onere sproporzionato”?</h3>\n  <p class="w-paragraph my-4">\n    Per onere sproporzionato si intende una circostanza di fatto o di diritto\n    che rappresenta, nei casi previsti dall’art. 3-ter, comma 2, legge n. 4 del\n    2004, una deroga alle prescrizioni fissate dalla stessa legge in materia di\n    accessibilità che deve fondarsi esclusivamente su motivazioni legittime e\n    adeguatamente giustificate.\n  </p>\n  <h3>\n    I tempi occorrenti per lo sviluppo di un sito pienamente accessibile possono\n    costituire onere sproporzionato?\n  </h3>\n  <p class="w-paragraph my-4">\n    No, mai, in quanto non rientra tra i motivi legittimi\n  </p>\n  <h3>\n    Sono previsti nuovi o maggiori oneri finanziari per l’attuazione degli\n    obblighi previsti dalla normativa?\n  </h3>\n  <p class="w-paragraph my-4">\n    No, il soggetto erogatore deve far fronte ai nuovi adempimenti con le\n    risorse umane, strumentali e finanziarie disponibili a legislazione vigente.\n    Tuttavia può tener conto di incentivi, agevolazioni e altri strumenti\n    previsti a livello europeo, nazionale e regionale.\n  </p>\n  <h2 style="max-width: 15em">\n    Responsabile per la Transizione Digitale (RTD)\n  </h2>\n  <h3>Chi compila il modello della dichiarazione di accessibilità?</h3>\n  <p class="w-paragraph my-4">\n    Il Responsabile per la Transizione Digitale (RTD) nominato dalla PA, i cui\n    riferimenti devono essere inseriti sul portale Indice delle Pubbliche\n    Amministrazioni (IndicePA). L\'RTD riceverà tramite email le credenziali per\n    collegarsi all\'applicazione online di AGID.\n  </p>\n  <h3>\n    Chi è responsabile di quanto indicato nella dichiarazione di accessibilità?\n  </h3>\n  <p class="w-paragraph my-4">\n    Il Responsabile per la Transizione Digitale (RTD)\n  </p>\n  <h3>\n    Se il Responsabile per la Transizione Digitale non è stato nominato, chi\n    compila la Dichiarazione di Accessibilità?\n  </h3>\n  <p class="w-paragraph my-4">\n    È necessaria la nomina del Responsabile per la Transizione Digitale e la\n    pubblicazione della sua mail su IndicePA, al fine di poter ricevere le\n    credenziali di accesso all\'applicazione della dichiarazione.\n  </p>',
+    };
+    this.form.verificaPubblicazione = {
+      abilitata: true,
+      campoUrlTarget: 'url',
+    };
+
+    this.form.versione = 0;
+    this.form.stato = 'string';
+    this.form.scheduling = {
+      giorni_attesa: 1,
+      dataInizio: new Date(),
+      dataFine: new Date(),
+    };
+  }
+
+  scrollToTop() {
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
   }
 }

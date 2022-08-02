@@ -12,22 +12,24 @@
             >
           </h2>
           <ul class="link-list">
-            <li class="mb-md-2" style="border-left: 4px solid blue">
-              <a
-                class="list-item large py-2 font-weight-bold neutral-1-color-b5"
-                [routerLink]="['./']"
+            <li
+              [routerLinkActive]="'selector'"
+              class="mb-md-2"
+              style="border-left: 4px solid #06c"
+            >
+              <a class="list-item large py-2" [routerLink]="['./']"
                 ><span>{{ titoloSottomissione }}</span></a
               >
             </li>
-            <li class="mb-md-2 pl-3">
+            <li [routerLinkActive]="'selector'" class="mb-md-2">
               <a
                 aria-current="page"
-                class="list-item large py-2 font-weight-bold primary-color-a11"
+                class="list-item large py-2"
                 [routerLink]="['./ricerca']"
                 ><span>Gestione sottomissioni</span></a
               >
             </li>
-            <li class="mb-md-2 pl-3">
+            <li [routerLinkActive]="'selector'" class="mb-md-2">
               <a class="list-item large py-2" [routerLink]="['./faq']"
                 ><span>FAQ</span></a
               >

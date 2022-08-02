@@ -8,6 +8,13 @@
   }"
   role="alert"
 >
-  {{ messaggio }}
-  <div *ngIf="htmlString" [innerHTML]="htmlString"></div>
+  <ng-container *ngFor="let item of messaggio">
+    <ng-container *ngIf="!item.routerlink"> {{ item.label }} </ng-container
+    ><br />
+    <ng-container *ngIf="item.routerlink">
+      <a [routerLink]="item.link" [queryParams]="item.params">{{
+        item.label
+      }}</a>
+    </ng-container>
+  </ng-container>
 </div>

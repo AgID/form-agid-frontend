@@ -8,43 +8,102 @@
   <div class="col-12 col-md-4">
     <div class="form-group">
       <label for="titolo">Titolo dello schema</label>
-      <input type="text" class="form-control mb-1" id="titolo" value="{{titolo}}" (keyup)="onKeyUpTitolo($event)" />
-      <app-alert *ngIf="!inserimentoForm.isValidTitoloForm" [messaggio]="errorMessage" [type]="typeAlert"></app-alert>
+      <input
+        type="text"
+        class="form-control mb-1"
+        id="titolo"
+        value="{{ metadati.titoloSchema }}"
+        (keyup)="onKeyUpTitolo($event)"
+      />
+      <app-alert
+        *ngIf="!isValid.titoloSchema"
+        [messaggio]="errorMessage"
+        [type]="typeAlert"
+      ></app-alert>
     </div>
   </div>
   <div class="w-100"></div>
   <div class="col-12 col-md-8">
     <div class="form-group">
+      <label for="descrizione">Home</label>
+      <textarea
+        id="home"
+        rows="3"
+        value="{{ metadati.home }}"
+        (keyup)="onKeyUpHome($event)"
+      ></textarea>
+      <app-alert
+        *ngIf="!isValid.home"
+        [messaggio]="errorMessage"
+        [type]="typeAlert"
+      ></app-alert>
+    </div>
+  </div>
+  <div class="col-12 col-md-8">
+    <div class="form-group">
+      <label for="descrizione">Faq</label>
+      <textarea
+        id="faq"
+        rows="3"
+        value="{{ metadati.faq }}"
+        (keyup)="onKeyUpFaq($event)"
+      ></textarea>
+      <app-alert
+        *ngIf="!isValid.faq"
+        [messaggio]="errorMessage"
+        [type]="typeAlert"
+      ></app-alert>
+    </div>
+  </div>
+  <div class="col-12 col-md-8">
+    <div class="form-group">
       <label for="descrizione">Descrizione</label>
-      <textarea id="descrizione" rows="3" value="{{descrizione}}" (keyup)="onKeyUpDescrizione($event)"></textarea>
-      <app-alert *ngIf="!inserimentoForm.isValidDescrizioneForm" [messaggio]="errorMessage" [type]="typeAlert"></app-alert>
+      <textarea
+        id="descrizione"
+        rows="3"
+        value="{{ metadati.descrizione }}"
+        (keyup)="onKeyUpDescrizione($event)"
+      ></textarea>
+      <app-alert
+        *ngIf="!isValid.descrizione"
+        [messaggio]="errorMessage"
+        [type]="typeAlert"
+      ></app-alert>
     </div>
   </div>
   <div class="w-100"></div>
   <div class="col-12 col-md-4">
-    <div class="it-datepicker-wrapper">
-      <div class="form-group">
-        <label for="dataInizio">Data inizio</label>
-        <input
-          class="form-control it-date-datepicker"
-          id="dataInizio"
-          type="text"
-          placeholder="inserisci la data in formato gg/mm/aaaa"
-        />
-      </div>
+    <div class="form-group">
+      <label class="active" for="dateInizio">Data inizio</label>
+      <input
+        (change)="onKeyDataInizio($event)"
+        value="{{ metadati.dataInizio }}"
+        type="date"
+        id="dateInizio"
+        name="dateInizio"
+      />
+      <app-alert
+        *ngIf="!isValid.dataInizio"
+        [messaggio]="errorMessage"
+        [type]="typeAlert"
+      ></app-alert>
     </div>
   </div>
   <div class="col-12 col-md-4">
-    <div class="it-datepicker-wrapper">
-      <div class="form-group">
-        <label for="dataFine">Data fine</label>
-        <input
-          class="form-control it-date-datepicker"
-          id="dataFine"
-          type="text"
-          placeholder="inserisci la data in formato gg/mm/aaaa"
-        />
-      </div>
+    <div class="form-group">
+      <label class="active" for="dateFine">Data fine</label>
+      <input
+        (change)="onKeyUpDataFine($event)"
+        value="{{ metadati.dataFine }}"
+        type="date"
+        id="dateFine"
+        name="dateFine"
+      />
+      <app-alert
+        *ngIf="!isValid.dataFine"
+        [messaggio]="errorMessage"
+        [type]="typeAlert"
+      ></app-alert>
     </div>
   </div>
 </div>
