@@ -1,0 +1,15 @@
+<div class="form-group mt-3">
+  <label class="active" [attr.for]="ident">{{ label }}</label>
+  <input
+    class="form-control mb-1"
+    [attr.type]="type"
+    [attr.id]="ident"
+    [value]="value"
+    (change)="onChangeInput($event)"
+  />
+  <app-alert
+    *ngIf="!isValid"
+    [messaggio]="errorMessage"
+    [type]="errorType"
+  ></app-alert>
+</div>

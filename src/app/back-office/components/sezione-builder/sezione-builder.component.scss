@@ -1,0 +1,37 @@
+// ul {
+//   background-color: #fff;
+//   border-bottom-color: #dfe4f2;
+//   border-bottom: 1px solid #b1b1b3;
+//   list-style: none;
+//   display: flex;
+//   overflow: hidden;
+
+//   li {
+//     flex: 1;
+//     text-align: center;
+
+//     .nav-link {
+//       margin-bottom: -1px;
+//       background: none;
+//       border-radius: 0;
+//       font-weight: 600;
+//       color: #5b6f82;
+//       border: none;
+//       border-bottom: 3px solid rgba(0, 0, 0, 0);
+//       padding: 0.778rem 1.333em;
+//       flex: 1 0 auto;
+//       white-space: nowrap;
+//       line-height: 1em;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       flex: 1;
+
+//       &.active {
+//         border-bottom-color: #06c;
+//         color: #06c;
+//         cursor: inherit;
+//       }
+//     }
+//   }
+// }

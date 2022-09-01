@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
 import { FooterModule } from './footer/footer.module';
-import { FormioBuilderModule } from './formio-builder/formio-builder.module';
 import { HeaderModule } from './header/header.module';
 import { FormModule } from './back-office/form.module';
 import { CommonModule } from '@angular/common';
@@ -20,7 +19,6 @@ const AppConfig = {};
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormioBuilderModule,
     FormModule,
     FormFoModule,
     HeaderModule,

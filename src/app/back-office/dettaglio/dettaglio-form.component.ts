@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { FormFoService } from '../../front-office/form-fo.service';
@@ -6,13 +6,17 @@ import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.se
 import { ISottomissione } from '../../front-office/types/sottomissione.type';
 import { Pagination } from '../../common/pagination.class';
 import { IForm } from '../types/form.type';
+import { RicercaSottomissioniComponent } from '../components/ricerca-sottomissioni/ricerca-sottomissioni.component';
 
 @Component({
-  selector: 'app-dettaglio-form',
+  selector: 'app-dettaglio-form-bo',
   templateUrl: './dettaglio-form.component.html',
   styleUrls: ['./dettaglio-form.component.scss'],
 })
 export class DettaglioFormComponent implements OnInit {
+  @ViewChild('ricercaSottomissioniComponent')
+  ricercaSottomissioniComponent: RicercaSottomissioniComponent;
+
   public id: string;
   public form: IForm;
   public totalElements: number;
@@ -57,15 +61,31 @@ export class DettaglioFormComponent implements OnInit {
   }
 
   public goToDettaglioSottomissione(item: any) {
-    // TODO
+    this.router.navigate([`../sottomissione/${item._id}`], {
+      queryParams: {
+        isPublished: true,
+      },
+      relativeTo: this.route,
+    });
   }
 
   public goToModificaSottomissione(item: any) {
-    // TODO
+    this.router.navigate([`../sottomissione/${item._id}`], {
+      queryParams: {
+        isModifica: true,
+      },
+      relativeTo: this.route,
+    });
+  }
+
+  public goToTornaAllaRicercaSchemi() {
+    this.router.navigate(['/admin']);
   }
 
   public eliminaSottomissione(item: any) {
-    // TODO
+    this.elencoFormService.deleteSottomissioneById(item._id).subscribe(() => {
+      this.fetchSottomissioni();
+    });
   }
 
   public esportaSottomissione(item: any) {
@@ -82,19 +102,28 @@ export class DettaglioFormComponent implements OnInit {
   }
 
   public Export() {
-    console.log(`Esportato in ${this.formatoEsportazione}`, this.selectedRow);
+    console.log(`Esportato in ${this.formatoEsportazione}`);
+    console.log(this.selectedRow);
   }
 
   public redirectPage() {
     this.myModal.hide();
   }
 
-  onPageChange(e: any) {
+  public onPageChange(e: any) {
     this.filters.pagination.currentPage = e;
     this.fetchSottomissioni();
   }
 
-  onChangeFormato($e: any) {
+  public onChangeFormato($e: any) {
     this.formatoEsportazione = $e.target.value;
+  }
+
+  public searchForm() {
+    this.filters = {
+      ...this.filters,
+      ...this.ricercaSottomissioniComponent.filters,
+    };
+    this.fetchSottomissioni();
   }
 }

@@ -15,6 +15,9 @@ import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormioModule } from '@formio/angular';
 import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
+import { RicercaSottomissioniComponent } from './components/ricerca-sottomissioni/ricerca-sottomissioni.component';
+import { SezionePermessiComponent } from './components/sezione-permessi/sezione-permessi.component';
+import { GestioneUtenzeComponent } from './gestione-utenze/gestione-utenze.component';
 
 @NgModule({
   declarations: [
@@ -25,8 +28,11 @@ import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-
     InserimentoFormComponent,
     SezioneBuilderComponent,
     SezioneMetadatiComponent,
+    SezionePermessiComponent,
     ContenutiDinamiciComponent,
     DettaglioFormComponent,
+    RicercaSottomissioniComponent,
+    GestioneUtenzeComponent,
   ],
   imports: [
     BrowserModule,

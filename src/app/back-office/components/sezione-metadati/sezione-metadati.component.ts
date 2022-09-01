@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
+import { ModificaFormComponent } from '../../modifica/modifica-form.component';
 import { IMetadatiType } from '../../types/metadati.type';
 
 @Component({
@@ -13,59 +14,72 @@ export class SezioneMetadatiComponent {
 
   public errorMessage: Array<any> = [{ label: 'Campo obbligatorio' }];
   public typeAlert: AlertType = 'DANGER';
-  public metadati: IMetadatiType = {};
+
+  @Input()
+  public metadati: IMetadatiType = {
+    titolo: '',
+    descrizione: '',
+    dataFineValidita: '',
+    dataInizioValidita: '',
+    sezioniInformative: {
+      faq: '',
+      home: '',
+    },
+  };
 
   public isValid: any = {
     home: true,
     faq: true,
-    titoloSchema: true,
+    titolo: true,
     descrizione: true,
-    dataInizio: true,
-    dataFine: true,
+    dataInizioValidita: true,
+    dataFineValidita: true,
   };
 
-  constructor() {}
-
   public onKeyUpTitolo(e: any) {
-    this.metadati.titoloSchema = e.target.value;
-    this.isValid.titoloSchema = true;
+    this.metadati.titolo = e.target.value;
+    this.isValid.titolo = true;
+    this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyUpHome(e: any) {
-    this.metadati.home = e.target.value;
+    this.metadati.sezioniInformative.home = e.target.value;
     this.isValid.home = true;
+    this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyUpFaq(e: any) {
-    this.metadati.faq = e.target.value;
+    this.metadati.sezioniInformative.faq = e.target.value;
     this.isValid.faq = true;
+    this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyUpDescrizione(e: any) {
     this.metadati.descrizione = e.target.value;
     this.isValid.descrizione = true;
+    this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyDataInizio(e: any) {
-    this.metadati.dataInizio = e.target.value;
-    this.isValid.dataInizio = true;
+    this.metadati.dataInizioValidita = e.target.value;
+    this.isValid.dataInizioValidita = true;
+    this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyUpDataFine(e: any) {
-    this.metadati.dataFine = e.target.value;
-    this.isValid.dataFine = true;
+    this.metadati.dataFineValidita = e.target.value;
+    this.isValid.dataFineValidita = true;
+    this.changeMetadati.emit(this.metadati);
   }
 
   public validate(): boolean {
-    this.isValid.titoloSchema = !!this.metadati.titoloSchema;
+    this.isValid.titolo = !!this.metadati.titolo;
     this.isValid.descrizione = !!this.metadati.descrizione;
-    this.isValid.dataInizio = !!this.metadati.dataInizio;
-    this.isValid.home = !!this.metadati.home;
-    this.isValid.faq = !!this.metadati.faq;
+    this.isValid.home = !!this.metadati.sezioniInformative.home;
+    this.isValid.faq = !!this.metadati.sezioniInformative.faq;
     return (
-      this.isValid.titoloSchema &&
+      this.isValid.titolo &&
       this.isValid.descrizione &&
-      this.isValid.dataInizio &&
       this.isValid.home &&
       this.isValid.faq
     );

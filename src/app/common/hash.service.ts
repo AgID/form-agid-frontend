@@ -7,6 +7,7 @@ export class HashService {
   public get form(): any {
     return this._form;
   }
+
   public set form(value: any) {
     this._form = value;
   }

@@ -6,6 +6,7 @@
           <h2 class="display-3 no_toc mb-4">
             <a
               class="primary-color-a12 text-decoration-none"
+              style="font-size: xx-large"
               href="#"
               [routerLink]="['/']"
               ><span class="primary-color-a9">&lt;</span> Form</a
@@ -14,23 +15,51 @@
           <ul class="link-list">
             <li
               [routerLinkActive]="'selector'"
-              class="mb-md-2"
               style="border-left: 4px solid #06c"
             >
-              <a class="list-item large py-2" [routerLink]="['./']"
+              <a
+                *ngIf="!isArchivio"
+                class="list-item large"
+                [routerLink]="['./']"
+                ><span>{{ titoloSottomissione }}</span></a
+              >
+              <a
+                *ngIf="isArchivio"
+                class="list-item large"
+                [routerLink]="['./']"
+                [queryParams]="{ isArchivio: true }"
                 ><span>{{ titoloSottomissione }}</span></a
               >
             </li>
-            <li [routerLinkActive]="'selector'" class="mb-md-2">
+            <li [routerLinkActive]="'selector'">
               <a
+                *ngIf="!isArchivio"
                 aria-current="page"
-                class="list-item large py-2"
+                class="list-item large"
                 [routerLink]="['./ricerca']"
                 ><span>Gestione sottomissioni</span></a
               >
+              <a
+                *ngIf="isArchivio"
+                aria-current="page"
+                class="list-item large"
+                [routerLink]="['./ricerca']"
+                [queryParams]="{ isArchivio: true }"
+                ><span>Gestione sottomissioni</span></a
+              >
             </li>
-            <li [routerLinkActive]="'selector'" class="mb-md-2">
-              <a class="list-item large py-2" [routerLink]="['./faq']"
+            <li [routerLinkActive]="'selector'">
+              <a
+                *ngIf="!isArchivio"
+                class="list-item large"
+                [routerLink]="['./faq']"
+                ><span>FAQ</span></a
+              >
+              <a
+                *ngIf="isArchivio"
+                class="list-item large"
+                [routerLink]="['./faq']"
+                [queryParams]="{ isArchivio: true }"
                 ><span>FAQ</span></a
               >
             </li>

@@ -19,13 +19,10 @@ export class NuovaSottomissioneComponent implements OnInit {
     codiceUtenteModifica: 'string',
     dataUltimaModifica: new Date(),
     stato: '',
-    verificaPubblicazione: {
-      abilitata: true,
-      campoUrlTarget: 'string',
-    },
+    verificaPubblicazione: false,
     idPubblicazione: 'UID',
-    dati_pubblicati: {},
-    dati_bozza: {},
+    datiPubblicati: {},
+    datiBozza: {},
   };
 
   public data = {};
@@ -50,13 +47,12 @@ export class NuovaSottomissioneComponent implements OnInit {
 
   public onChangeFormio(data: any) {
     this.dataForm = data;
-    console.log(data);
   }
 
   public salvaBozza() {
     this.payloadNewSubmission.idForm = this.id;
     this.payloadNewSubmission.stato = 'Bozza';
-    this.payloadNewSubmission.dati_bozza = this.dataForm.data;
+    this.payloadNewSubmission.datiBozza = this.dataForm.data;
     this.elencoFormService
       .createSubmission(this.payloadNewSubmission)
       .subscribe((response) =>

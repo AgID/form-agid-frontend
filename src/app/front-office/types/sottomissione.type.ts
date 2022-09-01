@@ -8,7 +8,7 @@ export interface ISottomissione {
   stato?: string;
   verificaPubblicazione?: { abilitata?: boolean; campoUrlTarget?: string };
   idPubblicazione?: string;
-  dati_pubblicati?: any;
-  dati_bozza?: any;
+  datiPubblicati?: any;
+  datiBozza?: any;
   descrizione?: any;
 }

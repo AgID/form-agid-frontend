@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Pagination } from 'src/app/common/pagination.class';
 
 @Component({
@@ -8,6 +8,8 @@ import { Pagination } from 'src/app/common/pagination.class';
   encapsulation: ViewEncapsulation.None,
 })
 export class RicercaFormComponent {
+  constructor() {}
+
   public filters = {
     titolo: '',
     descrizione: '',
@@ -17,13 +19,22 @@ export class RicercaFormComponent {
 
   public onChangeTitolo($e: any) {
     this.filters.titolo = $e.target.value;
+    this.filters = {
+      ...this.filters,
+    };
   }
 
   public onChangeDescrizione($e: any) {
     this.filters.descrizione = $e.target.value;
+    this.filters = {
+      ...this.filters,
+    };
   }
 
   public onChangeStato($e: any) {
     this.filters.stato = $e.target.value;
+    this.filters = {
+      ...this.filters,
+    };
   }
 }

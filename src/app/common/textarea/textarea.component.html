@@ -1,0 +1,20 @@
+<div class="form-group">
+  <label
+    [ngClass]="{
+      active: value
+    }"
+    [attr.for]="ident"
+    >{{ label }}</label
+  >
+  <textarea
+    [attr.id]="ident"
+    [attr.rows]="rows"
+    [value]="value"
+    (change)="onChangeInput($event)"
+  ></textarea>
+  <app-alert
+    *ngIf="!isValid"
+    [messaggio]="errorMessage"
+    [type]="errorType"
+  ></app-alert>
+</div>

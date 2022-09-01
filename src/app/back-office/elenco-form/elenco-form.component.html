@@ -1,8 +1,19 @@
-<div *ngIf="route.children.length === 0">
+<div *ngIf="!route.children.length">
   <app-ricerca-form #ricercaFormComponent></app-ricerca-form>
-  <div class="form-row">
+  <div class="row">
     <div class="form-group col text-right">
-      <button type="submit" class="btn btn-primary" (click)="searchForm()">Cerca</button>
+      <!-- <div class="d-flex justify-content-end" *ngIf="elencoForm?.length > 0"> -->
+      <button
+        type="button"
+        class="btn btn-primary me-2"
+        (click)="goToInserimentoForm()"
+      >
+        Nuovo
+      </button>
+      <!-- </div> -->
+      <button type="submit" class="btn btn-primary" (click)="searchForm()">
+        Cerca
+      </button>
     </div>
   </div>
   <app-risultati-form *ngIf="filters" [filters]="filters"></app-risultati-form>

@@ -5,6 +5,7 @@ import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione
 import { DatePipe } from '@angular/common';
 import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-builder.component';
 import { IForm } from '../types/form.type';
+import { IMetadatiType } from '../types/metadati.type';
 
 @Component({
   selector: 'app-modifica-form',
@@ -20,6 +21,11 @@ export class ModificaFormComponent implements OnInit {
 
   public form: IForm;
   public id: any;
+
+  public metadati: IMetadatiType;
+
+  public isModified: boolean = false;
+  public message: Array<any> = [{ label: 'Modifica avvenuta con successo' }];
 
   constructor(
     private router: Router,
@@ -37,43 +43,88 @@ export class ModificaFormComponent implements OnInit {
   }
 
   private buildFormMetadati(response: any) {
-    this.sezioneMetadatiComponent.metadati.titoloSchema = response.titolo;
-    this.sezioneMetadatiComponent.metadati.descrizione = response.descrizione;
-    this.sezioneMetadatiComponent.metadati.dataInizio = this.datePipe.transform(
-      response.dataInizioValidita,
-      'yyyy-MM-dd'
-    );
-    this.sezioneMetadatiComponent.metadati.dataFine = this.datePipe.transform(
-      response.dataFineValidita,
-      'yyyy-MM-dd'
-    );
+    const {
+      titolo,
+      sezioniInformative,
+      descrizione,
+      dataInizioValidita,
+      dataFineValidita,
+    } = response;
+
+    this.metadati = {
+      titolo,
+      descrizione,
+      sezioniInformative,
+      dataInizioValidita: this.datePipe.transform(
+        dataInizioValidita,
+        'yyyy-MM-dd'
+      ),
+      dataFineValidita: this.datePipe.transform(dataFineValidita, 'yyyy-MM-dd'),
+    };
   }
 
   public buildFormRequest() {
-    this.form.titolo = this.sezioneMetadatiComponent.metadati.titoloSchema;
-    this.form.descrizione = this.sezioneMetadatiComponent.metadati.descrizione;
-    this.form.dataInizioValidita = new Date(
-      this.sezioneMetadatiComponent.metadati.dataInizio
-    );
-    this.form.dataFineValidita = new Date(
-      this.sezioneMetadatiComponent.metadati.dataFine
-    );
-    this.form.components = this.sezioneBuilderComponent.form.components;
-    this.form.dataUltimaModifica = new Date();
+    const {
+      descrizione,
+      titolo,
+      dataFineValidita,
+      dataInizioValidita,
+      sezioniInformative,
+    } = this.metadati;
+    this.form = {
+      ...this.form,
+      titolo,
+      sezioniInformative,
+      descrizione,
+      dataInizioValidita: new Date(dataInizioValidita),
+      dataFineValidita: new Date(dataFineValidita),
+      components: this.sezioneBuilderComponent.form.components,
+      dataUltimaModifica: new Date(),
+    };
   }
 
-  public onClickSalvaSchemaRilevazione() {
+  public onClickSalvaBozzaSchemaRilevazione() {
     if (!this.sezioneMetadatiComponent.validate()) {
       this.scrollToTop();
       return;
     }
     this.buildFormRequest();
+    this.form.stato = 'Bozza';
     this.elencoFormService
       .updateForm(this.form._id, this.form)
       .subscribe(() => {
         this.ngOnInit();
+        this.isModified = true;
         this.scrollToTop();
       });
+  }
+
+  public onClickPubblicaSchemaRilevazione() {
+    if (!this.sezioneMetadatiComponent.validate()) {
+      this.scrollToTop();
+      return;
+    }
+    this.buildFormRequest();
+    this.form.stato = 'Pubblicato';
+    this.elencoFormService
+      .updateForm(this.form._id, this.form)
+      .subscribe(() => {
+        this.ngOnInit();
+        this.isModified = true;
+        this.scrollToTop();
+      });
+  }
+
+  public changeMetadati(event: any) {
+    this.isModified = false;
+  }
+
+  public changeForm(event: any) {
+    this.isModified = false;
+  }
+
+  public goToTornaAllaRicerca() {
+    this.router.navigate(['/admin']);
   }
 
   scrollToTop() {

@@ -1,5 +1,8 @@
 <div class="row">
-  <div class="col-12 col-lg-4 mb-3" *ngFor="let item of elencoForm">
+  <div
+    class="col-12 col-lg-4 mb-3"
+    *ngFor="let item of elencoForm; let i = index"
+  >
     <div class="card-wrapper">
       <div class="card card-bg">
         <div class="card-body position-relative">
@@ -14,6 +17,13 @@
           <p class="card-text mb-5">
             <span>{{ item.descrizione }}</span>
           </p>
+          <p
+            *ngIf="isArchivio"
+            class="position-absolute mb-0"
+            style="bottom: 20px"
+          >
+            Scaduto il {{ dateExpiredForm[i].dataFineValidita }}
+          </p>
           <p class="position-absolute mb-0" style="bottom: 20px; right: 20px">
             <a
               class="card-title cursor-pointer"
@@ -26,4 +36,11 @@
       </div>
     </div>
   </div>
+  <a
+    *ngIf="!isArchivio"
+    class="card-title cursor-pointer d-flex justify-content-end"
+    aria-label="Vai all'archivio delle sottomissioni"
+    (click)="goToArchivio()"
+    >Archivio</a
+  >
 </div>

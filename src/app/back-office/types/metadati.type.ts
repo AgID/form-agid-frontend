@@ -1,8 +1,10 @@
 export interface IMetadatiType {
-  home?: string;
-  faq?: string;
-  titoloSchema?: string;
-  descrizione?: string;
-  dataInizio?: string;
-  dataFine?: string;
+  titolo: string;
+  descrizione: string;
+  sezioniInformative?: {
+    home: string;
+    faq: string;
+  };
+  dataInizioValidita?: string;
+  dataFineValidita?: string;
 }

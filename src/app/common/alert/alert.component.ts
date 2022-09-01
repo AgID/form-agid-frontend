@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IAlertMessageType } from './types/message.type';
 
 @Component({
   selector: 'app-alert',
@@ -7,12 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class AlertComponent {
   @Input()
-  public messaggio: Array<{
-    label: '';
-    routerlink: false;
-    link: '';
-    params: {};
-  }>;
+  public messaggio: Array<IAlertMessageType>;
 
   @Input()
   public type: string;

@@ -1,6 +1,24 @@
-<app-sezione-metadati #sezioneMetadatiComponent></app-sezione-metadati>
-<app-sezione-builder #sezioneBuilderComponent></app-sezione-builder>
-<div class="row mb-3">
+<app-alert
+  *ngIf="isModified"
+  [messaggio]="message"
+  [type]="'SUCCESS'"
+></app-alert>
+<app-sezione-metadati
+  #sezioneMetadatiComponent
+  (changeMetadati)="changeMetadati($event)"
+></app-sezione-metadati>
+<app-sezione-builder
+  #sezioneBuilderComponent
+  (changeForm)="changeForm($event)"
+></app-sezione-builder>
+{{ metadati | json }}
+<div class="mb-3 d-flex justify-content-between">
+  <a class="text-16p text-primary mt-3" (click)="goToTornaAllaRicerca()"
+    ><span class="fa fa-angle-double-left me-1"></span>
+    <label class="text-16p underline cursor cursor-pointer"
+      >Torna alla ricerca</label
+    ></a
+  >
   <button
     class="btn btn-primary mt-3"
     type="submit"

@@ -30,16 +30,12 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/@formio/uswds/dist/uswds.min.css",
               "node_modules/formiojs/dist/formio.full.min.css",
               "node_modules/ngx-spinner/animations/ball-clip-rotate.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/bootstrap-italia/dist/js/bootstrap-italia.min.js",
+              "node_modules/bootstrap-italia/dist/js/bootstrap-italia.bundle.min.js",
               "node_modules/formiojs/dist/formio.full.min.js"
             ]
           },

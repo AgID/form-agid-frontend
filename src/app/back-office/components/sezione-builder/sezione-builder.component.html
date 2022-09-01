@@ -1,33 +1,37 @@
 <div class="row mb-3">
   <div class="col-12">
-    <h2>Sezione builder</h2>
+    <h3>Sezione builder</h3>
   </div>
 </div>
 
 <ul class="nav nav-tabs auto" id="builder-render" role="tablist">
-  <li class="nav-item">
-    <a
+  <li class="nav-item" role="presentation">
+    <button
       class="nav-link active"
       id="builder"
-      data-toggle="tab"
-      href="#builder-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#builder-tab"
+      type="button"
       role="tab"
-      aria-controls="builder-tab"
+      aria-controls="home"
       aria-selected="true"
-      >Builder</a
     >
+      Builder
+    </button>
   </li>
-  <li class="nav-item">
-    <a
+  <li class="nav-item" role="presentation">
+    <button
       class="nav-link"
       id="render"
-      data-toggle="tab"
-      href="#render-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#render-tab"
+      type="button"
       role="tab"
-      aria-controls="render-tab"
-      aria-selected="false"
-      >Anteprima</a
+      aria-controls="home"
+      aria-selected="true"
     >
+      Anteprima
+    </button>
   </li>
   <li class="nav-item-filler"></li>
 </ul>
@@ -38,11 +42,11 @@
     role="tabpanel"
     aria-labelledby="builder"
   >
-    <form-builder
+    <app-formio-builder
       [form]="form"
       [options]="formOptions"
-      (change)="onChange($event)"
-    ></form-builder>
+      (changeFormio)="onChange($event)"
+    ></app-formio-builder>
   </div>
   <div
     class="tab-pane py-4 fade"
@@ -50,6 +54,6 @@
     role="tabpanel"
     aria-labelledby="render"
   >
-    <formio [form]="form"></formio>
+    <app-formio-render [form]="form"></app-formio-render>
   </div>
 </div>

@@ -1,29 +1,33 @@
 <div>
-  <div class="form-row">
+  <h1>Ricerca schemi di rilevazione</h1>
+  <hr />
+  <div class="row mt-5">
     <div class="form-group col-md-4">
-      <label for="formNome">Titolo</label>
-      <input
-        type="text"
-        class="form-control"
-        id="formTitolo"
-        (input)="onChangeTitolo($event)"
-      />
+      <app-input
+        [label]="'Titolo'"
+        (changeInput)="onChangeTitolo($event)"
+        [value]="filters.titolo"
+      >
+      </app-input>
     </div>
     <div class="form-group col-md-4">
-      <label for="formNome">Descrizione</label>
-      <input
-        type="text"
-        class="form-control"
-        id="formDescrizione"
-        (input)="onChangeDescrizione($event)"
-      />
+      <app-input
+        [label]="'Descrizione'"
+        (changeInput)="onChangeDescrizione($event)"
+        [value]="filters.descrizione"
+      >
+      </app-input>
     </div>
-    <div class="col-md-4" style="margin-top: 1.2rem">
+    <div class="form-group col-md-4 mt-3">
       <div class="select-wrapper">
         <label for="defaultSelect">Stato</label>
-        <select id="defaultSelect" (change)="onChangeStato($event)">
+        <select
+          id="defaultSelect"
+          (change)="onChangeStato($event)"
+          [value]="filters.stato"
+        >
           <option selected="" value="">Scegli un'opzione</option>
-          <option value="string">Bozza</option>
+          <option value="Bozza">Bozza</option>
           <option value="Pubblicato">Pubblicato</option>
         </select>
       </div>

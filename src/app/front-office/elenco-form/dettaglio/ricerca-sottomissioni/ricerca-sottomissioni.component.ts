@@ -14,6 +14,7 @@ import { ElencoFormService } from '../../elenco-form.service';
 export class RicercaSottomissioniComponent implements OnInit {
   public id = '';
   public titolo = '';
+  public isArchivio: any;
   public elencoForm: Array<ISottomissione> = [];
   public filters = {
     idForm: '',
@@ -22,6 +23,9 @@ export class RicercaSottomissioniComponent implements OnInit {
 
   public selectedPage = 1;
   public totalElements: number;
+
+  public myModal: any; //Modal
+  public selectedSubmission: any; //Modal
 
   constructor(
     private router: Router,
@@ -33,6 +37,9 @@ export class RicercaSottomissioniComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.parent.snapshot.paramMap.get('id');
+    this.route.queryParams.subscribe((params) => {
+      this.isArchivio = params['isArchivio'];
+    });
     this.filters.idForm = this.id;
     this.titolo = this.sessionStorageService.getItem('titoloSottomissione');
     this.fetchSottomissioni();
@@ -52,12 +59,22 @@ export class RicercaSottomissioniComponent implements OnInit {
   }
 
   public goToDettaglioSottomissione(item: any) {
-    this.router.navigate([`../sottomissione/${item._id}`], {
-      queryParams: {
-        isPublished: true,
-      },
-      relativeTo: this.route,
-    });
+    if (!this.isArchivio) {
+      this.router.navigate([`../sottomissione/${item._id}`], {
+        queryParams: {
+          isPublished: true,
+        },
+        relativeTo: this.route,
+      });
+    } else {
+      this.router.navigate([`../sottomissione/${item._id}`], {
+        queryParams: {
+          isPublished: true,
+          isArchivio: true,
+        },
+        relativeTo: this.route,
+      });
+    }
   }
 
   public goToModificaSottomissione(item: any) {
@@ -69,10 +86,32 @@ export class RicercaSottomissioniComponent implements OnInit {
     });
   }
 
+  public redirectPage() {
+    this.myModal.hide();
+  }
+
+  public deleteSubmission() {
+    this.elencoFormService
+      .deleteSottomissioneById(this.selectedSubmission._id)
+      .subscribe(() => {
+        this.fetchSottomissioni();
+      })
+      .add(() => {
+        this.redirectPage();
+      });
+  }
+
   public eliminaSottomissione(item: any) {
-    this.elencoFormService.deleteSottomissioneById(item._id).subscribe(() => {
-      this.fetchSottomissioni();
-    });
+    // Modale
+    this.myModal = new (<any>window).bootstrap.Modal(
+      document.getElementById('deleteModal'),
+      {
+        keyboard: false,
+        backdrop: 'static',
+      }
+    );
+    this.myModal.show();
+    this.selectedSubmission = item;
   }
 
   onPageChange(e: any) {

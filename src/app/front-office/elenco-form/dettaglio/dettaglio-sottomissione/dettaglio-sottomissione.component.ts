@@ -4,6 +4,7 @@ import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { ISottomissione } from 'src/app/front-office/types/sottomissione.type';
 import { ElencoFormService } from '../../elenco-form.service';
 import './dettaglio-sottomissione.component.scss';
+import { v1 as uuidv1 } from 'uuid';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -12,12 +13,20 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./dettaglio-sottomissione.component.scss'],
 })
 export class DettaglioSottomissioneComponent implements OnInit {
+  public errorMessage: Array<any> = [
+    {
+      label:
+        '<strong>Attenzione</strong> Alcuni campi inseriti sono da controllare.',
+    },
+  ];
+
   public id: string;
   public DataInserimentoForm: string;
   public uuidLink: string = 'UUID_PLACEHOLDER';
 
   public isModifica: boolean;
   public isPublished: boolean;
+  public isArchivio: any;
   public modifyEqualsPublish: boolean;
 
   public response: any;
@@ -59,6 +68,9 @@ export class DettaglioSottomissioneComponent implements OnInit {
           .get('isPublished')
           .toLocaleLowerCase() === 'true'
       : false;
+    this.route.queryParams.subscribe((params) => {
+      this.isArchivio = params['isArchivio'];
+    });
   }
 
   private findSottomissione() {
@@ -66,15 +78,25 @@ export class DettaglioSottomissioneComponent implements OnInit {
       .findSottomissioneById(this.id)
       .subscribe((res: any) => {
         this.response = res;
-        if (this.isPublished) {
-          this.formData = this.response.dati_pubblicati;
+        if (
+          this.isPublished ||
+          (this.isModifica &&
+            this.response.datiBozza &&
+            Object.keys(this.response.datiBozza).length === 0) ||
+          (!this.isPublished &&
+            !this.isModifica &&
+            this.response.datiPubblicati &&
+            Object.keys(this.response.datiPubblicati).length !== 0 &&
+            Object.keys(this.response.datiBozza).length === 0)
+        ) {
+          this.formData = this.response.datiPubblicati;
         } else {
-          this.formData = this.response.dati_bozza;
+          this.formData = this.response.datiBozza;
         }
         this.formSchema = this.response.form[0];
         this.modifyEqualsPublish =
-          btoa(JSON.stringify(this.response.dati_bozza)) ===
-          btoa(JSON.stringify(this.response.dati_pubblicati));
+          btoa(JSON.stringify(this.response.datiBozza)) ===
+          btoa(JSON.stringify(this.response.datiPubblicati));
       })
       .add(() => {
         //composizione messaggio o modale in base allo stato della pagina
@@ -92,10 +114,16 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   private initStatusPage() {
-    if (
+    if (this.isArchivio) {
+      this.typeAlert = 'WARNING';
+      this.statusMessage.push({
+        label: `Questa sottomissione è scaduta.`,
+      });
+    } else if (
       this.isPublished &&
-      this.response.dati_pubblicati &&
-      !this.modifyEqualsPublish
+      this.response.datiPubblicati &&
+      !this.modifyEqualsPublish &&
+      Object.keys(this.response.datiBozza).length !== 0
     ) {
       //pubblicato con bozza
       this.typeAlert = 'WARNING';
@@ -107,7 +135,11 @@ export class DettaglioSottomissioneComponent implements OnInit {
         routerlink: true,
         link: './',
       });
-    } else if (this.response.dati_pubblicati && !this.modifyEqualsPublish) {
+    } else if (
+      this.response.datiPubblicati &&
+      !this.modifyEqualsPublish &&
+      Object.keys(this.response.datiBozza).length !== 0
+    ) {
       //Bozza ma è pubblicata
       this.typeAlert = 'WARNING';
       this.statusMessage.push({
@@ -126,7 +158,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
         this.response.dataInserimento,
         'dd/MM/yyyy'
       );
-    } else if (!this.isModifica && !this.response.dati_pubblicati) {
+    } else if (!this.isModifica && !this.response.datiPubblicati) {
       this.typeAlert = 'WARNING';
       this.statusMessage.push({
         label: `Il contenuto visualizzato risulta ancora in bozza.`,
@@ -147,12 +179,12 @@ export class DettaglioSottomissioneComponent implements OnInit {
 
   public onClickSalvaBozza() {
     const updateBody: ISottomissione = {
-      dati_bozza: this.actualFormData.data,
+      datiBozza: this.actualFormData.data,
     };
     this.elencoFormService
       .updateSottomissione(this.id, updateBody)
       .subscribe(() => {
-        if (this.response.dati_pubblicati) {
+        if (this.response.datiPubblicati) {
           this.router.navigate([`./`], {
             queryParams: {
               isPublished: true,
@@ -175,15 +207,15 @@ export class DettaglioSottomissioneComponent implements OnInit {
 
   public onClickPubblica() {
     const updateBody: ISottomissione = {
-      dati_pubblicati: this.formData,
+      datiPubblicati: this.formData,
       stato: 'Pubblicato',
       versione: (this.response.versione || 0) + 1,
+      idPubblicazione: uuidv1(),
     };
     this.elencoFormService
       .updateSottomissione(this.id, updateBody)
       .subscribe((response) => {
-        if (!this.response.dati_pubblicati) {
-          // TODO da generare lato BE
+        if (!this.response.datiPubblicati) {
           this.uuidLink = `https://form.agid.gov.it/view/${updateBody.idPubblicazione}`;
           // Modale
           this.myModal = new (<any>window).bootstrap.Modal(
@@ -194,12 +226,14 @@ export class DettaglioSottomissioneComponent implements OnInit {
             }
           );
           this.myModal.show();
+        } else {
+          this.redirectPage();
         }
       });
   }
 
   public redirectPage() {
-    this.myModal.hide();
+    if (this.myModal) this.myModal.hide();
     this.router.navigate([`./`], {
       queryParams: {
         isPublished: true,

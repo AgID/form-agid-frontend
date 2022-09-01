@@ -1,9 +1,9 @@
-<formio
+<app-formio-render
   [form]="form"
   [renderOptions]="renderOptions"
-  (change)="onChangeFormio($event)"
+  (changeFormio)="onChangeFormio($event)"
   [submission]="data"
-></formio>
+></app-formio-render>
 <div class="d-flex justify-content-end mb-3">
   <button
     *ngIf="form._id"

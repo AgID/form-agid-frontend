@@ -12,9 +12,14 @@ export class RisultatiFormComponent implements OnInit {
   @Input()
   filters: any;
 
-  public elencoForm: Array<any> = [];
+  public elencoForm: Array<any>;
   public totalElements: number;
   public selectedPage = 1;
+
+  public myModal: any; //Modal
+  public selectedRow: any; //Modal
+  public selectedForm: any; //Modal
+  public formatoEsportazione: string;
 
   constructor(
     private router: Router,
@@ -27,13 +32,9 @@ export class RisultatiFormComponent implements OnInit {
     this.risultatiFormService
       .findFormForParams(this.filters)
       .subscribe((response: any) => {
-        this.elencoForm = response.extraParams;
+        this.elencoForm = response.extraParams || [];
         this.totalElements = response.totalElements[0].totalElements;
       });
-  }
-
-  public goToInserimentoForm() {
-    this.router.navigate(['/admin/inserimento-form']);
   }
 
   public onChangePage(e: any) {
@@ -53,9 +54,57 @@ export class RisultatiFormComponent implements OnInit {
     });
   }
 
+  public esportaSottomissione(item: any) {
+    // Modale
+    this.myModal = new (<any>window).bootstrap.Modal(
+      document.getElementById('exportModal'),
+      {
+        keyboard: false,
+        backdrop: 'static',
+      }
+    );
+    this.myModal.show();
+    this.selectedRow = item;
+  }
+
+  public Export() {
+    console.log(`Esportato in ${this.formatoEsportazione}`);
+    console.log(this.selectedRow);
+  }
+
+  public redirectPage() {
+    this.myModal.hide();
+  }
+
+  public onChangeFormato($e: any) {
+    this.formatoEsportazione = $e.target.value;
+  }
+
+  public duplicaSottomissione($e: any) {
+    console.log('duplicato');
+  }
+
   public onClickEliminaForm(item: any) {
-    this.elencoFormService.deleteForm(item._id).subscribe(() => {
-      this.ngOnInit();
-    });
+    // Modale
+    this.myModal = new (<any>window).bootstrap.Modal(
+      document.getElementById('deleteModal'),
+      {
+        keyboard: false,
+        backdrop: 'static',
+      }
+    );
+    this.myModal.show();
+    this.selectedForm = item;
+  }
+
+  public deleteForm() {
+    this.elencoFormService
+      .deleteForm(this.selectedForm._id)
+      .subscribe(() => {
+        this.ngOnInit();
+      })
+      .add(() => {
+        this.redirectPage();
+      });
   }
 }

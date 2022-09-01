@@ -14,6 +14,10 @@ export class ElencoFormService {
     return this.http.get(`${ENV.BACKEND_HOST}/v1/form`);
   }
 
+  public getFormsExpired(): Observable<any> {
+    return this.http.get(`${ENV.BACKEND_HOST}/v1/form/expired`);
+  }
+
   public getFormsById(id: any): Observable<any> {
     return this.http.get(`${ENV.BACKEND_HOST}/v1/form/${id}`);
   }
@@ -38,7 +42,7 @@ export class ElencoFormService {
     id: string,
     body: Pick<
       ISottomissione,
-      'stato' | 'versione' | 'dati_pubblicati' | 'dati_bozza'
+      'stato' | 'versione' | 'datiPubblicati' | 'datiBozza'
     >
   ) {
     // TODO: Da testare

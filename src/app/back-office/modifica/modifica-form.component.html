@@ -1,16 +1,45 @@
-<app-sezione-metadati #sezioneMetadatiComponent></app-sezione-metadati>
+<app-alert
+  *ngIf="isModified"
+  [messaggio]="message"
+  [type]="'SUCCESS'"
+></app-alert>
+<h2 *ngIf="form">Dettaglio {{ form.titolo }}</h2>
+<app-sezione-metadati
+  [metadati]="metadati"
+  (changeMetadati)="changeMetadati($event)"
+  #sezioneMetadatiComponent
+></app-sezione-metadati>
+<app-sezione-permessi></app-sezione-permessi>
 <app-sezione-builder
   [form]="form"
+  (changeForm)="changeForm($event)"
   #sezioneBuilderComponent
 ></app-sezione-builder>
 <app-contenuti-dinamici></app-contenuti-dinamici>
-<div class="row mb-3">
-  <button
-    class="btn btn-primary mt-3"
-    type="submit"
-    data-focus-mouse="false"
-    (click)="onClickSalvaSchemaRilevazione()"
+<div class="mb-3 d-flex justify-content-between">
+  <a class="text-16p text-primary mt-3" (click)="goToTornaAllaRicerca()"
+    ><span class="fa fa-angle-double-left me-1"></span>
+    <label class="text-16p underline cursor cursor-pointer"
+      >Torna alla ricerca</label
+    ></a
   >
-    Salva
-  </button>
+  <div>
+    <button
+      class="btn btn-secondary mt-3"
+      type="submit"
+      data-focus-mouse="false"
+      (click)="onClickSalvaBozzaSchemaRilevazione()"
+    >
+      Salva Bozza
+    </button>
+    <button
+      *ngIf="form && form.stato === 'Bozza'"
+      class="btn btn-primary mt-3 ms-3"
+      type="submit"
+      data-focus-mouse="false"
+      (click)="onClickPubblicaSchemaRilevazione()"
+    >
+      Pubblica
+    </button>
+  </div>
 </div>
