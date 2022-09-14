@@ -1,7 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChildren,
+} from '@angular/core';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
-import { ModificaFormComponent } from '../../modifica/modifica-form.component';
+import { SharedService } from '../../inserimento/shared.service';
 import { IMetadatiType } from '../../types/metadati.type';
+import { SezioneBuilderComponent } from '../sezione-builder/sezione-builder.component';
 
 @Component({
   selector: 'app-sezione-metadati',
@@ -9,28 +16,45 @@ import { IMetadatiType } from '../../types/metadati.type';
   styleUrls: ['./sezione-metadati.component.scss'],
 })
 export class SezioneMetadatiComponent {
-  @Output()
-  public changeMetadati: EventEmitter<unknown> = new EventEmitter();
-
-  public errorMessage: Array<any> = [{ label: 'Campo obbligatorio' }];
-  public typeAlert: AlertType = 'DANGER';
+  constructor(private _sharedService: SharedService) {}
 
   @Input()
   public metadati: IMetadatiType = {
     titolo: '',
+    titoloPattern: '',
     descrizione: '',
     dataFineValidita: '',
     dataInizioValidita: '',
+    stato: '',
+    versione: 0,
+    abilitaStatistiche: false,
     sezioniInformative: {
       faq: '',
       home: '',
     },
+    verificaPubblicazione: {
+      abilitata: false,
+      campoUrlTarget: '',
+    },
   };
+
+  @Output()
+  public changeMetadati: EventEmitter<unknown> = new EventEmitter();
+
+  @ViewChildren('sezioneBuilderComponent')
+  sezioneBuilderComponent: SezioneBuilderComponent;
+
+  public errorMessage: Array<any> = [{ label: 'Campo obbligatorio' }];
+  public typeAlert: AlertType = 'DANGER';
+
+  public optionsCampoTarget: any = this._sharedService.optionsCampoTarget;
+  public optionsTitolo: any = this._sharedService.optionsTitolo;
 
   public isValid: any = {
     home: true,
     faq: true,
     titolo: true,
+    titoloPattern: true,
     descrizione: true,
     dataInizioValidita: true,
     dataFineValidita: true,
@@ -39,6 +63,12 @@ export class SezioneMetadatiComponent {
   public onKeyUpTitolo(e: any) {
     this.metadati.titolo = e.target.value;
     this.isValid.titolo = true;
+    this.changeMetadati.emit(this.metadati);
+  }
+
+  public onKeyUpTitoloPattern(e: any) {
+    this.metadati.titoloPattern = e.target.value;
+    this.isValid.titoloPattern = true;
     this.changeMetadati.emit(this.metadati);
   }
 
@@ -72,16 +102,57 @@ export class SezioneMetadatiComponent {
     this.changeMetadati.emit(this.metadati);
   }
 
+  public onChangeAbilitaStatistiche(e: any) {
+    this.metadati.abilitaStatistiche = e.target.checked;
+    this.changeMetadati.emit(this.metadati);
+  }
+
+  public onChangeVerificaPubblicazione(e: any) {
+    this.metadati.verificaPubblicazione.abilitata = e.target.checked;
+    if (!this.metadati.verificaPubblicazione.abilitata)
+      this.metadati.verificaPubblicazione.campoUrlTarget = '';
+  }
+
+  public onChangeCampoTarget(e: any) {
+    this.metadati.verificaPubblicazione.campoUrlTarget = e.target.value;
+  }
+
   public validate(): boolean {
+    this.isValid.titoloPattern = this.verificaSegnapostiTitolo();
     this.isValid.titolo = !!this.metadati.titolo;
     this.isValid.descrizione = !!this.metadati.descrizione;
     this.isValid.home = !!this.metadati.sezioniInformative.home;
     this.isValid.faq = !!this.metadati.sezioniInformative.faq;
+    this.isValid.verificaPubblicazione = this.metadati.verificaPubblicazione
+      ?.abilitata
+      ? this.metadati.verificaPubblicazione?.campoUrlTarget
+      : true;
     return (
       this.isValid.titolo &&
       this.isValid.descrizione &&
       this.isValid.home &&
-      this.isValid.faq
+      this.isValid.faq &&
+      this.isValid.verificaPubblicazione &&
+      this.isValid.titoloPattern
     );
+  }
+
+  public verificaSegnapostiTitolo() {
+    if (!this.metadati.titoloPattern) return false;
+
+    const regex = /\{\{(.*?)\}\}/g;
+    const invalidKeys = [];
+    let match = regex.exec(this.metadati.titoloPattern);
+    while (match != null) {
+      const [_, key] = match;
+      if (!this._sharedService.optionsTitolo.some((el) => el.option === key)) {
+        invalidKeys.push(key);
+      }
+      match = regex.exec(this.metadati.titoloPattern);
+    }
+    if (invalidKeys.length) {
+      this.isValid.titoloPattern = false;
+    }
+    return !invalidKeys.length;
   }
 }

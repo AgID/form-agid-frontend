@@ -5,10 +5,10 @@
 >
   <thead>
     <tr>
-      <th scope="col" style="width: 35%">Titolo</th>
-      <th scope="col" style="width: 40%">Descrizione</th>
-      <th scope="col" style="width: 10%">Stato</th>
-      <th scope="col" style="width: 15%">Opzioni</th>
+      <th scope="col" style="width: 45%">Titolo</th>
+      <th scope="col" style="width: 20%">Stato</th>
+      <th scope="col" style="width: 20%">Data ultima modifica</th>
+      <th scope="col" style="width: 15%">Azioni</th>
     </tr>
   </thead>
   <tbody>
@@ -17,14 +17,14 @@
         {{ item.titolo }}
         <!-- Dichiarazione accessibilità -->
       </td>
+      <td>{{ item.stato }}</td>
       <td>
-        {{ item.descrizione }}
+        {{ item.dataUltimaModifica }}
         <!-- Ministero dell'Economia e delle Finanze si impegna a rendere il proprio
         sito web accessibile, conformemente al D.lgs 10 agosto 2018, n. 106 che
         ha recepito la direttiva UE 2016/2102 del Parlamento europeo e del
         Consiglio. -->
       </td>
-      <td>{{ item.stato }}</td>
       <td>
         <svg class="icon cursor-pointer" (click)="goToModificaForm(item)">
           <title id="modifica">Modifica</title>
@@ -96,8 +96,9 @@
           class="mb-3"
         >
           <option selected="" value="">Scegli un'opzione</option>
-          <option value="CSV">CSV</option>
-          <option value="XLSX">XLSX</option>
+          <option value="csv">CSV</option>
+          <option value="xls">XLS</option>
+          <option value="xlsx">XLSX</option>
         </select>
         <div class="d-flex justify-content-end mb-3">
           <button type="button" class="btn btn-primary" (click)="Export()">

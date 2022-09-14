@@ -1,6 +1,51 @@
-<!-- <div class="row mb-3">
+<div class="row mb-3">
   <div class="col-12">
     <h3>Sezione permessi</h3>
   </div>
+  <div>
+    <div class="form-check form-check-inline">
+      <input
+        name="gruppo1"
+        type="radio"
+        id="pubblico"
+        value="pubblico"
+        (change)="onChangeRadioPubblico($event)"
+        [attr.checked]="metadati?.acl?.tipo === 'pubblico' ? true : undefined"
+      />
+      <label for="pubblico">Pubblico</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+        name="gruppo1"
+        type="radio"
+        id="privato"
+        value="privato"
+        (change)="onChangeRadioPrivato($event)"
+        [attr.checked]="metadati?.acl?.tipo === 'privato' ? true : undefined"
+      />
+      <label for="privato">Privato</label>
+    </div>
+    <!-- <div class="form-check form-check-inline">
+      <input
+        name="gruppo1"
+        type="radio"
+        id="token"
+        value="token"
+        (change)="onChangeRadioToken($event)"
+        [attr.checked]="metadati?.acl?.tipo === 'token' ? true : undefined"
+      />
+      <label for="token">Token</label>
+    </div>
+    <div class="form-group">
+      <label for="textToken">Token</label>
+      <input
+        type="text"
+        class="form-control"
+        id="textToken"
+        [value]="metadati?.acl?.valore"
+        (change)="onChangeToken($event)"
+        [attr.disabled]="acl.tipo !== 'token' ? true : undefined"
+      />
+    </div> -->
+  </div>
 </div>
-<div style="border: groove; height: 200px" class="mb-3"></div> -->

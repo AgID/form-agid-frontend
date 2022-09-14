@@ -5,7 +5,7 @@
 </div>
 
 <div class="row">
-  <div class="col-12 col-md-4">
+  <div class="col-12">
     <app-input
       [label]="'Titolo dello schema'"
       [value]="metadati?.titolo"
@@ -15,6 +15,26 @@
       (changeInput)="onKeyUpTitolo($event)"
     >
     </app-input>
+  </div>
+  <div class="col-12 col-md-4">
+    <app-input
+      [label]="'Pattern del titolo dello schema'"
+      [value]="metadati?.titoloPattern ? metadati.titoloPattern : ''"
+      [isValid]="isValid.titoloPattern"
+      [errorMessage]="errorMessage"
+      [errorType]="typeAlert"
+      (changeInput)="onKeyUpTitoloPattern($event)"
+    >
+    </app-input>
+  </div>
+  <div class="col-12 col-md-3">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="verificaSegnapostiTitolo()"
+    >
+      Verifica
+    </button>
   </div>
   <div class="w-100"></div>
   <div class="col-12">
@@ -54,7 +74,17 @@
     >
     </app-textarea>
   </div>
-  <div class="w-100"></div>
+  <div
+    class="col-12 d-flex mb-3"
+    *ngIf="metadati?.stato && metadati?.versione >= 0"
+  >
+    <div class="col-3">
+      <label><b>Stato</b> : {{ metadati.stato }}</label>
+    </div>
+    <div class="col-3">
+      <label><b>versione</b> : {{ metadati.versione }}</label>
+    </div>
+  </div>
   <div class="col-12 col-md-4">
     <app-input
       [label]="'Data inizio'"
@@ -78,5 +108,52 @@
       (changeInput)="onKeyUpDataFine($event)"
     >
     </app-input>
+  </div>
+  <div class="w-100"></div>
+  <div class="col-12 d-flex mb-3">
+    <div class="col-3">
+      <div class="form-check">
+        <input
+          id="abilitaStatistiche"
+          type="checkbox"
+          [attr.checked]="metadati?.abilitaStatistiche ? true : undefined"
+          (change)="onChangeAbilitaStatistiche($event)"
+        />
+        <label for="abilitaStatistiche">Abilita statistiche</label>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-check">
+        <input
+          id="verificaPubblicazione"
+          type="checkbox"
+          [attr.checked]="
+            metadati?.verificaPubblicazione.abilitata ? true : undefined
+          "
+          (change)="onChangeVerificaPubblicazione($event)"
+        />
+        <label for="verificaPubblicazione">Verifica pubblicazione</label>
+      </div>
+    </div>
+    <div class="col-3" *ngIf="metadati?.verificaPubblicazione.abilitata">
+      <div class="select-wrapper">
+        <label for="selectCampoTarget">Campo target</label>
+        <select id="selectCampoTarget" (change)="onChangeCampoTarget($event)">
+          <option selected="" value="">Scegli un'opzione</option>
+          <ng-container *ngFor="let item of optionsCampoTarget">
+            <option
+              value="{{ item.option }}"
+              [attr.selected]="
+                item.option === metadati.verificaPubblicazione.campoUrlTarget
+                  ? true
+                  : undefined
+              "
+            >
+              {{ item.option }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
   </div>
 </div>

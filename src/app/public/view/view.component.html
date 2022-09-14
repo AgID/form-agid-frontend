@@ -1,0 +1,6 @@
+<app-formio-render
+  [form]="formSchema"
+  [submission]="{ data: formData }"
+  [renderOptions]="renderOptions"
+  (changeFormio)="onChangeFormio($event)"
+></app-formio-render>

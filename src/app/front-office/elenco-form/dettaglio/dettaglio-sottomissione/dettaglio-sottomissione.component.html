@@ -36,7 +36,12 @@
     >
       Modifica
     </button>
-    <button type="button" class="btn btn-primary" (click)="onClickPubblica()">
+    <button
+      *ngIf="!isPublished"
+      type="button"
+      class="btn btn-primary"
+      (click)="onClickPubblica()"
+    >
       Pubblica
     </button>
   </ng-template>

@@ -28,11 +28,12 @@ export class DettaglioSottomissioneComponent implements OnInit {
   public isPublished: boolean;
   public isArchivio: any;
   public modifyEqualsPublish: boolean;
+  public isPubblicazioneAbilitata: boolean;
 
   public response: any;
 
   // Formio
-  public formSchema: unknown; // From BE
+  public formSchema: any; // From BE
   public formData: unknown; // From BE
   public myModal: any; //Modal
   public actualFormData: any;
@@ -94,6 +95,8 @@ export class DettaglioSottomissioneComponent implements OnInit {
           this.formData = this.response.datiBozza;
         }
         this.formSchema = this.response.form[0];
+        this.isPubblicazioneAbilitata =
+          this.formSchema.verificaPubblicazione.abilitata;
         this.modifyEqualsPublish =
           btoa(JSON.stringify(this.response.datiBozza)) ===
           btoa(JSON.stringify(this.response.datiPubblicati));
@@ -174,7 +177,9 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public onChangeFormio(data: any) {
-    this.actualFormData = data;
+    if (data.data) {
+      this.actualFormData = data;
+    }
   }
 
   public onClickSalvaBozza() {
@@ -206,17 +211,19 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public onClickPubblica() {
+    const idPubblicazione = this.isPubblicazioneAbilitata ? uuidv1() : '';
     const updateBody: ISottomissione = {
       datiPubblicati: this.formData,
       stato: 'Pubblicato',
       versione: (this.response.versione || 0) + 1,
-      idPubblicazione: uuidv1(),
+      idPubblicazione: idPubblicazione,
     };
     this.elencoFormService
       .updateSottomissione(this.id, updateBody)
       .subscribe((response) => {
-        if (!this.response.datiPubblicati) {
-          this.uuidLink = `https://form.agid.gov.it/view/${updateBody.idPubblicazione}`;
+        if (!this.response.datiPubblicati && this.isPubblicazioneAbilitata) {
+          const location = window.location.origin + '/view/';
+          this.uuidLink = `${location}${updateBody.idPubblicazione}`;
           // Modale
           this.myModal = new (<any>window).bootstrap.Modal(
             document.getElementById('publishModal'),

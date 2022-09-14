@@ -12,7 +12,8 @@ export class RicercaFormComponent {
 
   public filters = {
     titolo: '',
-    descrizione: '',
+    dataInizioValidita: '',
+    dataFineValidita: '',
     stato: '',
     pagination: new Pagination(),
   };
@@ -24,8 +25,15 @@ export class RicercaFormComponent {
     };
   }
 
-  public onChangeDescrizione($e: any) {
-    this.filters.descrizione = $e.target.value;
+  public onChangeDataInizio(e: any) {
+    this.filters.dataInizioValidita = e.target.value;
+    this.filters = {
+      ...this.filters,
+    };
+  }
+
+  public onChangeDataFine(e: any) {
+    this.filters.dataFineValidita = e.target.value;
     this.filters = {
       ...this.filters,
     };

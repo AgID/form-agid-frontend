@@ -62,9 +62,15 @@ export class ElencoFormFoComponent implements OnInit {
     }
   }
 
-  public goToNuovaSottomissione(item: any) {
-    this.sessionStorageService.setItem('titoloSottomissione', item.titolo);
-    this.router.navigate([`./${item._id}/nuova-sottomissione`], {
+  // public goToNuovaSottomissione(item: any) {
+  //   this.sessionStorageService.setItem('titoloSottomissione', item.titolo);
+  //   this.router.navigate([`./${item._id}/nuova-sottomissione`], {
+  //     relativeTo: this.route,
+  //   });
+  // }
+
+  public goToElencoForm() {
+    this.router.navigate([`./`], {
       relativeTo: this.route,
     });
   }

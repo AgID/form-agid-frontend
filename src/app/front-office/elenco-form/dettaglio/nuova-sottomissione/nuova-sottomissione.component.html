@@ -10,7 +10,7 @@
     type="button"
     class="btn btn-primary"
     (click)="salvaBozza()"
-    [disabled]="!dataForm.isValid"
+    [disabled]="!dataForm.isValid || !dataForm.isModified"
   >
     Salva bozza
   </button>

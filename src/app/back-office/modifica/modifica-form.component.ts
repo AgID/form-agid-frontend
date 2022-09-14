@@ -25,6 +25,7 @@ export class ModificaFormComponent implements OnInit {
   public metadati: IMetadatiType;
 
   public isModified: boolean = false;
+  public hasSottomissioni: boolean = false;
   public message: Array<any> = [{ label: 'Modifica avvenuta con successo' }];
 
   constructor(
@@ -36,25 +37,48 @@ export class ModificaFormComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.elencoFormService.getFormsById(this.id).subscribe((response) => {
-      this.form = response;
-      this.buildFormMetadati(response);
-    });
+    this.elencoFormService
+      .getFormsById(this.id)
+      .subscribe((response) => {
+        this.form = response;
+        this.buildFormMetadati(response);
+      })
+      .add(() => {
+        //elenco sottomissioni
+        this.elencoFormService.hasSubmissions(this.id).subscribe(
+          (res: any) => {
+            this.hasSottomissioni = res;
+          },
+          (err) => console.log(err)
+        );
+      });
   }
 
   private buildFormMetadati(response: any) {
     const {
       titolo,
+      titoloPattern,
       sezioniInformative,
       descrizione,
+      abilitaStatistiche,
       dataInizioValidita,
+      acl,
       dataFineValidita,
+      verificaPubblicazione,
+      stato,
+      versione,
     } = response;
 
     this.metadati = {
       titolo,
+      titoloPattern,
       descrizione,
       sezioniInformative,
+      abilitaStatistiche,
+      verificaPubblicazione,
+      stato,
+      acl,
+      versione,
       dataInizioValidita: this.datePipe.transform(
         dataInizioValidita,
         'yyyy-MM-dd'
@@ -67,15 +91,23 @@ export class ModificaFormComponent implements OnInit {
     const {
       descrizione,
       titolo,
+      titoloPattern,
+      abilitaStatistiche,
       dataFineValidita,
+      acl,
       dataInizioValidita,
       sezioniInformative,
+      verificaPubblicazione,
     } = this.metadati;
     this.form = {
       ...this.form,
       titolo,
+      titoloPattern,
       sezioniInformative,
       descrizione,
+      acl,
+      abilitaStatistiche,
+      verificaPubblicazione,
       dataInizioValidita: new Date(dataInizioValidita),
       dataFineValidita: new Date(dataFineValidita),
       components: this.sezioneBuilderComponent.form.components,
@@ -93,8 +125,10 @@ export class ModificaFormComponent implements OnInit {
     this.elencoFormService
       .updateForm(this.form._id, this.form)
       .subscribe(() => {
-        this.ngOnInit();
         this.isModified = true;
+      })
+      .add(() => {
+        this.ngOnInit();
         this.scrollToTop();
       });
   }
@@ -109,14 +143,21 @@ export class ModificaFormComponent implements OnInit {
     this.elencoFormService
       .updateForm(this.form._id, this.form)
       .subscribe(() => {
-        this.ngOnInit();
         this.isModified = true;
+      })
+      .add(() => {
+        this.ngOnInit();
         this.scrollToTop();
       });
   }
 
   public changeMetadati(event: any) {
+    this.metadati = event;
     this.isModified = false;
+  }
+
+  public changeAcl(event: any) {
+    this.metadati.acl = event;
   }
 
   public changeForm(event: any) {

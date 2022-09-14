@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { DettaglioFormFoComponent } from './elenco-form/dettaglio/dettaglio-form.component';
 import { FaqComponent } from './elenco-form/dettaglio/faq/faq.component';
-import { FormDichiarazioneAccessibilitaComponent } from './elenco-form/dettaglio/dichiarazione-accessibilita/dichiarazione-accessibilita.component';
 import { NuovaSottomissioneComponent } from './elenco-form/dettaglio/nuova-sottomissione/nuova-sottomissione.component';
 import { RicercaSottomissioniComponent } from './elenco-form/dettaglio/ricerca-sottomissioni/ricerca-sottomissioni.component';
 import { ElencoFormFoComponent } from './elenco-form/elenco-form.component';
 import { DettaglioSottomissioneComponent } from './elenco-form/dettaglio/dettaglio-sottomissione/dettaglio-sottomissione.component';
 import { DynamicTitoloResolverService } from '../common/dynamic-titolo-resolver.service';
+import { SezioneInformativaHomeComponent } from './elenco-form/dettaglio/dichiarazione-accessibilita/sezione-informativa-home.component';
 
 export const ROUTES: Routes = [
   {
@@ -22,13 +22,13 @@ export const ROUTES: Routes = [
     children: [
       {
         path: '',
-        component: FormDichiarazioneAccessibilitaComponent,
+        component: SezioneInformativaHomeComponent,
         data: { breadcrumb: '' },
       },
       {
         path: 'ricerca',
         component: RicercaSottomissioniComponent,
-        data: { breadcrumb: 'Ricerca' },
+        data: { breadcrumb: 'Gestione compilazioni' },
       },
       {
         path: 'faq',

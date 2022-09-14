@@ -4,6 +4,39 @@
   </div>
 </div>
 
+<!-- Export/Import Form -->
+<div class="row">
+  <div class="col-6">
+    <button
+      type="button"
+      id="jsonExport"
+      class="btn btn-primary"
+      (click)="ExportForm()"
+    >
+      Export
+    </button>
+  </div>
+  <div
+    class="col-6 d-flex justify-content-end"
+    [ngClass]="{ preventClick: hasSottomissioni }"
+  >
+    <input
+      type="file"
+      name="upload"
+      id="upload"
+      class="upload"
+      (change)="onChangeUpload($event)"
+      [attr.disabled]="hasSottomissioni ? true : undefined"
+    />
+    <label for="upload">
+      <svg class="icon icon-sm" aria-hidden="true">
+        <use href="../../../../assets/svg/sprite.svg#it-upload"></use>
+      </svg>
+      <span style="font-size: 16px">Import</span>
+    </label>
+  </div>
+</div>
+
 <ul class="nav nav-tabs auto" id="builder-render" role="tablist">
   <li class="nav-item" role="presentation">
     <button
@@ -38,6 +71,7 @@
 <div class="tab-content" id="builder-renderContent">
   <div
     class="tab-pane py-4 fade show active"
+    [ngClass]="{ preventClick: hasSottomissioni }"
     id="builder-tab"
     role="tabpanel"
     aria-labelledby="builder"

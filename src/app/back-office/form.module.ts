@@ -18,6 +18,7 @@ import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-
 import { RicercaSottomissioniComponent } from './components/ricerca-sottomissioni/ricerca-sottomissioni.component';
 import { SezionePermessiComponent } from './components/sezione-permessi/sezione-permessi.component';
 import { GestioneUtenzeComponent } from './gestione-utenze/gestione-utenze.component';
+import { SharedService } from './inserimento/shared.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,6 @@ import { GestioneUtenzeComponent } from './gestione-utenze/gestione-utenze.compo
     FormioModule,
     GestioneDichiarazioniModule,
   ],
-  providers: [HttpClient, DatePipe],
+  providers: [HttpClient, DatePipe, SharedService],
 })
 export class FormModule {}

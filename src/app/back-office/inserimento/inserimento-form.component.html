@@ -5,13 +5,15 @@
 ></app-alert>
 <app-sezione-metadati
   #sezioneMetadatiComponent
+  [metadati]="metadati"
   (changeMetadati)="changeMetadati($event)"
 ></app-sezione-metadati>
+<app-sezione-permessi (changeAcl)="changeAcl($event)"></app-sezione-permessi>
 <app-sezione-builder
   #sezioneBuilderComponent
+  [form]="this.form"
   (changeForm)="changeForm($event)"
 ></app-sezione-builder>
-{{ metadati | json }}
 <div class="mb-3 d-flex justify-content-between">
   <a class="text-16p text-primary mt-3" (click)="goToTornaAllaRicerca()"
     ><span class="fa fa-angle-double-left me-1"></span>

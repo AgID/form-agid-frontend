@@ -34,6 +34,10 @@ export class ElencoFormService {
     return this.http.delete(`${ENV.BACKEND_HOST}/v1/form/${id}`);
   }
 
+  public getStatistichePubblicati(): Observable<any> {
+    return this.http.get(`${ENV.BACKEND_HOST}/v1/form/statistiche/pubblicati`);
+  }
+
   public createSubmission(payload: any): Observable<any> {
     return this.http.post(`${ENV.BACKEND_HOST}/v1/submission`, payload);
   }
@@ -55,5 +59,14 @@ export class ElencoFormService {
 
   public deleteSottomissioneById(id: string) {
     return this.http.delete(`${ENV.BACKEND_HOST}/v1/submission/${id}`);
+  }
+
+  public extractForm(fileType: any, idForm: any): Observable<any> {
+    let url = `${ENV.BACKEND_HOST}/v1/submission/extract/${fileType}/${idForm}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
+  public hasSubmissions(idForm: any): Observable<any> {
+    return this.http.get(`${ENV.BACKEND_HOST}/v1/form/submission/${idForm}`);
   }
 }

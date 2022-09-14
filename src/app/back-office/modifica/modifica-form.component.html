@@ -9,8 +9,12 @@
   (changeMetadati)="changeMetadati($event)"
   #sezioneMetadatiComponent
 ></app-sezione-metadati>
-<app-sezione-permessi></app-sezione-permessi>
+<app-sezione-permessi
+  [metadati]="metadati"
+  (changeAcl)="changeAcl($event)"
+></app-sezione-permessi>
 <app-sezione-builder
+  [hasSottomissioni]="hasSottomissioni"
   [form]="form"
   (changeForm)="changeForm($event)"
   #sezioneBuilderComponent
@@ -25,6 +29,7 @@
   >
   <div>
     <button
+      *ngIf="form && form.stato !== 'Pubblicato'"
       class="btn btn-secondary mt-3"
       type="submit"
       data-focus-mouse="false"
@@ -40,6 +45,15 @@
       (click)="onClickPubblicaSchemaRilevazione()"
     >
       Pubblica
+    </button>
+    <button
+      *ngIf="form && form.stato === 'Pubblicato'"
+      class="btn btn-primary mt-3 ms-3"
+      type="submit"
+      data-focus-mouse="false"
+      (click)="onClickPubblicaSchemaRilevazione()"
+    >
+      Salva
     </button>
   </div>
 </div>

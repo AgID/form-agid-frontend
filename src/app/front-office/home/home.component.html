@@ -10,30 +10,24 @@
     >
   </p>
 </div>
-<div class="card-wrapper card-space d-flex justify-content-center">
-  <div class="card card-bg w-75">
+<div *ngIf="statistiche && statistiche.length" class="card-wrapper card-space d-flex justify-content-center pb-5">
+  <div class="card card-bg no-after w-50">
     <div class="card-body">
       <h2 class="card-title big-heading">Statistiche</h2>
       <table
         style="width: 100%; table-layout: fixed"
         class="table table-responsive-xl table-hover"
       >
+        <thead>
+        <tr>
+          <th scope="col">Form</th>
+          <th style="text-align: right" scope="col">Numero elementi</th>
+        </tr>
+        </thead>
         <tbody>
-          <tr>
-            <td>Pubbliche Amministrazioni coinvolte</td>
-            <td style="text-align: center">7436</td>
-          </tr>
-          <tr>
-            <td>Rilevazioni attivate</td>
-            <td style="text-align: center">78</td>
-          </tr>
-          <tr>
-            <td>Dichiarazioni di accessibilità compilate</td>
-            <td style="text-align: center">3679</td>
-          </tr>
-          <tr>
-            <td>N° siti dichiarati accessibili</td>
-            <td style="text-align: center">560</td>
+          <tr *ngFor="let stat of statistiche">
+            <td>{{stat.titolo}}</td>
+            <td style="text-align: right">{{stat.sottomissioniPubblicateCount}}</td>
           </tr>
         </tbody>
       </table>

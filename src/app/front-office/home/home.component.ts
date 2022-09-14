@@ -1,8 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ElencoFormService} from "../elenco-form/elenco-form.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {}
+export class HomeComponent implements OnInit{
+
+  constructor(private elencoFormService: ElencoFormService) { }
+
+  statistiche: any[] = [];
+
+  ngOnInit(): void {
+    this.elencoFormService.getStatistichePubblicati().subscribe(result => {
+      this.statistiche = result;
+    })
+  }
+
+
+
+}

@@ -26,6 +26,8 @@ export class DettaglioFormComponent implements OnInit {
   public selectedRow: any; //Modal
   public formatoEsportazione: string;
 
+  // public contentTypeMap =
+
   public filters = {
     idForm: '',
     pagination: new Pagination(),
@@ -86,24 +88,6 @@ export class DettaglioFormComponent implements OnInit {
     this.elencoFormService.deleteSottomissioneById(item._id).subscribe(() => {
       this.fetchSottomissioni();
     });
-  }
-
-  public esportaSottomissione(item: any) {
-    // Modale
-    this.myModal = new (<any>window).bootstrap.Modal(
-      document.getElementById('exportModal'),
-      {
-        keyboard: false,
-        backdrop: 'static',
-      }
-    );
-    this.myModal.show();
-    this.selectedRow = item;
-  }
-
-  public Export() {
-    console.log(`Esportato in ${this.formatoEsportazione}`);
-    console.log(this.selectedRow);
   }
 
   public redirectPage() {

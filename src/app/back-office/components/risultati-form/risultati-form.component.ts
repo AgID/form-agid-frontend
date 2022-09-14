@@ -68,8 +68,20 @@ export class RisultatiFormComponent implements OnInit {
   }
 
   public Export() {
-    console.log(`Esportato in ${this.formatoEsportazione}`);
-    console.log(this.selectedRow);
+    this.elencoFormService
+      .extractForm(this.formatoEsportazione, this.selectedRow._id)
+      .subscribe(
+        (res) => {
+          this.downloadFile(res);
+        },
+        (err) => console.log(err)
+      );
+  }
+
+  downloadFile(data: any) {
+    const blob = new Blob([data], { type: data.type });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
   }
 
   public redirectPage() {
@@ -80,8 +92,15 @@ export class RisultatiFormComponent implements OnInit {
     this.formatoEsportazione = $e.target.value;
   }
 
-  public duplicaSottomissione($e: any) {
-    console.log('duplicato');
+  public duplicaSottomissione(form: any) {
+    console.log('duplicato', form);
+    const { _id } = form;
+    this.router.navigate(['./inserimento-form'], {
+      queryParams: {
+        duplica: _id,
+      },
+      relativeTo: this.route,
+    });
   }
 
   public onClickEliminaForm(item: any) {

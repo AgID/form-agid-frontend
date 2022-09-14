@@ -15,7 +15,7 @@
           <ul class="link-list">
             <li
               [routerLinkActive]="'selector'"
-              style="border-left: 4px solid #06c"
+              [routerLinkActiveOptions]="{ exact: true }"
             >
               <a
                 *ngIf="!isArchivio"
@@ -37,7 +37,7 @@
                 aria-current="page"
                 class="list-item large"
                 [routerLink]="['./ricerca']"
-                ><span>Gestione sottomissioni</span></a
+                ><span>Gestione compilazioni</span></a
               >
               <a
                 *ngIf="isArchivio"
@@ -45,8 +45,13 @@
                 class="list-item large"
                 [routerLink]="['./ricerca']"
                 [queryParams]="{ isArchivio: true }"
-                ><span>Gestione sottomissioni</span></a
+                ><span>Gestione compilazioni</span></a
               >
+              <a
+                [hidden]="true"
+                [routerLink]="['./nuova-sottomissione']"
+              >
+              </a>
             </li>
             <li [routerLinkActive]="'selector'">
               <a

@@ -35,3 +35,19 @@
 //     }
 //   }
 // }
+
+.preventClick {
+  cursor: not-allowed !important;
+}
+
+.preventClick > label {
+  background-color: grey;
+}
+
+.preventClick > label:hover {
+  background-color: grey;
+}
+
+.preventClick > app-formio-builder {
+  pointer-events: none;
+}

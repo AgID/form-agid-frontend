@@ -45,8 +45,10 @@ export class NuovaSottomissioneComponent implements OnInit {
       .subscribe((res) => (this.form = res));
   }
 
-  public onChangeFormio(data: any) {
-    this.dataForm = data;
+  public onChangeFormio(ev: any) {
+    if (ev.data) {
+      this.dataForm = ev;
+    }
   }
 
   public salvaBozza() {

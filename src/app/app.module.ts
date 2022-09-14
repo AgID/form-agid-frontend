@@ -11,11 +11,12 @@ import { CommonModule } from '@angular/common';
 import { FormFoModule } from './front-office/form-fo.module';
 import { AppCommonModule } from './common/app-common.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ViewComponent } from './public/view/view.component';
 
 const AppConfig = {};
 
 @NgModule({
-  declarations: [AppComponent, BreadcrumbComponent],
+  declarations: [AppComponent, BreadcrumbComponent, ViewComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

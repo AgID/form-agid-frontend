@@ -1,17 +1,18 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione-metadati.component';
 import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.service';
 import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-builder.component';
 import { IForm } from '../types/form.type';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IMetadatiType } from '../types/metadati.type';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-inserimento-form',
   templateUrl: './inserimento-form.component.html',
   styleUrls: ['./inserimento-form.component.scss'],
 })
-export class InserimentoFormComponent {
+export class InserimentoFormComponent implements OnInit {
   @ViewChild('sezioneMetadatiComponent')
   public sezioneMetadatiComponent: SezioneMetadatiComponent;
 
@@ -19,15 +20,81 @@ export class InserimentoFormComponent {
   public sezioneBuilderComponent: SezioneBuilderComponent;
 
   public form: IForm = {};
-  public metadati: IMetadatiType;
+  public metadati: IMetadatiType = {
+    titolo: '',
+    titoloPattern: '',
+    descrizione: '',
+    dataFineValidita: '',
+    dataInizioValidita: '',
+    stato: '',
+    versione: 0,
+    abilitaStatistiche: false,
+    sezioniInformative: {
+      faq: '',
+      home: '',
+    },
+    verificaPubblicazione: {
+      abilitata: false,
+      campoUrlTarget: '',
+    },
+    acl: {
+      tipo: '',
+      valore: '',
+    },
+  };
 
   public isModified: boolean = false;
   public message: Array<any> = [{ label: 'Inserimento avvenuto con successo' }];
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private elencoFormService: ElencoFormService,
-    private router: Router
+    private datePipe: DatePipe
   ) {}
+
+  ngOnInit() {
+    const idFormDaDuplicare = this.route.snapshot.queryParamMap.get('duplica');
+    if (idFormDaDuplicare) {
+      this.elencoFormService
+        .getFormsById(idFormDaDuplicare)
+        .subscribe((res) => {
+          this.buildFormMetadati(res);
+          this.form = { components: res.components };
+        });
+    }
+  }
+
+  private buildFormMetadati(response: any) {
+    const {
+      titolo,
+      titoloPattern,
+      sezioniInformative,
+      descrizione,
+      abilitaStatistiche,
+      dataInizioValidita,
+      dataFineValidita,
+      verificaPubblicazione,
+      stato,
+      versione,
+    } = response;
+
+    this.metadati = {
+      titolo,
+      titoloPattern,
+      descrizione,
+      sezioniInformative,
+      abilitaStatistiche,
+      verificaPubblicazione,
+      stato,
+      versione,
+      dataInizioValidita: this.datePipe.transform(
+        dataInizioValidita,
+        'yyyy-MM-dd'
+      ),
+      dataFineValidita: this.datePipe.transform(dataFineValidita, 'yyyy-MM-dd'),
+    };
+  }
 
   public onClickSalvaSchemaRilevazione() {
     if (!this.sezioneMetadatiComponent.validate()) {
@@ -49,14 +116,19 @@ export class InserimentoFormComponent {
     const {
       descrizione,
       titolo,
+      titoloPattern,
+      abilitaStatistiche,
       dataFineValidita,
       dataInizioValidita,
+      acl,
       sezioniInformative,
+      verificaPubblicazione,
     } = this.metadati;
 
     this.form = {
       ...this.form,
       titolo,
+      titoloPattern,
       descrizione,
       sezioniInformative,
       dataInizioValidita: new Date(dataInizioValidita),
@@ -66,12 +138,10 @@ export class InserimentoFormComponent {
       dataInserimento: new Date(),
       codiceUtenteModifica: 'SYSTEM',
       dataUltimaModifica: new Date(),
-      //TODO: MOCK
-      acl: { tipo: 'pubblico', valore: 'true' },
-      verificaPubblicazione: {
-        abilitata: true,
-        campoUrlTarget: 'url',
-      },
+      acl,
+      //modificare pubblicazione
+      verificaPubblicazione,
+      abilitaStatistiche,
       versione: 0,
       stato: 'Bozza',
       scheduling: {
@@ -84,6 +154,10 @@ export class InserimentoFormComponent {
 
   public changeMetadati(event: any) {
     this.isModified = false;
+  }
+
+  public changeAcl(event: any) {
+    this.metadati.acl = event;
   }
 
   public changeForm(event: any) {

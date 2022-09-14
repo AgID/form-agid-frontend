@@ -1,5 +1,6 @@
 export interface IForm {
   titolo?: string;
+  titoloPattern?: string;
   descrizione?: string;
   sezioniInformative?: ISezioniInformative;
   stato?: string;
@@ -13,6 +14,7 @@ export interface IForm {
   dataFineValidita?: Date;
   scheduling?: IScheduling;
   verificaPubblicazione?: IVerificaPubblicazione;
+  abilitaStatistiche?: boolean;
   components?: Array<any>;
   _id?: string;
 }

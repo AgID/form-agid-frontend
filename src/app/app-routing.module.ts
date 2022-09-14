@@ -7,6 +7,7 @@ import { InserimentoFormComponent } from './back-office/inserimento/inserimento-
 import { ModificaFormComponent } from './back-office/modifica/modifica-form.component';
 import { DichiarazioneComponent } from './front-office/dichiarazione/dichiarazione.component';
 import { HomeComponent } from './front-office/home/home.component';
+import { ViewComponent } from './public/view/view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,6 +15,11 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     data: { breadcrumb: 'Home' },
+  },
+  {
+    path: 'view/:id',
+    component: ViewComponent,
+    data: { breadcrumb: '' },
   },
   {
     path: 'dichiarazione',

@@ -1,6 +1,7 @@
 export interface ISottomissione {
   idForm?: string;
   versione?: number;
+  titolo?: string;
   codiceUtenteInserimento?: string;
   dataInserimento?: Date;
   codiceUtenteModifica?: string;

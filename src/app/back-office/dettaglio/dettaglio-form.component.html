@@ -1,4 +1,4 @@
-<h2>Gestione sottomissioni</h2>
+<h2>Gestione compilazioni</h2>
 <app-ricerca-sottomissioni
   #ricercaSottomissioniComponent
 ></app-ricerca-sottomissioni>
@@ -45,10 +45,6 @@
           <title id="dettaglio">Dettaglio</title>
           <use href="../../../../assets/svg/sprite.svg#it-note"></use>
         </svg>
-        <svg class="icon cursor-pointer" (click)="esportaSottomissione(item)">
-          <title id="esporta">Esporta</title>
-          <use href="../../../../assets/svg/sprite.svg#it-files"></use>
-        </svg>
         <svg class="icon cursor-pointer" (click)="eliminaSottomissione(item)">
           <title id="elimina">Elimina</title>
           <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
@@ -78,47 +74,4 @@
       >Torna alla ricerca</label
     ></a
   >
-</div>
-
-<!-- Modal -->
-<div
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  id="exportModal"
-  aria-labelledby="exportModalTitle"
->
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content rounded">
-      <div class="modal-header">
-        <h2 class="modal-title">Scegli il formato di esportazione</h2>
-        <button
-          class="close"
-          type="button"
-          aria-label="Close"
-          (click)="redirectPage()"
-        >
-          <svg class="icon">
-            <use href="/assets/svg/sprite.svg#it-close"></use>
-          </svg>
-        </button>
-      </div>
-      <div class="modal-body">
-        <select
-          id="defaultSelect"
-          (change)="onChangeFormato($event)"
-          class="mb-3"
-        >
-          <option selected="" value="">Scegli un'opzione</option>
-          <option value="CSV">CSV</option>
-          <option value="XLSX">XLSX</option>
-        </select>
-        <div class="d-flex justify-content-end mb-3">
-          <button type="button" class="btn btn-primary" (click)="Export()">
-            Esporta
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

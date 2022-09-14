@@ -52,12 +52,6 @@ export class RicercaSottomissioniComponent implements OnInit {
     });
   }
 
-  public goToInserimentoSottomissione() {
-    this.router.navigate([`../nuova-sottomissione`], {
-      relativeTo: this.route,
-    });
-  }
-
   public goToDettaglioSottomissione(item: any) {
     if (!this.isArchivio) {
       this.router.navigate([`../sottomissione/${item._id}`], {
