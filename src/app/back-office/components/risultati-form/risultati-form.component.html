@@ -5,25 +5,28 @@
 >
   <thead>
     <tr>
-      <th scope="col" style="width: 45%">Titolo</th>
-      <th scope="col" style="width: 20%">Stato</th>
-      <th scope="col" style="width: 20%">Data ultima modifica</th>
-      <th scope="col" style="width: 15%">Azioni</th>
+      <th scope="col" style="width: 30%">Titolo</th>
+      <th scope="col" style="width: 10%">Stato</th>
+      <th scope="col" style="width: 15%">Data ultima modifica</th>
+      <th scope="col" style="width: 10%">Versione</th>
+      <th scope="col" style="width: 15%">Numero sottomissioni</th>
+      <th scope="col" style="width: 20%">Azioni</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of elencoForm">
       <td>
         {{ item.titolo }}
-        <!-- Dichiarazione accessibilità -->
       </td>
       <td>{{ item.stato }}</td>
       <td>
         {{ item.dataUltimaModifica }}
-        <!-- Ministero dell'Economia e delle Finanze si impegna a rendere il proprio
-        sito web accessibile, conformemente al D.lgs 10 agosto 2018, n. 106 che
-        ha recepito la direttiva UE 2016/2102 del Parlamento europeo e del
-        Consiglio. -->
+      </td>
+      <td>
+        {{ item.versione }}
+      </td>
+      <td>
+        {{ item.numeroSottomissioni }}
       </td>
       <td>
         <svg class="icon cursor-pointer" (click)="goToModificaForm(item)">
@@ -34,7 +37,11 @@
           <title id="dettaglio">Dettaglio</title>
           <use href="../../../../assets/svg/sprite.svg#it-note"></use>
         </svg>
-        <svg class="icon cursor-pointer" (click)="esportaSottomissione(item)">
+        <svg
+          class="icon cursor-pointer"
+          [ngClass]="{ disabled: !item.numeroSottomissioni }"
+          (click)="esportaSottomissione(item)"
+        >
           <title id="esporta">Esporta</title>
           <use href="../../../../assets/svg/sprite.svg#it-download"></use>
         </svg>
@@ -79,7 +86,7 @@
       <div class="modal-header">
         <h2 class="modal-title">Scegli il formato di esportazione</h2>
         <button
-          class="close"
+          class="btn-close"
           type="button"
           aria-label="Close"
           (click)="redirectPage()"
@@ -123,7 +130,7 @@
       <div class="modal-header">
         <h2 class="modal-title">Eliminazione</h2>
         <button
-          class="close"
+          class="btn-close"
           type="button"
           aria-label="Close"
           (click)="redirectPage()"

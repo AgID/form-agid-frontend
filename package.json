@@ -30,6 +30,7 @@
     "bootstrap": "^5.2.0",
     "bootstrap-italia": "^2.0.2",
     "font-awesome": "^4.7.0",
+    "formio-export": "^0.3.0",
     "formiojs": "^4.14.8",
     "ngx-markdown": "^13.1.0",
     "ngx-spinner": "13.1.1",

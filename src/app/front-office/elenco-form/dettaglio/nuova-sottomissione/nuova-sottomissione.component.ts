@@ -14,6 +14,7 @@ export class NuovaSottomissioneComponent implements OnInit {
   public payloadNewSubmission: any = {
     idForm: '',
     versione: 0,
+    versioneForm: 0,
     codiceUtenteInserimento: 'string',
     dataInserimento: new Date(),
     codiceUtenteModifica: 'string',
@@ -55,6 +56,7 @@ export class NuovaSottomissioneComponent implements OnInit {
     this.payloadNewSubmission.idForm = this.id;
     this.payloadNewSubmission.stato = 'Bozza';
     this.payloadNewSubmission.datiBozza = this.dataForm.data;
+    this.payloadNewSubmission.versioneForm = this.form.versione;
     this.elencoFormService
       .createSubmission(this.payloadNewSubmission)
       .subscribe((response) =>

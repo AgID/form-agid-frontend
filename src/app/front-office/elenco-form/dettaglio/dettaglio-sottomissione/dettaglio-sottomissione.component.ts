@@ -6,6 +6,7 @@ import { ElencoFormService } from '../../elenco-form.service';
 import './dettaglio-sottomissione.component.scss';
 import { v1 as uuidv1 } from 'uuid';
 import { DatePipe } from '@angular/common';
+import FormioExport from 'formio-export';
 
 @Component({
   selector: 'app-dettaglio-sottomissione',
@@ -38,6 +39,34 @@ export class DettaglioSottomissioneComponent implements OnInit {
   public myModal: any; //Modal
   public actualFormData: any;
   public renderOptions: any = {};
+  public component: any = {
+    type: 'form',
+    title: '',
+    display: 'form',
+    components: [],
+  };
+  public data = {};
+  public options = {
+    formio: {
+      ignoreLayout: true,
+      emptyValue: 'n/a',
+    },
+  };
+
+  public config: {
+    download: true;
+    filename: 'Sottomissione.pdf';
+    margin: 10;
+    html2canvas: {
+      scale: 2;
+      logging: false;
+    };
+    jsPDF: {
+      orientation: 'p';
+      unit: 'mm';
+      format: 'a4';
+    };
+  };
 
   //Alert
   public statusMessage: Array<any> = [];
@@ -94,7 +123,12 @@ export class DettaglioSottomissioneComponent implements OnInit {
         } else {
           this.formData = this.response.datiBozza;
         }
+        //PDF
+        this.component.title = this.response.form[0].titolo;
+        this.data = this.formData;
         this.formSchema = this.response.form[0];
+        this.component.components = this.formSchema.components;
+
         this.isPubblicazioneAbilitata =
           this.formSchema.verificaPubblicazione.abilitata;
         this.modifyEqualsPublish =
@@ -185,6 +219,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   public onClickSalvaBozza() {
     const updateBody: ISottomissione = {
       datiBozza: this.actualFormData.data,
+      versioneForm: this.response.form[0].versione,
     };
     this.elencoFormService
       .updateSottomissione(this.id, updateBody)
@@ -210,12 +245,25 @@ export class DettaglioSottomissioneComponent implements OnInit {
     });
   }
 
+  public downloadPDF() {
+    let exporter = new FormioExport(
+      this.component,
+      this.formData,
+      this.options
+    );
+    exporter.toPdf(this.config).then((pdf: any) => {
+      // download the pdf file
+      pdf.save();
+    });
+  }
+
   public onClickPubblica() {
     const idPubblicazione = this.isPubblicazioneAbilitata ? uuidv1() : '';
     const updateBody: ISottomissione = {
       datiPubblicati: this.formData,
       stato: 'Pubblicato',
       versione: (this.response.versione || 0) + 1,
+      versioneForm: this.response.form[0].versione,
       idPubblicazione: idPubblicazione,
     };
     this.elencoFormService

@@ -129,3 +129,15 @@ formio fieldset legend[ref="header"] {
   box-shadow: 0 0 0 2px #f90 !important;
   outline: none !important;
 }
+
+.formio-component {
+  margin-bottom: 2rem !important;
+}
+
+.formio-component-checkbox > div {
+  margin-top: 1rem !important;
+}
+
+.formio-component > label {
+  padding-left: 0 !important;
+}

@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-builder.component';
 import { IForm } from '../types/form.type';
 import { IMetadatiType } from '../types/metadati.type';
+import { Utils } from 'formiojs';
 
 @Component({
   selector: 'app-modifica-form',
@@ -20,6 +21,7 @@ export class ModificaFormComponent implements OnInit {
   public sezioneBuilderComponent: SezioneBuilderComponent;
 
   public form: IForm;
+  public initialComponentsForm: any;
   public id: any;
 
   public metadati: IMetadatiType;
@@ -41,6 +43,10 @@ export class ModificaFormComponent implements OnInit {
       .getFormsById(this.id)
       .subscribe((response) => {
         this.form = response;
+        this.initialComponentsForm = Utils.flattenComponents(
+          this.form.components,
+          false
+        );
         this.buildFormMetadati(response);
       })
       .add(() => {
@@ -98,6 +104,7 @@ export class ModificaFormComponent implements OnInit {
       dataInizioValidita,
       sezioniInformative,
       verificaPubblicazione,
+      versione,
     } = this.metadati;
     this.form = {
       ...this.form,
@@ -107,6 +114,7 @@ export class ModificaFormComponent implements OnInit {
       descrizione,
       acl,
       abilitaStatistiche,
+      versione,
       verificaPubblicazione,
       dataInizioValidita: new Date(dataInizioValidita),
       dataFineValidita: new Date(dataFineValidita),
@@ -138,7 +146,18 @@ export class ModificaFormComponent implements OnInit {
       this.scrollToTop();
       return;
     }
+    let finalComponentsForm = Utils.flattenComponents(
+      this.form.components,
+      false
+    );
     this.buildFormRequest();
+    if (
+      this.form.stato === 'Pubblicato' &&
+      this.hasSottomissioni &&
+      this.componentChanged(finalComponentsForm)
+    ) {
+      this.form.versione++;
+    }
     this.form.stato = 'Pubblicato';
     this.elencoFormService
       .updateForm(this.form._id, this.form)
@@ -149,6 +168,23 @@ export class ModificaFormComponent implements OnInit {
         this.ngOnInit();
         this.scrollToTop();
       });
+  }
+
+  public componentChanged(fc: any): boolean {
+    if (
+      Object.keys(this.initialComponentsForm).length === Object.keys(fc).length
+    ) {
+      for (const key of Object.keys(fc)) {
+        if (
+          !this.initialComponentsForm[key] ||
+          this.initialComponentsForm[key].type !== fc[key].type
+        )
+          return true;
+      }
+    } else {
+      return true;
+    }
+    return false;
   }
 
   public changeMetadati(event: any) {

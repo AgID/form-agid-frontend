@@ -6,6 +6,7 @@ import { GestioneUtenzeComponent } from './back-office/gestione-utenze/gestione-
 import { InserimentoFormComponent } from './back-office/inserimento/inserimento-form.component';
 import { ModificaFormComponent } from './back-office/modifica/modifica-form.component';
 import { DichiarazioneComponent } from './front-office/dichiarazione/dichiarazione.component';
+import { DettaglioSottomissioneComponent } from './front-office/elenco-form/dettaglio/dettaglio-sottomissione/dettaglio-sottomissione.component';
 import { HomeComponent } from './front-office/home/home.component';
 import { ViewComponent } from './public/view/view.component';
 
@@ -45,17 +46,22 @@ const routes: Routes = [
       {
         path: 'inserimento-form',
         component: InserimentoFormComponent,
-        data: { breadcrumb: 'Inserimento' },
+        data: { breadcrumb: 'Inserimento Form' },
       },
       {
         path: 'modifica-form/:id',
         component: ModificaFormComponent,
-        data: { breadcrumb: 'Modifica' },
+        data: { breadcrumb: 'Modifica Form' },
       },
       {
         path: 'dettaglio-form/:id',
         component: DettaglioFormComponent,
         data: { breadcrumb: 'Dettaglio' },
+      },
+      {
+        path: 'sottomissione/:id',
+        component: DettaglioSottomissioneComponent,
+        data: { breadcrumb: 'Dettaglio sottomissione' },
       },
     ],
   },

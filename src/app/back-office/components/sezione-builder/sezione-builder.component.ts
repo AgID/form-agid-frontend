@@ -5,8 +5,8 @@ import {
   OnChanges,
   Output,
 } from '@angular/core';
-import { FormioOptions } from '@formio/angular';
 import { SharedService } from '../../inserimento/shared.service';
+import { Utils } from 'formiojs';
 
 @Component({
   selector: 'app-sezione-builder',
@@ -52,27 +52,36 @@ export class SezioneBuilderComponent implements OnChanges {
 
   private populateSharedServiceWithFormIdFields() {
     this._sharedService.optionsCampoTarget.length = 0;
-    this.form.components.forEach((element: any) => {
-      if (element.type === 'url' || element.type === 'textfield')
-        this._sharedService.optionsCampoTarget.push({
-          option: element.key,
-        });
+    // * Ottengo i campi da cui prendere le chiavi da mostrare nella select
+    // TODO: E' possibile migliorare la query mettendo un OR piuttosto che farne due?
+    // https://help.form.io/developers/javascript-utilities#searchcomponents-components-query
+    const urls = Utils.searchComponents(this.form.components, {
+      type: 'url',
+    });
+    const textfields = Utils.searchComponents(this.form.components, {
+      type: 'textfield',
+    });
+    const fields = [...urls, ...textfields];
+
+    fields.forEach((element: any) => {
+      this._sharedService.optionsCampoTarget.push({
+        option: element.key,
+      });
     });
 
     // TODO: Da valutare i campi da poter inserire nel titolo tramite i segnaposti
     this._sharedService.optionsTitolo.length = 0;
-    this.form.components.forEach((element: any) => {
-      if (element.type === 'url' || element.type === 'textfield')
-        this._sharedService.optionsTitolo.push({
-          option: element.key,
-        });
+    fields.forEach((element: any) => {
+      this._sharedService.optionsTitolo.push({
+        option: element.key,
+      });
     });
   }
 
   public ExportForm() {
     if (this.form) {
       const a = document.createElement('a');
-      const blob = new Blob([JSON.stringify(this.form, null, 2)], {
+      const blob = new Blob([JSON.stringify(this.form.components, null, 2)], {
         type: 'application/json',
       });
       a.href = URL.createObjectURL(blob);
@@ -93,7 +102,8 @@ export class SezioneBuilderComponent implements OnChanges {
       })
         .then((content: any) => {
           try {
-            this.form = JSON.parse(content);
+            this.form = { components: JSON.parse(content) };
+            this.populateSharedServiceWithFormIdFields();
           } catch (error) {
             //gestione errore front end
             console.log(error);

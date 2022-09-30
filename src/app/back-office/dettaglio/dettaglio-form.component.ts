@@ -7,6 +7,7 @@ import { ISottomissione } from '../../front-office/types/sottomissione.type';
 import { Pagination } from '../../common/pagination.class';
 import { IForm } from '../types/form.type';
 import { RicercaSottomissioniComponent } from '../components/ricerca-sottomissioni/ricerca-sottomissioni.component';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-dettaglio-form-bo',
@@ -63,7 +64,7 @@ export class DettaglioFormComponent implements OnInit {
   }
 
   public goToDettaglioSottomissione(item: any) {
-    this.router.navigate([`../sottomissione/${item._id}`], {
+    this.router.navigate([`../../sottomissione/${item._id}`], {
       queryParams: {
         isPublished: true,
       },
@@ -72,12 +73,16 @@ export class DettaglioFormComponent implements OnInit {
   }
 
   public goToModificaSottomissione(item: any) {
-    this.router.navigate([`../sottomissione/${item._id}`], {
+    this.router.navigate([`../../sottomissione/${item._id}`], {
       queryParams: {
         isModifica: true,
       },
       relativeTo: this.route,
     });
+  }
+
+  public idSubmissionString(item: any) {
+    return item._id;
   }
 
   public goToTornaAllaRicercaSchemi() {

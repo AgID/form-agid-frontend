@@ -14,6 +14,13 @@
   [renderOptions]="renderOptions"
   (changeFormio)="onChangeFormio($event)"
 ></app-formio-render>
+<div class="d-flex justify-content-center gap-35">
+  <i
+    class="fa fa-file-pdf-o fa-2x custom-color-home mb-3 cursor-pointer"
+    style="color: #06c"
+    (click)="downloadPDF()"
+  ></i>
+</div>
 <div class="d-flex justify-content-center gap-35 mb-3" *ngIf="!isArchivio">
   <ng-container *ngIf="isModifica; else isVisualizzazione">
     <button
@@ -62,7 +69,7 @@
       <div class="modal-header">
         <h2 class="modal-title">Pubblica il link sul sito istituzionale</h2>
         <button
-          class="close"
+          class="btn-close"
           type="button"
           aria-label="Close"
           (click)="redirectPage()"

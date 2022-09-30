@@ -26,7 +26,7 @@ export class SezioneMetadatiComponent {
     dataFineValidita: '',
     dataInizioValidita: '',
     stato: '',
-    versione: 0,
+    versione: 1,
     abilitaStatistiche: false,
     sezioniInformative: {
       faq: '',

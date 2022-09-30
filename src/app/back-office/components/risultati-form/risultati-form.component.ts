@@ -120,6 +120,12 @@ export class RisultatiFormComponent implements OnInit {
     this.elencoFormService
       .deleteForm(this.selectedForm._id)
       .subscribe(() => {
+        this.totalElements--;
+        if (
+          this.filters.pagination.currentPage > 1 &&
+          this.totalElements % this.filters.pagination.elementsForPage === 0
+        )
+          this.filters.pagination.currentPage--;
         this.ngOnInit();
       })
       .add(() => {

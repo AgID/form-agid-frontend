@@ -27,7 +27,7 @@ export class InserimentoFormComponent implements OnInit {
     dataFineValidita: '',
     dataInizioValidita: '',
     stato: '',
-    versione: 0,
+    versione: 1,
     abilitaStatistiche: false,
     sezioniInformative: {
       faq: '',
@@ -142,7 +142,7 @@ export class InserimentoFormComponent implements OnInit {
       //modificare pubblicazione
       verificaPubblicazione,
       abilitaStatistiche,
-      versione: 0,
+      versione: 1,
       stato: 'Bozza',
       scheduling: {
         giorni_attesa: 1,

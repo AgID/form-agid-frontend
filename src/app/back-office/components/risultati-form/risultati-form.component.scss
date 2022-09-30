@@ -1,3 +1,8 @@
 svg {
   fill: #06c !important;
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
