@@ -70,8 +70,12 @@ export class SezioneBuilderComponent implements OnChanges {
     });
 
     // TODO: Da valutare i campi da poter inserire nel titolo tramite i segnaposti
+    const emails = Utils.searchComponents(this.form.components, {
+      type: 'email',
+    });
+    const optionsTitoloFields = [...emails, ...fields];
     this._sharedService.optionsTitolo.length = 0;
-    fields.forEach((element: any) => {
+    optionsTitoloFields.forEach((element: any) => {
       this._sharedService.optionsTitolo.push({
         option: element.key,
       });
