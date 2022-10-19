@@ -5,9 +5,15 @@ import { ElencoFormComponent } from './back-office/elenco-form/elenco-form.compo
 import { GestioneUtenzeComponent } from './back-office/gestione-utenze/gestione-utenze.component';
 import { InserimentoFormComponent } from './back-office/inserimento/inserimento-form.component';
 import { ModificaFormComponent } from './back-office/modifica/modifica-form.component';
-import { DichiarazioneComponent } from './front-office/dichiarazione/dichiarazione.component';
+import { ElencoEtichetteComponent } from './back-office/multilinguismo/elenco-etichette/elenco-etichette.component';
+import { InserimentoEtichettaComponent } from './back-office/multilinguismo/inserimento-etichetta/inserimento-etichetta.component';
+import { ModificaEtichettaComponent } from './back-office/multilinguismo/modifica-etichetta/modifica-etichetta.component';
+import { AuthGuard } from './common/auth/auth.guard';
+import { UserRole } from './common/auth/role.enum';
 import { DettaglioSottomissioneComponent } from './front-office/elenco-form/dettaglio/dettaglio-sottomissione/dettaglio-sottomissione.component';
 import { HomeComponent } from './front-office/home/home.component';
+import { VerificaMailComponent } from './front-office/verifica-mail/verifica-mail.component';
+import { VerificaOtpComponent } from './front-office/verifica-otp/verifica-otp.component';
 import { ViewComponent } from './public/view/view.component';
 
 const routes: Routes = [
@@ -23,25 +29,35 @@ const routes: Routes = [
     data: { breadcrumb: '' },
   },
   {
-    path: 'dichiarazione',
-    component: DichiarazioneComponent,
-    data: { breadcrumb: 'Dichiarazione' },
-  },
-  {
     path: 'elenco-form',
     loadChildren: () =>
       import('./front-office/form-fo.module').then((m) => m.FormFoModule),
     data: { breadcrumb: 'Elenco Form' },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'verifica-mail',
+    component: VerificaMailComponent,
+    data: { breadcrumb: 'Verifica mail' },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'verifica-otp',
+    component: VerificaOtpComponent,
+    data: { breadcrumb: 'Verifica OTP' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'gestione-utenze',
     component: GestioneUtenzeComponent,
     data: { breadcrumb: 'Gestione utenze' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin',
     component: ElencoFormComponent,
-    data: { breadcrumb: 'Elenco Form BO' },
+    data: { breadcrumb: 'Elenco Form BO', usersAlowed: UserRole.ADMIN },
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'inserimento-form',
@@ -62,6 +78,24 @@ const routes: Routes = [
         path: 'sottomissione/:id',
         component: DettaglioSottomissioneComponent,
         data: { breadcrumb: 'Dettaglio sottomissione' },
+      },
+    ],
+  },
+  {
+    path: 'multilanguage',
+    component: ElencoEtichetteComponent,
+    data: { breadcrumb: 'Elenco etichette', usersAlowed: UserRole.ADMIN },
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'inserimento-etichetta',
+        component: InserimentoEtichettaComponent,
+        data: { breadcrumb: 'Inserimento Etichetta' },
+      },
+      {
+        path: 'modifica-etichetta',
+        component: ModificaEtichettaComponent,
+        data: { breadcrumb: 'Modifica Etichetta' },
       },
     ],
   },

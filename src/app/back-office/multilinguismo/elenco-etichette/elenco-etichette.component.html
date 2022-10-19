@@ -1,0 +1,24 @@
+<div *ngIf="!route.children.length">
+  <app-ricerca-etichette #ricercaEtichetteComponent></app-ricerca-etichette>
+  <div class="row">
+    <div class="form-group col text-right">
+      <!-- <div class="d-flex justify-content-end" *ngIf="elencoForm?.length > 0"> -->
+      <button
+        type="button"
+        class="btn btn-primary me-2"
+        (click)="goToInserimentoEtichetta()"
+      >
+        Nuovo
+      </button>
+      <!-- </div> -->
+      <button type="submit" class="btn btn-primary" (click)="searchEtichetta()">
+        Cerca
+      </button>
+    </div>
+    <app-risultati-etichette
+      *ngIf="filters"
+      [filters]="filters"
+    ></app-risultati-etichette>
+  </div>
+</div>
+<router-outlet></router-outlet>

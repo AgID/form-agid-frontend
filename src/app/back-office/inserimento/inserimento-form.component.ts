@@ -6,6 +6,7 @@ import { IForm } from '../types/form.type';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IMetadatiType } from '../types/metadati.type';
 import { DatePipe } from '@angular/common';
+import { HashService } from 'src/app/common/hash.service';
 
 @Component({
   selector: 'app-inserimento-form',
@@ -21,6 +22,7 @@ export class InserimentoFormComponent implements OnInit {
 
   public form: IForm = {};
   public metadati: IMetadatiType = {
+    lingua: '',
     titolo: '',
     titoloPattern: '',
     descrizione: '',
@@ -43,14 +45,12 @@ export class InserimentoFormComponent implements OnInit {
     },
   };
 
-  public isModified: boolean = false;
-  public message: Array<any> = [{ label: 'Inserimento avvenuto con successo' }];
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private elencoFormService: ElencoFormService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    public hashService: HashService
   ) {}
 
   ngOnInit() {
@@ -67,27 +67,29 @@ export class InserimentoFormComponent implements OnInit {
 
   private buildFormMetadati(response: any) {
     const {
+      lingua,
       titolo,
       titoloPattern,
       sezioniInformative,
       descrizione,
+      acl,
       abilitaStatistiche,
       dataInizioValidita,
       dataFineValidita,
       verificaPubblicazione,
-      stato,
-      versione,
     } = response;
 
     this.metadati = {
+      lingua,
       titolo,
       titoloPattern,
       descrizione,
       sezioniInformative,
       abilitaStatistiche,
+      acl,
       verificaPubblicazione,
-      stato,
-      versione,
+      stato: 'Bozza',
+      versione: 1,
       dataInizioValidita: this.datePipe.transform(
         dataInizioValidita,
         'yyyy-MM-dd'
@@ -105,11 +107,22 @@ export class InserimentoFormComponent implements OnInit {
 
     this.buildFormRequest();
 
-    this.elencoFormService.createForm(this.form).subscribe((response) => {
-      // this.router.navigate([`/admin/dettaglio-form/${response._id}`]);
-      this.isModified = true;
-      this.scrollToTop();
-    });
+    this.elencoFormService.createForm(this.form).subscribe(
+      (response) => {
+        this.hashService.isModified = true;
+        this.hashService.type = 'SUCCESS';
+        this.hashService.message = [
+          { label: 'Inserimento avvenuto con successo' },
+        ];
+        this.scrollToTop();
+        this.router.navigate([`/admin/modifica-form/${response._id}`]);
+      },
+      (error) => {
+        this.hashService.isModified = true;
+        this.hashService.message = [{ label: 'Inserimento non avvenuto' }];
+        this.hashService.type = 'DANGER';
+      }
+    );
   }
 
   public buildFormRequest() {
@@ -153,7 +166,7 @@ export class InserimentoFormComponent implements OnInit {
   }
 
   public changeMetadati(event: any) {
-    this.isModified = false;
+    this.hashService.isModified = false;
   }
 
   public changeAcl(event: any) {
@@ -161,7 +174,7 @@ export class InserimentoFormComponent implements OnInit {
   }
 
   public changeForm(event: any) {
-    this.isModified = false;
+    this.hashService.isModified = false;
   }
 
   public goToTornaAllaRicerca() {

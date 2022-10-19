@@ -70,6 +70,7 @@ export class SezioneBuilderComponent implements OnChanges {
     });
 
     // TODO: Da valutare i campi da poter inserire nel titolo tramite i segnaposti
+    this._sharedService.optionsTitolo.length = 0;
     const emails = Utils.searchComponents(this.form.components, {
       type: 'email',
     });
@@ -89,7 +90,7 @@ export class SezioneBuilderComponent implements OnChanges {
         type: 'application/json',
       });
       a.href = URL.createObjectURL(blob);
-      a.download = 'form.json';
+      a.download = this.form.titolo + '.json';
       a.click();
     }
   }

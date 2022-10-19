@@ -31,6 +31,8 @@
             class="custom-overwrite-border nav-link"
             routerLink="/elenco-form"
             routerLinkActive="active"
+            appControlAccess
+            (click)="resetMessage()"
             ><span>Front office</span></a
           >
         </li>
@@ -40,8 +42,22 @@
             class="custom-overwrite-border nav-link"
             routerLink="/admin"
             routerLinkActive="active"
+            (click)="resetMessage()"
+            appControlAccess
           >
             <span>Back office</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            id="multilanguage_link"
+            class="custom-overwrite-border nav-link"
+            routerLink="/multilanguage"
+            routerLinkActive="active"
+            (click)="resetMessage()"
+            appControlAccess
+          >
+            <span>Multilinguismo</span>
           </a>
         </li>
         <!-- <li class="nav-item">

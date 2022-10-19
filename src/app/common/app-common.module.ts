@@ -20,9 +20,10 @@ import { TextareaComponent } from './textarea/textarea.component';
 import { AuthConfig, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { authConfig } from './auth/auth-config';
 import { AuthService } from './auth/auth.service';
-import { AuthGuard } from './auth/auth-guard.service';
+import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { MarkdownModule } from 'ngx-markdown';
+import { ControlAccessDirective } from './auth/control-access.directive';
 
 // We need a factory, since localStorage is not available during AOT build time.
 export function storageFactory(): OAuthStorage {
@@ -32,6 +33,7 @@ export function storageFactory(): OAuthStorage {
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
+    ControlAccessDirective,
     PaginatorComponent,
     AlertComponent,
     FormioRenderComponent,
@@ -59,6 +61,7 @@ export function storageFactory(): OAuthStorage {
     FormioBuilderComponent,
     InputComponent,
     TextareaComponent,
+    ControlAccessDirective,
   ],
   providers: [
     AuthService,

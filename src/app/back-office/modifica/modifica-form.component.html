@@ -1,9 +1,22 @@
 <app-alert
-  *ngIf="isModified"
-  [messaggio]="message"
-  [type]="'SUCCESS'"
+  *ngIf="hashService.isModified"
+  [messaggio]="hashService.message"
+  [type]="hashService.type"
 ></app-alert>
-<h2 *ngIf="form">Dettaglio {{ form.titolo }}</h2>
+<div class="d-flex">
+  <h2 *ngIf="form">Dettaglio {{ form.titolo }}</h2>
+  <svg
+    class="icon icon-sm cursor-pointer ms-2"
+    style="margin-top: 12px"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    id="tooltip"
+    tabindex="0"
+    *ngIf="metadati?.stato && metadati?.versione >= 0"
+  >
+    <use href="../../../assets/svg/sprite.svg#it-info-circle"></use>
+  </svg>
+</div>
 <app-sezione-metadati
   [metadati]="metadati"
   (changeMetadati)="changeMetadati($event)"

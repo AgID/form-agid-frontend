@@ -1,0 +1,21 @@
+<div>
+  <h1>Ricerca etichette</h1>
+  <hr />
+  <div class="row mt-5">
+    <div class="form-group col-md-4 mt-3">
+      <div class="select-wrapper">
+        <label for="defaultSelect">Lingua</label>
+        <select
+          id="defaultSelect"
+          (change)="onChangeLingua($event)"
+          [value]="filters.lingua"
+        >
+          <option selected="" value="">Scegli un'opzione</option>
+          <option value="ITA">Italiano</option>
+          <option value="ENG">Inglese</option>
+          <option value="DET">Tedesco</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

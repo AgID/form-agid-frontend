@@ -1,4 +1,5 @@
 export interface IMetadatiType {
+  lingua: string;
   titolo: string;
   titoloPattern: string;
   descrizione: string;

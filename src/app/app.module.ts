@@ -12,6 +12,8 @@ import { FormFoModule } from './front-office/form-fo.module';
 import { AppCommonModule } from './common/app-common.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewComponent } from './public/view/view.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppInterceptor } from './app.interceptor';
 
 const AppConfig = {};
 
@@ -28,7 +30,14 @@ const AppConfig = {};
     AppCommonModule,
     NoopAnimationsModule,
   ],
-  providers: [{ provide: FormioAppConfig, useValue: AppConfig }],
+  providers: [
+    { provide: FormioAppConfig, useValue: AppConfig },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

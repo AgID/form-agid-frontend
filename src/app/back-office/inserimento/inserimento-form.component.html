@@ -1,8 +1,10 @@
 <app-alert
-  *ngIf="isModified"
-  [messaggio]="message"
-  [type]="'SUCCESS'"
+  *ngIf="hashService.isModified"
+  [messaggio]="hashService.message"
+  [type]="hashService.type"
 ></app-alert>
+<h2>Nuovo inserimento</h2>
+<hr />
 <app-sezione-metadati
   #sezioneMetadatiComponent
   [metadati]="metadati"

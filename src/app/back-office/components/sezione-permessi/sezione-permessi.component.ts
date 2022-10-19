@@ -18,6 +18,7 @@ export class SezionePermessiComponent implements AfterViewInit {
 
   @Input()
   public metadati: IMetadatiType = {
+    lingua: '',
     titolo: '',
     titoloPattern: '',
     descrizione: '',

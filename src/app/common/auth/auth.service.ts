@@ -3,7 +3,7 @@ import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, filter, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { UserProfile } from './user-profile.model';
+import { User } from '../types/user.type';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +19,8 @@ export class AuthService {
     this.isAuthenticated$,
     this.isDoneLoading$,
   ]).pipe(map((values) => values.every((b) => b)));
+
+  public userInfo: User;
 
   constructor(
     private oauthService: OAuthService,
@@ -45,7 +47,8 @@ export class AuthService {
   }
 
   public identityClaims() {
-    return this.oauthService.getIdentityClaims();
+    this.userInfo = this.oauthService.getIdentityClaims() as any;
+    return this.userInfo;
   }
 
   public login(targetUrl?: string) {

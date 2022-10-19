@@ -6,3 +6,14 @@ svg {
   pointer-events: none;
   opacity: 0.5;
 }
+
+table {
+  td {
+    vertical-align: middle;
+    &:nth-child(4),
+    &:nth-child(5) {
+      text-align: end;
+      padding-right: 2rem;
+    }
+  }
+}

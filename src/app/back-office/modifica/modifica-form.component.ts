@@ -7,6 +7,8 @@ import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-b
 import { IForm } from '../types/form.type';
 import { IMetadatiType } from '../types/metadati.type';
 import { Utils } from 'formiojs';
+import { HashService } from 'src/app/common/hash.service';
+// import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-modifica-form',
@@ -24,17 +26,39 @@ export class ModificaFormComponent implements OnInit {
   public initialComponentsForm: any;
   public id: any;
 
-  public metadati: IMetadatiType;
+  public metadati: IMetadatiType = {
+    lingua: '',
+    titolo: '',
+    titoloPattern: '',
+    descrizione: '',
+    dataFineValidita: '',
+    dataInizioValidita: '',
+    stato: '',
+    versione: 1,
+    abilitaStatistiche: false,
+    sezioniInformative: {
+      faq: '',
+      home: '',
+    },
+    verificaPubblicazione: {
+      abilitata: false,
+      campoUrlTarget: '',
+    },
+    acl: {
+      tipo: '',
+      valore: '',
+    },
+  };
 
-  public isModified: boolean = false;
+  public titleTooltip: string = '';
   public hasSottomissioni: boolean = false;
-  public message: Array<any> = [{ label: 'Modifica avvenuta con successo' }];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private elencoFormService: ElencoFormService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    public hashService: HashService
   ) {}
 
   ngOnInit() {
@@ -48,6 +72,13 @@ export class ModificaFormComponent implements OnInit {
           false
         );
         this.buildFormMetadati(response);
+        //Inizializzazione tooltip
+        setTimeout(() => {
+          let tooltipTitle = document.getElementById('tooltip');
+          // let tooltip = new bootstrap.Tooltip(tooltipTitle, {
+          //   title: `Stato : ${this.metadati.stato} - Versione : ${this.metadati.versione}`,
+          // });
+        }, 500);
       })
       .add(() => {
         //elenco sottomissioni
@@ -62,6 +93,7 @@ export class ModificaFormComponent implements OnInit {
 
   private buildFormMetadati(response: any) {
     const {
+      lingua,
       titolo,
       titoloPattern,
       sezioniInformative,
@@ -76,6 +108,7 @@ export class ModificaFormComponent implements OnInit {
     } = response;
 
     this.metadati = {
+      lingua,
       titolo,
       titoloPattern,
       descrizione,
@@ -132,9 +165,20 @@ export class ModificaFormComponent implements OnInit {
     this.form.stato = 'Bozza';
     this.elencoFormService
       .updateForm(this.form._id, this.form)
-      .subscribe(() => {
-        this.isModified = true;
-      })
+      .subscribe(
+        () => {
+          this.hashService.isModified = true;
+          this.hashService.message = [
+            { label: 'Modifica avvenuta con successo' },
+          ];
+          this.hashService.type = 'SUCCESS';
+        },
+        (err) => {
+          this.hashService.isModified = true;
+          this.hashService.message = [{ label: 'Modifica non avvenuta' }];
+          this.hashService.type = 'DANGER';
+        }
+      )
       .add(() => {
         this.ngOnInit();
         this.scrollToTop();
@@ -161,9 +205,20 @@ export class ModificaFormComponent implements OnInit {
     this.form.stato = 'Pubblicato';
     this.elencoFormService
       .updateForm(this.form._id, this.form)
-      .subscribe(() => {
-        this.isModified = true;
-      })
+      .subscribe(
+        () => {
+          this.hashService.isModified = true;
+          this.hashService.message = [
+            { label: 'Modifica avvenuta con successo' },
+          ];
+          this.hashService.type = 'SUCCESS';
+        },
+        (err) => {
+          this.hashService.isModified = true;
+          this.hashService.message = [{ label: 'Modifica non avvenuta' }];
+          this.hashService.type = 'DANGER';
+        }
+      )
       .add(() => {
         this.ngOnInit();
         this.scrollToTop();
@@ -189,7 +244,7 @@ export class ModificaFormComponent implements OnInit {
 
   public changeMetadati(event: any) {
     this.metadati = event;
-    this.isModified = false;
+    this.hashService.isModified = false;
   }
 
   public changeAcl(event: any) {
@@ -197,10 +252,11 @@ export class ModificaFormComponent implements OnInit {
   }
 
   public changeForm(event: any) {
-    this.isModified = false;
+    this.hashService.isModified = false;
   }
 
   public goToTornaAllaRicerca() {
+    this.hashService.isModified = false;
     this.router.navigate(['/admin']);
   }
 

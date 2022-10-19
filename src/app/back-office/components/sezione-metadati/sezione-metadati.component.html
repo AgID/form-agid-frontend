@@ -1,11 +1,11 @@
-<div class="col-12 d-flex mb-3 mt-3 " *ngIf="metadati?.stato && metadati?.versione >= 0">
+<!-- <div class="col-12 d-flex mb-3 mt-3 " *ngIf="metadati?.stato && metadati?.versione >= 0">
   <div class="col-3 p-2">
     <label><b>Stato</b> : {{ metadati.stato }}</label>
   </div>
   <div class="col-4 p-2">
     <label><b>versione</b> : {{ metadati.versione }}</label>
   </div>
-</div>
+</div> -->
 <div class="row">
   <div class="col-12">
     <h3>Sezione metadati</h3>
@@ -14,64 +14,151 @@
 
 <div class="row">
   <div class="col-12">
-    <app-input [label]="'Titolo dello schema'" [value]="metadati?.titolo" [isValid]="isValid.titolo"
-      [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpTitolo($event)">
+    <select id="langSelect" (change)="onChangeLang($event)" class="mb-3">
+      <option selected="" value="">Scegli un'opzione</option>
+      <option value="ITA">Italiano</option>
+      <option value="ENG">Inglese</option>
+      <option value="DET">Tedesco</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <app-input
+      [label]="'Titolo dello schema'"
+      [value]="metadati?.titolo"
+      [isValid]="isValid.titolo"
+      [errorMessage]="errorMessage"
+      [errorType]="typeAlert"
+      (changeInput)="onKeyUpTitolo($event)"
+    >
     </app-input>
   </div>
   <div class="col-12 col-md-4">
-    <app-input [label]="'Pattern del titolo dello schema'"
-      [value]="metadati?.titoloPattern ? metadati.titoloPattern : ''" [isValid]="isValid.titoloPattern"
-      [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpTitoloPattern($event)">
+    <app-input
+      [label]="'Pattern del titolo dello schema'"
+      [value]="metadati?.titoloPattern ? metadati.titoloPattern : ''"
+      [isValid]="isValid.titoloPattern"
+      [errorMessage]="errorMessage"
+      [errorType]="typeAlert"
+      (changeInput)="onKeyUpTitoloPattern($event)"
+    >
     </app-input>
   </div>
   <div class="col-12 col-md-3">
-    <button type="button" class="btn btn-primary" (click)="verificaSegnapostiTitolo()">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="verificaSegnapostiTitolo()"
+    >
       Verifica
     </button>
   </div>
   <div class="w-100"></div>
   <div class="col-12">
-    <app-textarea [label]="'Descrizione'" [value]="metadati?.descrizione" [isValid]="isValid.descrizione" [rows]="4"
-      [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpDescrizione($event)">
+    <app-textarea
+      [label]="'Descrizione'"
+      [value]="metadati?.descrizione"
+      [isValid]="isValid.descrizione"
+      [rows]="4"
+      [errorMessage]="errorMessage"
+      [errorType]="typeAlert"
+      (changeInput)="onKeyUpDescrizione($event)"
+    >
     </app-textarea>
   </div>
   <div class="w-100"></div>
   <div class="col-12">
-    <app-textarea [label]="'Home'" [value]="metadati?.sezioniInformative?.home" [isValid]="isValid.home" [rows]="4"
-      [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpHome($event)">
-    </app-textarea>
+    <div class="form-group mt-3">
+      <label class="active" [attr.for]="'home'">{{ "Home" }}</label>
+      <md-editor
+        name="home"
+        [(ngModel)]="metadati.sezioniInformative.home"
+        [height]="'400px'"
+        required
+      >
+        <slot custom-btns></slot>
+      </md-editor>
+      <!-- <angular-markdown-editor
+        [locale]="locale"
+        textareaId="home"
+        name="home"
+        [rows]="8"
+        [options]="editorOptions"
+        [(ngModel)]="metadati.sezioniInformative.home"
+        (onChange)="onKeyUpDescrizione($event)"
+      >
+      </angular-markdown-editor> -->
+    </div>
   </div>
   <div class="col-12">
-    <app-textarea [label]="'Faq'" [value]="metadati?.sezioniInformative?.faq" [rows]="4" [isValid]="isValid.faq"
-      [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpFaq($event)">
-    </app-textarea>
+    <div class="form-group mt-3">
+      <label class="active" [attr.for]="'faq'">{{ "Faq" }}</label>
+      <!-- <angular-markdown-editor
+        [locale]="locale"
+        textareaId="faq"
+        name="faq"
+        [rows]="8"
+        [options]="editorOptions"
+        [(ngModel)]="metadati.sezioniInformative.faq"
+        (onChange)="onKeyUpDescrizione($event)"
+      >
+      </angular-markdown-editor> -->
+      <md-editor
+        name="faq"
+        [(ngModel)]="metadati.sezioniInformative.faq"
+        [height]="'400px'"
+        required
+      >
+        <slot custom-btns></slot>
+      </md-editor>
+    </div>
   </div>
   <div class="col-12 col-md-4">
-    <app-input [label]="'Data inizio'" [type]="'date'" [value]="metadati?.dataInizioValidita"
-      [isValid]="isValid.dataInizioValidita" [errorMessage]="errorMessage" [errorType]="typeAlert"
-      (changeInput)="onKeyDataInizio($event)">
+    <app-input
+      [label]="'Data inizio'"
+      [type]="'date'"
+      [value]="metadati?.dataInizioValidita"
+      [isValid]="isValid.dataInizioValidita"
+      [errorMessage]="errorMessage"
+      [errorType]="typeAlert"
+      (changeInput)="onKeyDataInizio($event)"
+    >
     </app-input>
   </div>
   <div class="col-12 col-md-4">
-    <app-input [label]="'Data fine'" [type]="'date'" [value]="metadati?.dataFineValidita"
-      [isValid]="isValid.dataFineValidita" [errorMessage]="errorMessage" [errorType]="typeAlert"
-      (changeInput)="onKeyUpDataFine($event)">
+    <app-input
+      [label]="'Data fine'"
+      [type]="'date'"
+      [value]="metadati?.dataFineValidita"
+      [isValid]="isValid.dataFineValidita"
+      [errorMessage]="errorMessage"
+      [errorType]="typeAlert"
+      (changeInput)="onKeyUpDataFine($event)"
+    >
     </app-input>
   </div>
   <div class="w-100"></div>
   <div class="col-12 d-flex mb-3">
     <div class="col-3">
       <div class="form-check">
-        <input id="abilitaStatistiche" type="checkbox" [attr.checked]="metadati?.abilitaStatistiche ? true : undefined"
-          (change)="onChangeAbilitaStatistiche($event)" />
+        <input
+          id="abilitaStatistiche"
+          type="checkbox"
+          [attr.checked]="metadati?.abilitaStatistiche ? true : undefined"
+          (change)="onChangeAbilitaStatistiche($event)"
+        />
         <label for="abilitaStatistiche">Abilita statistiche</label>
       </div>
     </div>
     <div class="col-3">
       <div class="form-check">
-        <input id="verificaPubblicazione" type="checkbox" [attr.checked]="
+        <input
+          id="verificaPubblicazione"
+          type="checkbox"
+          [attr.checked]="
             metadati?.verificaPubblicazione.abilitata ? true : undefined
-          " (change)="onChangeVerificaPubblicazione($event)" />
+          "
+          (change)="onChangeVerificaPubblicazione($event)"
+        />
         <label for="verificaPubblicazione">Verifica pubblicazione</label>
       </div>
     </div>
@@ -81,11 +168,14 @@
         <select id="selectCampoTarget" (change)="onChangeCampoTarget($event)">
           <option selected="" value="">Scegli un'opzione</option>
           <ng-container *ngFor="let item of optionsCampoTarget">
-            <option value="{{ item.option }}" [attr.selected]="
+            <option
+              value="{{ item.option }}"
+              [attr.selected]="
                 item.option === metadati.verificaPubblicazione.campoUrlTarget
                   ? true
                   : undefined
-              ">
+              "
+            >
               {{ item.option }}
             </option>
           </ng-container>

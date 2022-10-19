@@ -44,10 +44,12 @@
     aria-label="Vai all'archivio delle sottomissioni"
     (click)="goToElencoForm()"
     style="color: #06c"
+    appControlAccess
     >Torna indietro</a
   >
   <a
     *ngIf="!isArchivio"
+    appControlAccess
     class="card-title cursor-pointer d-flex justify-content-end"
     aria-label="Vai all'archivio delle sottomissioni"
     (click)="goToArchivio()"

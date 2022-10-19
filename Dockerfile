@@ -2,7 +2,7 @@
 FROM node:14.19.0-alpine as builder
 WORKDIR /app
 COPY . /app
-RUN npm ci 
+RUN npm i --only=prod
 RUN npm run build --prod
 #stage 2
 FROM nginx:alpine

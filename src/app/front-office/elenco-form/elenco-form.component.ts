@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ElencoFormService } from './elenco-form.service';
 import { SessionStorageService } from '../../common/session-storage.service';
 import { DatePipe } from '@angular/common';
+import { AuthService } from 'src/app/common/auth/auth.service';
+import { User } from 'src/app/common/types/user.type';
 
 @Component({
   selector: 'app-elenco-form-fo',
@@ -19,7 +21,8 @@ export class ElencoFormFoComponent implements OnInit {
     private route: ActivatedRoute,
     private elencoFormService: ElencoFormService,
     private sessionStorageService: SessionStorageService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -28,17 +31,21 @@ export class ElencoFormFoComponent implements OnInit {
       this.isArchivio = params['isArchivio'];
     });
     if (this.isArchivio) {
-      this.elencoFormService.getFormsExpired().subscribe((response: any) => {
-        this.elencoForm = response;
-        this.elencoForm.forEach((element, index) => {
-          this.dateExpiredForm.push({
-            dataFineValidita: this.datePipe.transform(
-              element.dataInserimento,
-              'dd/MM/yyyy'
-            ),
+      if (this.isAdmin()) {
+        this.elencoFormService.getFormsExpired().subscribe((response: any) => {
+          this.elencoForm = response;
+          this.elencoForm.forEach((element, index) => {
+            this.dateExpiredForm.push({
+              dataFineValidita: this.datePipe.transform(
+                element.dataInserimento,
+                'dd/MM/yyyy'
+              ),
+            });
           });
         });
-      });
+      } else {
+        this.goToElencoForm();
+      }
     } else {
       this.elencoFormService.getForms().subscribe((response: any) => {
         this.elencoForm = response;
@@ -60,6 +67,12 @@ export class ElencoFormFoComponent implements OnInit {
         relativeTo: this.route,
       });
     }
+  }
+
+  public isAdmin(): boolean {
+    return this.authService.userInfo?.user_policy.some(
+      (el) => el.policy.is_admin
+    );
   }
 
   // public goToNuovaSottomissione(item: any) {
