@@ -4,69 +4,29 @@
       <div class="sidebar-linklist-wrapper">
         <div class="link-list-wrapper">
           <h2 class="display-3 no_toc mb-4">
-            <a
-              class="primary-color-a12 text-decoration-none"
-              style="font-size: xx-large"
-              href="#"
-              [routerLink]="['/']"
-              ><span class="primary-color-a9">&lt;</span> Form</a
-            >
+            <a class="primary-color-a12 text-decoration-none" style="font-size: xx-large" href="#"
+              [routerLink]="['/']"><span class="primary-color-a9">&lt;</span> Form</a>
           </h2>
           <ul class="link-list">
-            <li
-              [routerLinkActive]="'selector'"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a
-                *ngIf="!isArchivio"
-                class="list-item large"
-                [routerLink]="['./']"
-                ><span>{{ titoloSottomissione }}</span></a
-              >
-              <a
-                *ngIf="isArchivio"
-                class="list-item large"
-                [routerLink]="['./']"
-                [queryParams]="{ isArchivio: true }"
-                ><span>{{ titoloSottomissione }}</span></a
-              >
+            <li [routerLinkActive]="'selector'" [routerLinkActiveOptions]="{ exact: true }">
+              <a *ngIf="!isArchivio" class="list-item large" [routerLink]="['./']"><span>{{ titoloSottomissione
+                  }}</span></a>
+              <a *ngIf="isArchivio" class="list-item large" [routerLink]="['./']"
+                [queryParams]="{ isArchivio: true }"><span>{{ titoloSottomissione }}</span></a>
             </li>
             <li [routerLinkActive]="'selector'">
-              <a
-                *ngIf="!isArchivio"
-                aria-current="page"
-                class="list-item large"
-                [routerLink]="['./ricerca']"
-                ><span>Gestione compilazioni</span></a
-              >
-              <a
-                *ngIf="isArchivio"
-                aria-current="page"
-                class="list-item large"
-                [routerLink]="['./ricerca']"
-                [queryParams]="{ isArchivio: true }"
-                ><span>Gestione compilazioni</span></a
-              >
-              <a
-                [hidden]="true"
-                [routerLink]="['./nuova-sottomissione']"
-              >
+              <a *ngIf="!isArchivio" aria-current="page" class="list-item large"
+                [routerLink]="['./ricerca']"><span>{{"AG_Gestione_Compilazioni" | translate}}</span></a>
+              <a *ngIf="isArchivio" aria-current="page" class="list-item large" [routerLink]="['./ricerca']"
+                [queryParams]="{ isArchivio: true }"><span>{{"AG_Gestione_Compilazioni" | translate}}</span></a>
+              <a [hidden]="true" [routerLink]="['./nuova-sottomissione']">
               </a>
             </li>
             <li [routerLinkActive]="'selector'">
-              <a
-                *ngIf="!isArchivio"
-                class="list-item large"
-                [routerLink]="['./faq']"
-                ><span>FAQ</span></a
-              >
-              <a
-                *ngIf="isArchivio"
-                class="list-item large"
-                [routerLink]="['./faq']"
-                [queryParams]="{ isArchivio: true }"
-                ><span>FAQ</span></a
-              >
+              <a *ngIf="!isArchivio" class="list-item large" [routerLink]="['./faq']"><span>{{"AG_Faq" |
+                  translate}}</span></a>
+              <a *ngIf="isArchivio" class="list-item large" [routerLink]="['./faq']"
+                [queryParams]="{ isArchivio: true }"><span>{{"AG_Faq" | translate}}</span></a>
             </li>
           </ul>
         </div>

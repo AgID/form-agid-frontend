@@ -1,30 +1,19 @@
 <div class="card-wrapper card-space d-flex justify-content-center pb-5">
   <div class="card card-bg no-after w-50">
     <div class="card-body">
-      <h2 class="card-title big-heading text-center">Aggiorna profilo</h2>
+      <h2 class="card-title big-heading text-center">{{"AG_Aggiorna_Profilo" | translate}}</h2>
       <div class="px-2">
-        Sembra che non sia associata una mail al tuo profilo.
+        {{"AG_Mail_Profilo" | translate}}
       </div>
       <div class="mt-5">
-        <app-input
-          [label]="'Indirizzo email'"
-          [value]="email"
-          [isValid]="isValidEmail"
-          [errorMessage]="errorMessage"
-          [errorType]="typeAlert"
-          (changeInput)="onKeyUpEmail($event)"
-        >
+        <app-input [label]="'Indirizzo email'" [value]="email" [isValid]="isValidEmail" [errorMessage]="errorMessage"
+          [errorType]="typeAlert" (changeInput)="onKeyUpEmail($event)">
         </app-input>
       </div>
       <div class="text-end">
-        <button
-          class="btn btn-primary mt-3 text-right"
-          type="submit"
-          [disabled]="!email ? true : undefined"
-          data-focus-mouse="false"
-          (click)="onClickInviaCodiceOTP()"
-        >
-          Invia codice
+        <button class="btn btn-primary mt-3 text-right" type="submit" [disabled]="!email ? true : undefined"
+          data-focus-mouse="false" (click)="onClickInviaCodiceOTP()">
+          {{"AG_Invia_Codice" | translate}}
         </button>
       </div>
     </div>

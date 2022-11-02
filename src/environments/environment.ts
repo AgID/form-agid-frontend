@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   BACKEND_HOST: 'http://localhost:3001/api',
+  BACKEND_AMM: 'https://indicepa.gov.it/ipa-dati/api',
 };
 
 /*

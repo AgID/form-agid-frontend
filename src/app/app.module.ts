@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormioAppConfig } from '@formio/angular';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppInitializer } from './app.inizializer';
+import { AppInterceptor } from './app.interceptor';
+import { FormModule } from './back-office/form.module';
+import { AppCommonModule } from './common/app-common.module';
 import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
 import { FooterModule } from './footer/footer.module';
-import { HeaderModule } from './header/header.module';
-import { FormModule } from './back-office/form.module';
-import { CommonModule } from '@angular/common';
 import { FormFoModule } from './front-office/form-fo.module';
-import { AppCommonModule } from './common/app-common.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderModule } from './header/header.module';
 import { ViewComponent } from './public/view/view.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppInterceptor } from './app.interceptor';
 
 const AppConfig = {};
 
@@ -29,8 +31,15 @@ const AppConfig = {};
     CommonModule,
     AppCommonModule,
     NoopAnimationsModule,
+    TranslateModule.forRoot(),
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: AppInitializer,
+      deps: [TranslateService, HttpClient],
+      multi: true,
+    },
     { provide: FormioAppConfig, useValue: AppConfig },
     {
       provide: HTTP_INTERCEPTORS,

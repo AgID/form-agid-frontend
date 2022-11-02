@@ -1,12 +1,6 @@
 <nav class="navbar navbar-expand-lg has-megamenu">
-  <button
-    class="custom-navbar-toggler"
-    type="button"
-    aria-controls="nav1"
-    aria-expanded="false"
-    aria-label="Mostra/Nascondi la navigazione"
-    data-target="#nav1"
-  >
+  <button class="custom-navbar-toggler" type="button" aria-controls="nav1" aria-expanded="false"
+    aria-label="Mostra/Nascondi la navigazione" data-target="#nav1">
     <svg class="icon">
       <use href="/assets/svg/sprite.svg#it-burger"></use>
     </svg>
@@ -15,49 +9,35 @@
     <div class="overlay"></div>
     <div class="close-div">
       <button class="btn close-menu" type="button">
-        <span class="sr-only">Nascondi la navigazione</span>
+        <span class="sr-only">{{"AG_Nascondi_Navigazione" | translate}}</span>
         <svg class="icon">
           <use href="/assets/svg/sprite.svg#it-close-big"></use>
         </svg>
       </button>
     </div>
     <div class="menu-wrapper">
-      <ul
-        class="navbar-nav justify-content-start ms-auto me-auto px-0 custom-max-width-1200"
-      >
+      <ul class="navbar-nav justify-content-start ms-auto me-auto px-0 custom-max-width-1200">
         <li class="nav-item">
-          <a
-            id="front_link"
-            class="custom-overwrite-border nav-link"
-            routerLink="/elenco-form"
-            routerLinkActive="active"
-            appControlAccess
-            (click)="resetMessage()"
-            ><span>Front office</span></a
-          >
+          <a id="front_link" class="custom-overwrite-border nav-link" routerLink="/elenco-form"
+            routerLinkActive="active" appControlAccess (click)="resetMessage()"><span>{{"AG_Front_Office" |
+              translate}}</span></a>
         </li>
         <li class="nav-item">
-          <a
-            id="admin_link"
-            class="custom-overwrite-border nav-link"
-            routerLink="/admin"
-            routerLinkActive="active"
-            (click)="resetMessage()"
-            appControlAccess
-          >
-            <span>Back office</span>
+          <a id="admin_link" class="custom-overwrite-border nav-link" routerLink="/admin" routerLinkActive="active"
+            (click)="resetMessage()" appControlAccess>
+            <span>{{"AG_Back_Office" | translate}}</span>
           </a>
         </li>
         <li class="nav-item">
-          <a
-            id="multilanguage_link"
-            class="custom-overwrite-border nav-link"
-            routerLink="/multilanguage"
-            routerLinkActive="active"
-            (click)="resetMessage()"
-            appControlAccess
-          >
-            <span>Multilinguismo</span>
+          <a id="multilanguage_link" class="custom-overwrite-border nav-link" routerLink="/multilanguage"
+            routerLinkActive="active" (click)="resetMessage()" appControlAccess>
+            <span>{{"AG_Multilinguismo" | translate}}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a id="invite_link" class="custom-overwrite-border nav-link" routerLink="/invite" routerLinkActive="active"
+            (click)="resetMessage()" appControlAccess>
+            <span>{{"AG_Inviti" | translate}}</span>
           </a>
         </li>
         <!-- <li class="nav-item">

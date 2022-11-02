@@ -8,90 +8,51 @@
 </div> -->
 <div class="row">
   <div class="col-12">
-    <h3>Sezione metadati</h3>
+    <h3>{{"AG_Dati_Generali" | translate}}</h3>
   </div>
 </div>
 
 <div class="row">
   <div class="col-12">
-    <select id="langSelect" (change)="onChangeLang($event)" class="mb-3">
-      <option selected="" value="">Scegli un'opzione</option>
-      <option value="ITA">Italiano</option>
-      <option value="ENG">Inglese</option>
-      <option value="DET">Tedesco</option>
-    </select>
+    <app-language-selector [label]="'AG_Lingua_Associata_Schema' | translate" [value]="metadati?.lingua"
+      [isValid]="isValid.lingua" [errorMessage]="errorMessage" [errorType]="typeAlert"
+      (changeLanguage)="onChangeLang($event)">
+    </app-language-selector>
   </div>
   <div class="col-12">
-    <app-input
-      [label]="'Titolo dello schema'"
-      [value]="metadati?.titolo"
-      [isValid]="isValid.titolo"
-      [errorMessage]="errorMessage"
-      [errorType]="typeAlert"
-      (changeInput)="onKeyUpTitolo($event)"
-    >
+    <app-input [label]="'AG_Titolo_Schema' | translate" [value]="metadati?.titolo" [isValid]="isValid.titolo"
+      [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpTitolo($event)">
     </app-input>
   </div>
   <div class="col-12 col-md-4">
-    <app-input
-      [label]="'Pattern del titolo dello schema'"
-      [value]="metadati?.titoloPattern ? metadati.titoloPattern : ''"
-      [isValid]="isValid.titoloPattern"
-      [errorMessage]="errorMessage"
-      [errorType]="typeAlert"
-      (changeInput)="onKeyUpTitoloPattern($event)"
-    >
+    <app-input [label]="'AG_Pattern_Titolo_Schema' | translate"
+      [value]="metadati?.titoloPattern ? metadati.titoloPattern : ''" [isValid]="isValid.titoloPattern"
+      [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpTitoloPattern($event)">
     </app-input>
   </div>
   <div class="col-12 col-md-3">
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="verificaSegnapostiTitolo()"
-    >
-      Verifica
+    <button type="button" class="btn btn-primary" (click)="verificaSegnapostiTitolo()">
+      {{"AG_Verifica" | translate}}
     </button>
   </div>
   <div class="w-100"></div>
   <div class="col-12">
-    <app-textarea
-      [label]="'Descrizione'"
-      [value]="metadati?.descrizione"
-      [isValid]="isValid.descrizione"
-      [rows]="4"
-      [errorMessage]="errorMessage"
-      [errorType]="typeAlert"
-      (changeInput)="onKeyUpDescrizione($event)"
-    >
+    <app-textarea [label]="'AG_Descrizione' | translate" [value]="metadati?.descrizione" [isValid]="isValid.descrizione"
+      [rows]="4" [errorMessage]="errorMessage" [errorType]="typeAlert" (changeInput)="onKeyUpDescrizione($event)">
     </app-textarea>
   </div>
   <div class="w-100"></div>
   <div class="col-12">
     <div class="form-group mt-3">
-      <label class="active" [attr.for]="'home'">{{ "Home" }}</label>
-      <md-editor
-        name="home"
-        [(ngModel)]="metadati.sezioniInformative.home"
-        [height]="'400px'"
-        required
-      >
+      <label class="active" [attr.for]="'home'">{{ "AG_Sezione_Home" | translate }}</label>
+      <md-editor name="home" [(ngModel)]="metadati.sezioniInformative.home" [height]="'400px'" required>
         <slot custom-btns></slot>
       </md-editor>
-      <!-- <angular-markdown-editor
-        [locale]="locale"
-        textareaId="home"
-        name="home"
-        [rows]="8"
-        [options]="editorOptions"
-        [(ngModel)]="metadati.sezioniInformative.home"
-        (onChange)="onKeyUpDescrizione($event)"
-      >
-      </angular-markdown-editor> -->
     </div>
   </div>
   <div class="col-12">
     <div class="form-group mt-3">
-      <label class="active" [attr.for]="'faq'">{{ "Faq" }}</label>
+      <label class="active" [attr.for]="'faq'">{{"AG_Sezione_Faq" | translate}}</label>
       <!-- <angular-markdown-editor
         [locale]="locale"
         textareaId="faq"
@@ -102,80 +63,51 @@
         (onChange)="onKeyUpDescrizione($event)"
       >
       </angular-markdown-editor> -->
-      <md-editor
-        name="faq"
-        [(ngModel)]="metadati.sezioniInformative.faq"
-        [height]="'400px'"
-        required
-      >
+      <md-editor name="faq" [(ngModel)]="metadati.sezioniInformative.faq" [height]="'400px'" required>
         <slot custom-btns></slot>
       </md-editor>
     </div>
   </div>
   <div class="col-12 col-md-4">
-    <app-input
-      [label]="'Data inizio'"
-      [type]="'date'"
-      [value]="metadati?.dataInizioValidita"
-      [isValid]="isValid.dataInizioValidita"
-      [errorMessage]="errorMessage"
-      [errorType]="typeAlert"
-      (changeInput)="onKeyDataInizio($event)"
-    >
+    <app-input [label]="'AG_Data_Inizio' | translate" [type]="'date'" [value]="metadati?.dataInizioValidita"
+      [isValid]="isValid.dataInizioValidita" [errorMessage]="errorMessage" [errorType]="typeAlert"
+      (changeInput)="onKeyDataInizio($event)">
     </app-input>
   </div>
   <div class="col-12 col-md-4">
-    <app-input
-      [label]="'Data fine'"
-      [type]="'date'"
-      [value]="metadati?.dataFineValidita"
-      [isValid]="isValid.dataFineValidita"
-      [errorMessage]="errorMessage"
-      [errorType]="typeAlert"
-      (changeInput)="onKeyUpDataFine($event)"
-    >
+    <app-input [label]="'AG_Data_Fine' | translate" [type]="'date'" [value]="metadati?.dataFineValidita"
+      [isValid]="isValid.dataFineValidita" [errorMessage]="errorMessage" [errorType]="typeAlert"
+      (changeInput)="onKeyUpDataFine($event)">
     </app-input>
   </div>
   <div class="w-100"></div>
   <div class="col-12 d-flex mb-3">
     <div class="col-3">
       <div class="form-check">
-        <input
-          id="abilitaStatistiche"
-          type="checkbox"
-          [attr.checked]="metadati?.abilitaStatistiche ? true : undefined"
-          (change)="onChangeAbilitaStatistiche($event)"
-        />
-        <label for="abilitaStatistiche">Abilita statistiche</label>
+        <input id="abilitaStatistiche" type="checkbox" [attr.checked]="metadati?.abilitaStatistiche ? true : undefined"
+          (change)="onChangeAbilitaStatistiche($event)" />
+        <label for="abilitaStatistiche">{{"AG_Abilita_Statistiche" | translate}}</label>
       </div>
     </div>
     <div class="col-3">
       <div class="form-check">
-        <input
-          id="verificaPubblicazione"
-          type="checkbox"
-          [attr.checked]="
+        <input id="verificaPubblicazione" type="checkbox" [attr.checked]="
             metadati?.verificaPubblicazione.abilitata ? true : undefined
-          "
-          (change)="onChangeVerificaPubblicazione($event)"
-        />
-        <label for="verificaPubblicazione">Verifica pubblicazione</label>
+          " (change)="onChangeVerificaPubblicazione($event)" />
+        <label for="verificaPubblicazione">{{"AG_Verifica_Pubblicazione" | translate}}</label>
       </div>
     </div>
     <div class="col-3" *ngIf="metadati?.verificaPubblicazione.abilitata">
       <div class="select-wrapper">
-        <label for="selectCampoTarget">Campo target</label>
+        <label for="selectCampoTarget">{{"AG_Campo_Target" | translate}}</label>
         <select id="selectCampoTarget" (change)="onChangeCampoTarget($event)">
-          <option selected="" value="">Scegli un'opzione</option>
+          <option selected="" value="">{{"AG_Scegli_Opzione" | translate}}</option>
           <ng-container *ngFor="let item of optionsCampoTarget">
-            <option
-              value="{{ item.option }}"
-              [attr.selected]="
+            <option value="{{ item.option }}" [attr.selected]="
                 item.option === metadati.verificaPubblicazione.campoUrlTarget
                   ? true
                   : undefined
-              "
-            >
+              ">
               {{ item.option }}
             </option>
           </ng-container>

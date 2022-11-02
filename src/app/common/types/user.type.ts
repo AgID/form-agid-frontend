@@ -1,5 +1,6 @@
 export type User = {
   sub: string;
+  id: string;
   provider: string;
   provider_id: string;
   firstname: string;

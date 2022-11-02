@@ -6,7 +6,6 @@ import {
   Output,
   ViewChildren,
 } from '@angular/core';
-import { MarkdownService } from 'ngx-markdown';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { SharedService } from '../../inserimento/shared.service';
 import { IMetadatiType } from '../../types/metadati.type';
@@ -17,7 +16,7 @@ import { SezioneBuilderComponent } from '../sezione-builder/sezione-builder.comp
   templateUrl: './sezione-metadati.component.html',
   styleUrls: ['./sezione-metadati.component.scss'],
 })
-export class SezioneMetadatiComponent {
+export class SezioneMetadatiComponent implements OnInit {
   @Input()
   public metadati: IMetadatiType = {
     lingua: '',
@@ -63,12 +62,14 @@ export class SezioneMetadatiComponent {
     descrizione: true,
     dataInizioValidita: true,
     dataFineValidita: true,
+    lingua: true,
   };
 
-  constructor(
-    private _sharedService: SharedService,
-    private markdownService: MarkdownService
-  ) {}
+  constructor(private _sharedService: SharedService) {}
+
+  ngOnInit(): void {
+    this.metadati.lingua = localStorage.getItem('lang');
+  }
 
   public onKeyUpTitolo(e: any) {
     this.metadati.titolo = e.target.value;
@@ -117,10 +118,6 @@ export class SezioneMetadatiComponent {
     this.changeMetadati.emit(this.metadati);
   }
 
-  public onChange(e: any) {
-    console.log(e);
-  }
-
   public onChangeVerificaPubblicazione(e: any) {
     this.metadati.verificaPubblicazione.abilitata = e.target.checked;
     if (!this.metadati.verificaPubblicazione.abilitata)
@@ -131,8 +128,8 @@ export class SezioneMetadatiComponent {
     this.metadati.verificaPubblicazione.campoUrlTarget = e.target.value;
   }
 
-  public onChangeLang($e: any) {
-    this.metadati.lingua = $e.target.value;
+  public onChangeLang(lingua: any) {
+    this.metadati.lingua = lingua;
   }
 
   public validate(): boolean {

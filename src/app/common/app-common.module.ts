@@ -1,29 +1,31 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
   NgModule,
   SecurityContext,
 } from '@angular/core';
-import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
-import { AlertComponent } from './alert/alert.component';
-import { PaginatorComponent } from './paginator/paginator.component';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { SpinnerInterceptor } from './spinner.interceptor';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
 import { FormioModule } from '@formio/angular';
-import { FormioRenderComponent } from './formio/formiojs-render/formio-render.component';
-import { FormioBuilderComponent } from './formio/formiojs-builder/formio-builder.component';
-import { InputComponent } from './input/input.component';
-import { TextareaComponent } from './textarea/textarea.component';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthConfig, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
-import { authConfig } from './auth/auth-config';
-import { AuthService } from './auth/auth.service';
-import { AuthGuard } from './auth/auth.guard';
-import { TokenInterceptor } from './auth/token.interceptor';
 import { MarkdownModule } from 'ngx-markdown';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
+import { AlertComponent } from './alert/alert.component';
+import { authConfig } from './auth/auth-config';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
 import { ControlAccessDirective } from './auth/control-access.directive';
+import { TokenInterceptor } from './auth/token.interceptor';
+import { FormioBuilderComponent } from './formio/formiojs-builder/formio-builder.component';
+import { FormioRenderComponent } from './formio/formiojs-render/formio-render.component';
+import { InputComponent } from './input/input.component';
+import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { SpinnerInterceptor } from './spinner.interceptor';
+import { TextareaComponent } from './textarea/textarea.component';
 
 // We need a factory, since localStorage is not available during AOT build time.
 export function storageFactory(): OAuthStorage {
@@ -40,6 +42,7 @@ export function storageFactory(): OAuthStorage {
     FormioBuilderComponent,
     InputComponent,
     TextareaComponent,
+    LanguageSelectorComponent,
   ],
   imports: [
     CommonModule,
@@ -52,16 +55,6 @@ export function storageFactory(): OAuthStorage {
       loader: HttpClient,
       sanitize: SecurityContext.NONE,
     }),
-  ],
-  exports: [
-    PaginatorComponent,
-    AlertComponent,
-    NgxSpinnerModule,
-    FormioRenderComponent,
-    FormioBuilderComponent,
-    InputComponent,
-    TextareaComponent,
-    ControlAccessDirective,
   ],
   providers: [
     AuthService,
@@ -85,6 +78,18 @@ export function storageFactory(): OAuthStorage {
       deps: [AuthService],
       multi: true,
     },
+  ],
+  exports: [
+    PaginatorComponent,
+    AlertComponent,
+    NgxSpinnerModule,
+    FormioRenderComponent,
+    FormioBuilderComponent,
+    InputComponent,
+    TextareaComponent,
+    LanguageSelectorComponent,
+    ControlAccessDirective,
+    TranslateModule,
   ],
 })
 export class AppCommonModule {}

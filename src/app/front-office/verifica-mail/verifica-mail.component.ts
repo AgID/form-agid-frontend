@@ -26,30 +26,23 @@ export class VerificaMailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.userInfo?.email) {
-      this.router.navigate([`../home`], {
-        relativeTo: this.route,
+    this.verificaMailService
+      .getStatoValidazione()
+      .subscribe((response: any) => {
+        // this.hashService.statoValidazioneUtente = response;
+        if (
+          response.state === 'NEVER_VALIDATE' ||
+          response.state === 'EXPIRED'
+        ) {
+          //redirect a questa pagina quando metteremo la pagina precedente di guard
+        }
+        //Se è in fase di validazione mi porta alla pagina di OTP
+        if (response.state === 'VALIDATION') {
+          this.router.navigate([`../verifica-otp`], {
+            relativeTo: this.route,
+          });
+        }
       });
-    } else {
-      //Controllo stato validazione (se non esiste la mail)
-      this.verificaMailService
-        .getStatoValidazione()
-        .subscribe((response: any) => {
-          // this.hashService.statoValidazioneUtente = response;
-          if (
-            response.state === 'NEVER_VALIDATE' ||
-            response.state === 'EXPIRED'
-          ) {
-            //redirect a questa pagina quando metteremo la pagina precedente di guard
-          }
-          //Se è in fase di validazione mi porta alla pagina di OTP
-          if (response.state === 'VALIDATION') {
-            this.router.navigate([`../verifica-otp`], {
-              relativeTo: this.route,
-            });
-          }
-        });
-    }
   }
 
   public onKeyUpEmail(e: any) {

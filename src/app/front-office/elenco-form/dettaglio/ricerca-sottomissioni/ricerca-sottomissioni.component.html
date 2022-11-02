@@ -1,22 +1,15 @@
 <div class="d-flex justify-content-end">
-  <button
-    type="button"
-    class="btn btn-primary"
-    [routerLink]="['../nuova-sottomissione']"
-  >
-    Nuovo
+  <button type="button" class="btn btn-primary" [routerLink]="['../nuova-sottomissione']">
+    {{ "AG_Nuovo" | translate }}
   </button>
 </div>
-<table
-  style="width: 100%; table-layout: fixed"
-  class="table table-responsive-xl table-hover mt-4"
->
+<table style="width: 100%; table-layout: fixed" class="table table-responsive-xl table-hover mt-4">
   <thead>
     <tr>
-      <th style="width: 40%" scope="col">Titolo</th>
-      <th style="width: 20%" scope="col">Stato</th>
-      <th style="width: 25%" scope="col">Data ultima modifica</th>
-      <th style="width: 15%" scope="col">Azioni</th>
+      <th style="width: 40%" scope="col">{{"AG_Titolo" | translate}}</th>
+      <th style="width: 20%" scope="col">{{"AG_Stato" | translate}}</th>
+      <th style="width: 25%" scope="col">{{"AG_Data_Ultima_Modifica" | translate}}</th>
+      <th style="width: 15%" scope="col">{{"AG_Azioni" | translate}}</th>
     </tr>
   </thead>
   <tbody>
@@ -34,28 +27,17 @@
       </td>
       <td>{{ item.dataUltimaModifica }}</td>
       <td>
-        <svg
-          *ngIf="!isArchivio"
-          class="icon cursor-pointer"
-          (click)="goToModificaSottomissione(item)"
-        >
-          <title id="modifica">Modifica</title>
+        <svg *ngIf="!isArchivio" class="icon cursor-pointer" (click)="goToModificaSottomissione(item)">
+          <title id="modifica">{{"AG_Modifica" | translate}}</title>
           <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
         </svg>
-        <svg
-          class="icon cursor-pointer"
-          [ngClass]="{ 'icon-disabled': item.stato !== 'Pubblicato' }"
-          (click)="goToDettaglioSottomissione(item)"
-        >
-          <title id="dettaglio">Dettaglio</title>
+        <svg class="icon cursor-pointer" [ngClass]="{ 'icon-disabled': item.stato !== 'Pubblicato' }"
+          (click)="goToDettaglioSottomissione(item)">
+          <title id="dettaglio">{{"AG_Dettaglio" | translate}}</title>
           <use href="../../../../assets/svg/sprite.svg#it-note"></use>
         </svg>
-        <svg
-          *ngIf="!isArchivio"
-          class="icon cursor-pointer"
-          (click)="eliminaSottomissione(item)"
-        >
-          <title id="elimina">Elimina</title>
+        <svg *ngIf="!isArchivio" class="icon cursor-pointer" (click)="eliminaSottomissione(item)">
+          <title id="elimina">{{"AG_Elimina" | translate}}</title>
           <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
         </svg>
       </td>
@@ -69,53 +51,30 @@
     </div>
   </tr>
 </tbody>
-<app-paginator
-  *ngIf="totalElements"
-  [elementsForPage]="filters.pagination.elementsForPage"
-  [(selectedPage)]="selectedPage"
-  [totalElements]="totalElements"
-  (selectedPageChange)="onPageChange($event)"
-></app-paginator>
+<app-paginator *ngIf="totalElements" [elementsForPage]="filters.pagination.elementsForPage"
+  [(selectedPage)]="selectedPage" [totalElements]="totalElements" (selectedPageChange)="onPageChange($event)">
+</app-paginator>
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  tabindex="-1"
-  role="dialog"
-  id="deleteModal"
-  aria-labelledby="deleteModalTitle"
->
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteModal" aria-labelledby="deleteModalTitle">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content rounded">
       <div class="modal-header">
-        <h2 class="modal-title">Eliminazione</h2>
-        <button
-          class="btn-close"
-          type="button"
-          aria-label="Close"
-          (click)="redirectPage()"
-        >
+        <h2 class="modal-title">{{"AG_Eliminazione" | translate}}</h2>
+        <button class="btn-close" type="button" aria-label="Close" (click)="redirectPage()">
           <svg class="icon">
             <use href="/assets/svg/sprite.svg#it-close"></use>
           </svg>
         </button>
       </div>
       <div class="modal-body">
-        <p>Procedere con l'eliminazione?</p>
+        <p>{{"AG_Procedere_Eliminazione" | translate}}</p>
         <div class="d-flex justify-content-end mb-3">
-          <button
-            type="button"
-            class="btn btn-secondary me-3"
-            (click)="redirectPage()"
-          >
-            Annulla
+          <button type="button" class="btn btn-secondary me-3" (click)="redirectPage()">
+            {{"AG_Annulla" | translate}}
           </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="deleteSubmission()"
-          >
-            Conferma
+          <button type="button" class="btn btn-primary" (click)="deleteSubmission()">
+            {{"AG_Conferma" | translate}}
           </button>
         </div>
       </div>

@@ -3,6 +3,8 @@ export interface ISottomissione {
   versione?: number;
   versioneForm?: number;
   titolo?: string;
+  ente?: string;
+  emailUtente?: string;
   codiceUtenteInserimento?: string;
   dataInserimento?: Date;
   codiceUtenteModifica?: string;

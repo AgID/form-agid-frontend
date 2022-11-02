@@ -1,0 +1,40 @@
+<div [ngClass]="{ 'form-group mt-3': isInsideForm }">
+  <label *ngIf="label" class="active" [attr.for]="ident">{{ label }}</label>
+  <div class="nav-item dropdown">
+    <a
+      class="nav-link dropdown-toggle custom-flex"
+      [attr.id]="ident"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <span class="sr-only"
+        >{{ "Seleziona un'opzione" }}: {{ value || "Nessuna scelta" }}</span
+      >
+      <span>{{ value || "Seleziona un'opzione" }}</span>
+      <svg class="icon d-none d-lg-block">
+        <use href="/assets/svg/sprite.svg#it-expand"></use>
+      </svg>
+    </a>
+    <ul class="dropdown-menu" [attr.aria-labelledby]="ident">
+      <div class="row">
+        <div class="col-12">
+          <div class="link-list-wrapper">
+            <ul class="link-list" (click)="onChangeSelectedLanguage($event)">
+              <li data-lingua="ITA">
+                <a class="list-item"><span>ITA</span></a>
+              </li>
+              <li data-lingua="ENG">
+                <a class="list-item"><span>ENG</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+  <app-alert
+    *ngIf="!isValid"
+    [messaggio]="errorMessage"
+    [type]="errorType"
+  ></app-alert>
+</div>

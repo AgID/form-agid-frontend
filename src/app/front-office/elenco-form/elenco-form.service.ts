@@ -49,7 +49,6 @@ export class ElencoFormService {
       'stato' | 'versione' | 'datiPubblicati' | 'datiBozza'
     >
   ) {
-    // TODO: Da testare
     return this.http.put(`${ENV.BACKEND_HOST}/v1/submission/${id}`, body);
   }
 

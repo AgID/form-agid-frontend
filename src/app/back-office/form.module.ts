@@ -26,6 +26,7 @@ import { ElencoEtichetteComponent } from './multilinguismo/elenco-etichette/elen
 import { RisultatiEtichetteComponent } from './components/risultati-etichette/risultati-etichette.component';
 import { ModificaEtichettaComponent } from './multilinguismo/modifica-etichetta/modifica-etichetta.component';
 import { InserimentoEtichettaComponent } from './multilinguismo/inserimento-etichetta/inserimento-etichetta.component';
+import { InvitiComponent } from './Inviti/inviti.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { InserimentoEtichettaComponent } from './multilinguismo/inserimento-etic
     ModificaEtichettaComponent,
     InserimentoFormComponent,
     InserimentoEtichettaComponent,
+    InvitiComponent,
     SezioneBuilderComponent,
     SezioneMetadatiComponent,
     SezionePermessiComponent,

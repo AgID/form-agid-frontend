@@ -1,29 +1,17 @@
 <div class="row mb-3">
   <div class="col-12">
-    <h3>Sezione permessi</h3>
+    <h3>{{"AG_Destinatario" | translate}}</h3>
   </div>
   <div>
     <div class="form-check form-check-inline">
-      <input
-        name="gruppo1"
-        type="radio"
-        id="pubblico"
-        value="pubblico"
-        (change)="onChangeRadioPubblico($event)"
-        [attr.checked]="metadati?.acl?.tipo === 'pubblico' ? true : undefined"
-      />
-      <label for="pubblico">Pubblico</label>
+      <input name="gruppo1" type="radio" id="pubblico" value="pubblico" (change)="onChangeRadioPubblico($event)"
+        [attr.checked]="metadati?.acl?.tipo === 'pubblico' ? true : undefined" />
+      <label for="pubblico">{{"AG_Pubblico" | translate}}</label>
     </div>
     <div class="form-check form-check-inline">
-      <input
-        name="gruppo1"
-        type="radio"
-        id="privato"
-        value="privato"
-        (change)="onChangeRadioPrivato($event)"
-        [attr.checked]="metadati?.acl?.tipo === 'privato' ? true : undefined"
-      />
-      <label for="privato">Privato</label>
+      <input name="gruppo1" type="radio" id="privato" value="privato" (change)="onChangeRadioPrivato($event)"
+        [attr.checked]="metadati?.acl?.tipo === 'privato' ? true : undefined" />
+      <label for="privato">{{"AG_Privato" | translate}}</label>
     </div>
     <!-- <div class="form-check form-check-inline">
       <input

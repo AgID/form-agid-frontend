@@ -1,0 +1,111 @@
+<div class="card-wrapper card-space d-flex justify-content-center pb-5">
+  <div class="card card-bg no-after w-50">
+    <div class="card-body">
+      <h2 class="card-title big-heading text-center">Accedi</h2>
+      <div class="px-2">
+        Per poter procedere alla compilazione di un modulo è necessario
+        identificare l’amministrazione. La mail del relativo Responsabile per la
+        transizione digitale (RTD) deve essere già presente all’interno
+        dell’Indice delle Pubbliche Amministrazioni (IPA). Procedi con la scelta
+        della PA oppure leggi la guida su come accedere.
+      </div>
+      <div class="mt-5">
+        <!-- Esempi -->
+        <div class="select-wrapper mb-4">
+          <label for="accessibleAutocomplete"
+            >Cerca la tua amministrazione</label
+          >
+          <select
+            class="form-control"
+            id="accessibleAutocomplete"
+            required
+          ></select>
+          <small id="accessibleAutocomplete" class="form-text"
+            >inserisci la denominazione della tua amministrazione o il codice
+            ipa</small
+          >
+        </div>
+        <ng-container *ngIf="showKeyChoose">
+          <div class="form-check">
+            <input
+              name="gruppo1"
+              type="radio"
+              value="Y"
+              id="yesKey"
+              (change)="onChangeYesKey($event)"
+            />
+            <label for="yesKey">ho già la chiave di accesso</label>
+          </div>
+          <div class="form-check">
+            <input
+              name="gruppo1"
+              type="radio"
+              value="N"
+              id="noKey"
+              (change)="onChangeNoKey($event)"
+            />
+            <label for="noKey">desidero ricevere una chiave di accesso</label>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="haveKey === 'Y'">
+          <div class="form-group mt-5">
+            <app-input
+              [label]="
+                'inserisci la chiave di accesso che hai ricevuto per email:'
+              "
+              [value]="key"
+              [isValid]="isValidKey"
+              [errorMessage]="errorMessage"
+              [errorType]="typeAlert"
+              (changeInput)="onKeyUpKey($event)"
+            >
+            </app-input>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="haveKey === 'N'">
+          <div class="form-check mb-3">
+            <input
+              id="sendKey"
+              type="checkbox"
+              (change)="onChangeRadio($event)"
+            />
+            <label for="sendKey" style="overflow-wrap: break-word">
+              {{ radioText }}
+            </label>
+          </div>
+        </ng-container>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button
+          *ngIf="haveKey"
+          class="btn btn-secondary mt-3 text-right"
+          type="submit"
+          data-focus-mouse="false"
+          (click)="onClickAnnulla()"
+        >
+          Annulla
+        </button>
+        <button
+          *ngIf="haveKey === 'N'"
+          class="btn btn-primary mt-3 text-right"
+          type="submit"
+          [disabled]="!authorizationSend ? true : undefined"
+          data-focus-mouse="false"
+          (click)="onClickInviaMail()"
+        >
+          Invia email
+        </button>
+        <button
+          *ngIf="haveKey === 'Y'"
+          class="btn btn-primary mt-3 text-right"
+          type="submit"
+          [disabled]="!key ? true : undefined"
+          data-focus-mouse="false"
+          (click)="onClickAccedi()"
+        >
+          Accedi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

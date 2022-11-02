@@ -1,0 +1,15 @@
+<div>
+  <h1>{{"AG_Inviti" | translate}}</h1>
+  <hr />
+  <div class="row mt-5">
+    <div class="form-group col-md-4">
+      <app-input [label]="'AG_Email' | translate" (changeInput)="onChangeEmail($event)" [value]="">
+      </app-input>
+    </div>
+    <div class="form-group col-md-4">
+      <button type="button" class="btn btn-primary" [disabled]="email === ''" (click)="inviaEmail(email)">
+        {{"AG_Invia_Email" | translate}}
+      </button>
+    </div>
+  </div>
+</div>

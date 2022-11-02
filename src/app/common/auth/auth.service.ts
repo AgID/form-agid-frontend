@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { map } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, filter, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { BehaviorSubject, combineLatest, filter, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment as ENV } from 'src/environments/environment';
 import { User } from '../types/user.type';
 
 @Injectable({
@@ -18,7 +19,10 @@ export class AuthService {
   public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([
     this.isAuthenticated$,
     this.isDoneLoading$,
-  ]).pipe(map((values) => values.every((b) => b)));
+  ]).pipe(
+    map((values) => values.every((b) => b)),
+    filter((e) => !!e)
+  );
 
   public userInfo: User;
 
@@ -35,20 +39,25 @@ export class AuthService {
 
     this.oauthService.events
       .pipe(filter((e) => ['token_received'].includes(e.type)))
-      .subscribe((e) => this.oauthService.loadUserProfile());
+      .subscribe((e) => {
+        this.oauthService.userinfoEndpoint = `${ENV.BACKEND_HOST}/v1/profile/info`; // Sovrascrittura endpoint
+        this.oauthService.loadUserProfile();
+      });
+
+    this.canActivateProtectedRoutes$.subscribe((_) => {
+      this.userInfo = this.oauthService.getIdentityClaims() as User;
+      if (this.userInfo.id && !this.userInfo.email) {
+        console.log({ userInfo: this.userInfo });
+        this.router.navigate(['/verifica-mail']);
+      }
+    });
   }
 
   async initAuth(): Promise<any> {
     return this.oauthService
       .loadDiscoveryDocument()
-      .then(() => new Promise<void>((resolve) => resolve()))
       .then(() => this.oauthService.tryLogin())
-      .catch(() => this.isDoneLoadingSubject$.next(true));
-  }
-
-  public identityClaims() {
-    this.userInfo = this.oauthService.getIdentityClaims() as any;
-    return this.userInfo;
+      .then(() => this.isDoneLoadingSubject$.next(true));
   }
 
   public login(targetUrl?: string) {

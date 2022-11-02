@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione-metadati.component';
 import { DatePipe } from '@angular/common';
-import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-builder.component';
-import { IForm } from '../types/form.type';
-import { IMetadatiType } from '../types/metadati.type';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Utils } from 'formiojs';
 import { HashService } from 'src/app/common/hash.service';
-// import * as bootstrap from 'bootstrap';
+import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.service';
+import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-builder.component';
+import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione-metadati.component';
+import { IForm } from '../types/form.type';
+import { IMetadatiType } from '../types/metadati.type';
 
 @Component({
   selector: 'app-modifica-form',

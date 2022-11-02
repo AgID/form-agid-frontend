@@ -3,16 +3,12 @@
   <div class="row">
     <div class="form-group col text-right">
       <!-- <div class="d-flex justify-content-end" *ngIf="elencoForm?.length > 0"> -->
-      <button
-        type="button"
-        class="btn btn-primary me-2"
-        (click)="goToInserimentoForm()"
-      >
-        Nuovo
+      <button type="button" class="btn btn-primary me-2" (click)="goToInserimentoForm()">
+        {{"AG_Nuovo" | translate}}
       </button>
       <!-- </div> -->
       <button type="submit" class="btn btn-primary" (click)="searchForm()">
-        Cerca
+        {{"AG_Cerca" | translate}}
       </button>
     </div>
   </div>

@@ -15,6 +15,7 @@ import { ElencoFormFoComponent } from './elenco-form/elenco-form.component';
 import { ROUTES } from './form-fo.routes';
 import { FormFoService } from './form-fo.service';
 import { HomeComponent } from './home/home.component';
+import { IdentificaAmministrazioneModule } from './identifica-amministrazione/identifica-amministrazione.module';
 import { VerificaMailModule } from './verifica-mail/verifica-mail.module';
 import { VerificaOtpModule } from './verifica-otp/verifica-otp.module';
 
@@ -34,6 +35,7 @@ import { VerificaOtpModule } from './verifica-otp/verifica-otp.module';
     CommonModule,
     AppCommonModule,
     VerificaMailModule,
+    IdentificaAmministrazioneModule,
     VerificaOtpModule,
     GestioneDichiarazioniModule,
     FormioModule,

@@ -1,28 +1,17 @@
 <div class="card-wrapper card-space d-flex justify-content-center pb-5">
   <div class="card card-bg no-after w-50">
     <div class="card-body">
-      <h2 class="card-title big-heading text-center">Inserisci OTP</h2>
-      <div class="px-2">Inserire OTP.</div>
+      <h2 class="card-title big-heading text-center">{{"AG_Inserisci_OTP" | translate}}</h2>
+      <div class="px-2">{{"AG_Inserire_OTP" | translate}}</div>
       <div class="mt-5">
-        <app-input
-          [label]="'OTP'"
-          [value]="otp"
-          [isValid]="isValidOtp"
-          [errorMessage]="errorMessage"
-          [errorType]="typeAlert"
-          (changeInput)="onKeyUpOtp($event)"
-        >
+        <app-input [label]="'OTP'" [value]="otp" [isValid]="isValidOtp" [errorMessage]="errorMessage"
+          [errorType]="typeAlert" (changeInput)="onKeyUpOtp($event)">
         </app-input>
       </div>
       <div class="text-end">
-        <button
-          class="btn btn-primary mt-3 text-right"
-          type="submit"
-          [disabled]="!otp ? true : undefined"
-          data-focus-mouse="false"
-          (click)="onClickOTP()"
-        >
-          Invia codice
+        <button class="btn btn-primary mt-3 text-right" type="submit" [disabled]="!otp ? true : undefined"
+          data-focus-mouse="false" (click)="onClickOTP()">
+          {{"AG_Invia_Codice" | translate}}
         </button>
       </div>
     </div>
