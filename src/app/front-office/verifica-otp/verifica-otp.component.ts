@@ -30,7 +30,7 @@ export class VerificaOtpComponent {
     this.verificaOtp
       .effettuaValidazione({ codiceValidazione: this.otp })
       .subscribe((res) => {
-        console.log(res);
+        this.router.navigate(['/elenco-form']);
       });
   }
 }

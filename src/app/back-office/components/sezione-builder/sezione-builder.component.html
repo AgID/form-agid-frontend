@@ -1,52 +1,98 @@
 <div class="row mb-3">
   <div class="col-12">
-    <h3>{{"AG_Definizione_Modulo" | translate}}</h3>
+    <h3>{{ "AG_Definizione_Modulo" | translate }}</h3>
   </div>
 </div>
 
 <!-- Export/Import Form -->
 <div class="row">
   <div class="col-6">
-    <button type="button" id="jsonExport" class="btn btn-primary" (click)="ExportForm()">
+    <button
+      type="button"
+      id="jsonExport"
+      class="btn btn-primary"
+      (click)="ExportForm()"
+    >
       <svg class="icon icon-sm" aria-hidden="true" style="fill: #fff">
         <use href="../../../../assets/svg/sprite.svg#it-upload"></use>
       </svg>
-      {{"AG_Esporta" | translate}}
+      {{ "AG_Esporta" | translate }}
     </button>
   </div>
-  <div class="col-6 d-flex justify-content-end" [ngClass]="{ preventClick: hasSottomissioni }">
-    <input type="file" name="upload" id="upload" class="upload" (change)="onChangeUpload($event)"
-      [attr.disabled]="hasSottomissioni ? true : undefined" />
-    <label for="upload">
+  <div
+    class="col-6 d-flex justify-content-end"
+    [ngClass]="{ preventClick: hasSottomissioni }"
+  >
+    <input
+      type="file"
+      name="upload"
+      id="upload"
+      class="upload"
+      (change)="onChangeUpload($event)"
+      [attr.disabled]="hasSottomissioni ? true : undefined"
+    />
+    <label for="upload" class="align-self-center" style="padding: 12px 24px">
       <svg class="icon icon-sm" aria-hidden="true">
         <use href="../../../../assets/svg/sprite.svg#it-download"></use>
       </svg>
-      <span style="font-size: 16px">{{"AG_Importa" | translate}}</span>
+      <span style="font-size: 16px; font-weight: 600">{{
+        "AG_Importa" | translate
+      }}</span>
     </label>
   </div>
 </div>
 
 <ul class="nav nav-tabs auto" id="builder-render" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="builder" data-bs-toggle="tab" data-bs-target="#builder-tab" type="button"
-      role="tab" aria-controls="home" aria-selected="true">
-      {{"AG_Creazione" | translate}}
+    <button
+      class="nav-link active"
+      id="builder"
+      data-bs-toggle="tab"
+      data-bs-target="#builder-tab"
+      type="button"
+      role="tab"
+      aria-controls="home"
+      aria-selected="true"
+    >
+      {{ "AG_Creazione" | translate }}
     </button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="render" data-bs-toggle="tab" data-bs-target="#render-tab" type="button" role="tab"
-      aria-controls="home" aria-selected="true">
-      {{"AG_Anteprima" | translate}}
+    <button
+      class="nav-link"
+      id="render"
+      data-bs-toggle="tab"
+      data-bs-target="#render-tab"
+      type="button"
+      role="tab"
+      aria-controls="home"
+      aria-selected="true"
+    >
+      {{ "AG_Anteprima" | translate }}
     </button>
   </li>
   <li class="nav-item-filler"></li>
 </ul>
 <div class="tab-content" id="builder-renderContent">
-  <div class="tab-pane py-4 fade show active" [ngClass]="{ preventClick: hasSottomissioni }" id="builder-tab"
-    role="tabpanel" aria-labelledby="builder">
-    <app-formio-builder [form]="form" [options]="formOptions" (changeFormio)="onChange($event)"></app-formio-builder>
+  <div
+    class="tab-pane py-4 fade show active"
+    [ngClass]="{ preventClick: hasSottomissioni }"
+    id="builder-tab"
+    role="tabpanel"
+    aria-labelledby="builder"
+  >
+    <app-formio-builder
+      [form]="form"
+      [options]="formOptions"
+      (changeFormio)="onChange($event)"
+    ></app-formio-builder>
   </div>
-  <div class="tab-pane py-4 fade" id="render-tab" role="tabpanel" aria-labelledby="render">
+  <div
+    class="tab-pane py-4 fade"
+    id="render-tab"
+    role="tabpanel"
+    aria-labelledby="render"
+  >
     <app-formio-render [form]="form"></app-formio-render>
   </div>
 </div>

@@ -31,21 +31,17 @@ export class ElencoFormFoComponent implements OnInit {
       this.isArchivio = params['isArchivio'];
     });
     if (this.isArchivio) {
-      if (this.isAdmin()) {
-        this.elencoFormService.getFormsExpired().subscribe((response: any) => {
-          this.elencoForm = response;
-          this.elencoForm.forEach((element, index) => {
-            this.dateExpiredForm.push({
-              dataFineValidita: this.datePipe.transform(
-                element.dataInserimento,
-                'dd/MM/yyyy'
-              ),
-            });
+      this.elencoFormService.getFormsExpired().subscribe((response: any) => {
+        this.elencoForm = response;
+        this.elencoForm.forEach((element, index) => {
+          this.dateExpiredForm.push({
+            dataFineValidita: this.datePipe.transform(
+              element.dataInserimento,
+              'dd/MM/yyyy'
+            ),
           });
         });
-      } else {
-        this.goToElencoForm();
-      }
+      });
     } else {
       this.elencoFormService.getForms().subscribe((response: any) => {
         this.elencoForm = response;
@@ -64,6 +60,22 @@ export class ElencoFormFoComponent implements OnInit {
       });
     } else {
       this.router.navigate([`./${item._id}`], {
+        relativeTo: this.route,
+      });
+    }
+  }
+
+  public goToRenderSubmission(item: any) {
+    this.sessionStorageService.setItem('titoloSottomissione', item.titolo);
+    if (this.isArchivio) {
+      this.router.navigate([`./${item._id}/nuova-sottomissione`], {
+        queryParams: {
+          isArchivio: true,
+        },
+        relativeTo: this.route,
+      });
+    } else {
+      this.router.navigate([`./${item._id}/nuova-sottomissione`], {
         relativeTo: this.route,
       });
     }

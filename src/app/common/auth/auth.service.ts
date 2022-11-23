@@ -43,13 +43,31 @@ export class AuthService {
         this.oauthService.userinfoEndpoint = `${ENV.BACKEND_HOST}/v1/profile/info`; // Sovrascrittura endpoint
         this.oauthService.loadUserProfile();
       });
-
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
-      if (this.userInfo.id && !this.userInfo.email) {
-        console.log({ userInfo: this.userInfo });
-        this.router.navigate(['/verifica-mail']);
+      //se l'utente non è associato a nessuna amministrazione
+      //TODO:controllo nuovo se l'utente non esiste o è scaduto
+      if (
+        this.userInfo &&
+        this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+          'Microsoft'
+      ) {
+        this.router.navigate(['/admin']);
+      } else if (
+        (this.userInfo &&
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'SPID') ||
+        this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) === 'CIE'
+      ) {
+        this.router.navigate(['/scelta-utente']);
       }
+      // if (this.userInfo.id && !this.userInfo.email) {
+      //   console.log({ userInfo: this.userInfo });
+      //   this.router.navigate(['/verifica-mail']);
+      // }
+      // if (this.userInfo.expired) {
+      //   this.router.navigate(['/scelta-utente']);
+      // }
     });
   }
 

@@ -133,6 +133,7 @@ export class ModificaFormComponent implements OnInit {
       abilitaStatistiche,
       dataFineValidita,
       acl,
+      lingua,
       dataInizioValidita,
       sezioniInformative,
       verificaPubblicazione,
@@ -144,6 +145,7 @@ export class ModificaFormComponent implements OnInit {
       titoloPattern,
       sezioniInformative,
       descrizione,
+      lingua,
       acl,
       abilitaStatistiche,
       versione,
@@ -244,10 +246,6 @@ export class ModificaFormComponent implements OnInit {
   public changeMetadati(event: any) {
     this.metadati = event;
     this.hashService.isModified = false;
-  }
-
-  public changeAcl(event: any) {
-    this.metadati.acl = event;
   }
 
   public changeForm(event: any) {

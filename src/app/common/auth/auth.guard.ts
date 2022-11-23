@@ -20,7 +20,11 @@ export class AuthGuard implements CanActivate {
     const loggedUserInfo = this.authService.userInfo;
     // TODO gestione dei ruoli basandoci sul valore di usersAllowed
     if (usersAllowed) {
-      return loggedUserInfo?.user_policy.some((el) => el.policy.is_admin);
+      return (
+        loggedUserInfo?.sub.slice(0, loggedUserInfo.sub.indexOf(':')) ===
+        'Microsoft'
+      );
+      /* user_policy.some((el) => el.policy.is_admin) */
     }
     return !!loggedUserInfo;
   }

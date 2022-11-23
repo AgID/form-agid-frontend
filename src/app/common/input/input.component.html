@@ -5,7 +5,7 @@
     [attr.type]="type"
     [attr.id]="ident"
     [value]="value"
-    (change)="onChangeInput($event)"
+    (input)="onChangeInput($event)"
   />
   <app-alert
     *ngIf="!isValid"

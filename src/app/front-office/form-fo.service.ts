@@ -25,4 +25,12 @@ export class FormFoService {
   public findSottomissioni(payload: any): Observable<any> {
     return this.http.post(`${ENV.BACKEND_HOST}/v1/submission/search`, payload);
   }
+
+  public getCategorieEnti(text: string) {
+    return this.http.get(
+      `${
+        ENV.BACKEND_AMM
+      }/3/action/datastore_search_sql?sql=SELECT * from "84ebb2e7-0e61-427b-a1dd-ab8bb2a84f07" WHERE UPPER("Nome_categoria") LIKE '%${text.toLocaleUpperCase()}%' LIMIT 10`
+    );
+  }
 }

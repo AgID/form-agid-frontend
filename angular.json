@@ -26,17 +26,28 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/ace-builds/src-min",
+                "output": "./assets/ace-builds/"
+              }
+            ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/formiojs/dist/formio.full.min.css",
               "node_modules/ngx-spinner/animations/ball-clip-rotate.css",
+              "node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css",
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/bootstrap-italia/dist/js/bootstrap-italia.bundle.min.js",
-              "node_modules/formiojs/dist/formio.full.min.js"
+              "node_modules/formiojs/dist/formio.full.min.js",
+              "node_modules/ngx-markdown-editor/assets/highlight.js/highlight.min.js",
+              "node_modules/ngx-markdown-editor/assets/marked.min.js"
             ]
           },
           "configurations": {
@@ -114,6 +125,7 @@
   },
   "defaultProject": "agid_forms",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }

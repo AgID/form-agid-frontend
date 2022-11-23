@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Pagination } from 'src/app/common/pagination.class';
+import { HashService } from 'src/app/common/hash.service';
+import { LanguageSelectorService } from 'src/app/common/language-selector/language-selector.service';
 
 @Component({
   selector: 'app-ricerca-etichette',
@@ -8,7 +10,10 @@ import { Pagination } from 'src/app/common/pagination.class';
   encapsulation: ViewEncapsulation.None,
 })
 export class RicercaEtichetteComponent {
-  constructor() {}
+  constructor(
+    public hashService: HashService,
+    public languageSlService: LanguageSelectorService
+  ) {}
 
   public filters = {
     lingua: '',
@@ -20,5 +25,9 @@ export class RicercaEtichetteComponent {
     this.filters = {
       ...this.filters,
     };
+  }
+
+  public onChangeLang(lingua: any) {
+    this.filters.lingua = lingua;
   }
 }

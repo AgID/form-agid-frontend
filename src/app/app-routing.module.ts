@@ -14,6 +14,7 @@ import { UserRole } from './common/auth/role.enum';
 import { DettaglioSottomissioneComponent } from './front-office/elenco-form/dettaglio/dettaglio-sottomissione/dettaglio-sottomissione.component';
 import { HomeComponent } from './front-office/home/home.component';
 import { IdentificaAmministrazioneComponent } from './front-office/identifica-amministrazione/identifica-amministrazione.component';
+import { SceltaUtenteComponent } from './front-office/scelta-utente/scelta-utente.component';
 import { VerificaMailComponent } from './front-office/verifica-mail/verifica-mail.component';
 import { VerificaOtpComponent } from './front-office/verifica-otp/verifica-otp.component';
 import { ViewComponent } from './public/view/view.component';
@@ -35,12 +36,17 @@ const routes: Routes = [
     loadChildren: () =>
       import('./front-office/form-fo.module').then((m) => m.FormFoModule),
     data: { breadcrumb: 'Elenco Form' },
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'verifica-mail',
     component: VerificaMailComponent,
     data: { breadcrumb: 'Verifica mail' },
+  },
+  {
+    path: 'scelta-utente',
+    component: SceltaUtenteComponent,
+    data: { breadcrumb: 'Scelta utente' },
   },
   {
     path: 'identifica-amministrazione',

@@ -1,33 +1,70 @@
-<app-alert *ngIf="hashService.isModified" [messaggio]="hashService.message" [type]="hashService.type"></app-alert>
+<app-alert
+  *ngIf="hashService.isModified"
+  [messaggio]="hashService.message"
+  [type]="hashService.type"
+></app-alert>
 <div class="d-flex">
-  <h2 *ngIf="form">{{"AG_Dettaglio" | translate}} {{ form.titolo }}</h2>
-  <svg class="icon icon-sm cursor-pointer ms-2" style="margin-top: 12px" data-bs-toggle="tooltip"
-    data-bs-placement="top" id="tooltip" tabindex="0" *ngIf="metadati?.stato && metadati?.versione >= 0">
+  <h2 *ngIf="form">{{ "AG_Dettaglio" | translate }} {{ form.titolo }}</h2>
+  <svg
+    class="icon icon-sm cursor-pointer ms-2"
+    style="margin-top: 12px"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    id="tooltip"
+    tabindex="0"
+    *ngIf="metadati?.stato && metadati?.versione >= 0"
+  >
     <use href="../../../assets/svg/sprite.svg#it-info-circle"></use>
   </svg>
 </div>
-<app-sezione-metadati [metadati]="metadati" (changeMetadati)="changeMetadati($event)" #sezioneMetadatiComponent>
+<app-sezione-metadati
+  [metadati]="metadati"
+  (changeMetadati)="changeMetadati($event)"
+  #sezioneMetadatiComponent
+>
 </app-sezione-metadati>
-<app-sezione-permessi [metadati]="metadati" (changeAcl)="changeAcl($event)"></app-sezione-permessi>
-<app-sezione-builder [hasSottomissioni]="hasSottomissioni" [form]="form" (changeForm)="changeForm($event)"
-  #sezioneBuilderComponent></app-sezione-builder>
+<app-sezione-permessi [metadati]="metadati"></app-sezione-permessi>
+<app-sezione-builder
+  [hasSottomissioni]="hasSottomissioni"
+  [form]="form"
+  (changeForm)="changeForm($event)"
+  #sezioneBuilderComponent
+></app-sezione-builder>
 <app-contenuti-dinamici></app-contenuti-dinamici>
 <div class="mb-3 d-flex justify-content-between">
-  <a class="text-16p text-primary mt-3" (click)="goToTornaAllaRicerca()"><span
-      class="fa fa-angle-double-left me-1"></span>
-    <label class="text-16p underline cursor cursor-pointer" style="color: #06c">Torna alla ricerca</label></a>
+  <a class="text-16p text-primary mt-3" (click)="goToTornaAllaRicerca()"
+    ><span class="fa fa-angle-double-left me-1"></span>
+    <label class="text-16p underline cursor cursor-pointer" style="color: #06c"
+      >Torna alla ricerca</label
+    ></a
+  >
   <div>
-    <button *ngIf="form && form.stato !== 'Pubblicato'" class="btn btn-secondary mt-3" type="submit"
-      data-focus-mouse="false" (click)="onClickSalvaBozzaSchemaRilevazione()">
-      {{"AG_Salva_Bozza" | translate}}
+    <button
+      *ngIf="form && form.stato !== 'Pubblicato'"
+      class="btn btn-secondary mt-3"
+      type="submit"
+      data-focus-mouse="false"
+      (click)="onClickSalvaBozzaSchemaRilevazione()"
+    >
+      {{ "AG_Salva_Bozza" | translate }}
     </button>
-    <button *ngIf="form && form.stato === 'Bozza'" class="btn btn-primary mt-3 ms-3" type="submit"
-      data-focus-mouse="false" (click)="onClickPubblicaSchemaRilevazione()">
-      {{"AG_Pubblica" | translate}}
+    <button
+      *ngIf="form && form.stato === 'Bozza'"
+      class="btn btn-primary mt-3 ms-3"
+      type="submit"
+      data-focus-mouse="false"
+      (click)="onClickPubblicaSchemaRilevazione()"
+    >
+      {{ "AG_Pubblica" | translate }}
     </button>
-    <button *ngIf="form && form.stato === 'Pubblicato'" class="btn btn-primary mt-3 ms-3" type="submit"
-      data-focus-mouse="false" (click)="onClickPubblicaSchemaRilevazione()">
-      {{"AG_Salva" | translate}}
+    <button
+      *ngIf="form && form.stato === 'Pubblicato'"
+      class="btn btn-primary mt-3 ms-3"
+      type="submit"
+      data-focus-mouse="false"
+      (click)="onClickPubblicaSchemaRilevazione()"
+    >
+      {{ "AG_Salva" | translate }}
     </button>
   </div>
 </div>

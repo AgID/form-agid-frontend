@@ -10,11 +10,11 @@ export class RisultatiEtichetteService {
   constructor(private http: HttpClient) {}
 
   public createLabel(data: any): Observable<any> {
-    return this.http.post(`${ENV.BACKEND_HOST}/v1/label`, data);
+    return this.http.post(`${ENV.BACKEND_HOST}/v1/messages/create`, data);
   }
 
-  public findLabelsForParams(payload: any): Observable<any> {
-    return this.http.post(`${ENV.BACKEND_HOST}/v1/labels/search`, payload);
+  public findLabelsForParams(inputLang: any): Observable<any> {
+    return this.http.get(`${ENV.BACKEND_HOST}/v1/messages/`.concat(inputLang));
   }
 
   public getLabelsById(id: any): Observable<any> {
@@ -23,5 +23,13 @@ export class RisultatiEtichetteService {
 
   public deleteLabel(id: string): Observable<any> {
     return this.http.delete(`${ENV.BACKEND_HOST}/v1/label/${id}`);
+  }
+
+  public updateLabel(reqBody: any): Observable<any> {
+    return this.http.put(`${ENV.BACKEND_HOST}/v1/messages/update`, reqBody);
+  }
+
+  public findAll(): Observable<any> {
+    return this.http.get(`${ENV.BACKEND_HOST}/v1/messages`);
   }
 }

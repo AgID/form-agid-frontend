@@ -1,3 +1,8 @@
+<app-alert
+  *ngIf="hashService.isModified"
+  [messaggio]="hashService.message"
+  [type]="hashService.type"
+></app-alert>
 <div class="card-wrapper card-space d-flex justify-content-center pb-5">
   <div class="card card-bg no-after w-50">
     <div class="card-body">
@@ -32,6 +37,7 @@
               type="radio"
               value="Y"
               id="yesKey"
+              [attr.disabled]="hashService.isModified ? true : undefined"
               (change)="onChangeYesKey($event)"
             />
             <label for="yesKey">ho già la chiave di accesso</label>
@@ -42,6 +48,7 @@
               type="radio"
               value="N"
               id="noKey"
+              [attr.disabled]="hashService.isModified ? true : undefined"
               (change)="onChangeNoKey($event)"
             />
             <label for="noKey">desidero ricevere una chiave di accesso</label>

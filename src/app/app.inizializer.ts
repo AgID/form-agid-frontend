@@ -9,15 +9,17 @@ export function AppInitializer(
   return () =>
     new Promise(async (resolve, reject) => {
       let messages: any;
+      const currentLang = localStorage.getItem('lang') || 'ITA';
       // TODO: Ottenere la lista delle etichette / lingue dal Backend
-      // TODO: Settare la lingua hardcoded in base a quello che prenderemo dai cookie
+      //TODO: Settare la lingua hardcoded in base a quello che prenderemo dai cookie
       http
-        .get(`${ENV.BACKEND_HOST}/v1/messages/ITA`)
+        .get(`${ENV.BACKEND_HOST}/v1/messages/${currentLang}`)
         .subscribe((res: any) => {
-          messages = res[0].data;
+          if (res) {
+            messages = res;
+          }
         })
         .add(() => {
-          const currentLang = localStorage.getItem('lang') || 'it';
           translate.setTranslation(currentLang, messages);
           translate.use(currentLang);
           resolve(null);

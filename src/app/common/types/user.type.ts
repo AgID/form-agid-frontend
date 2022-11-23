@@ -11,6 +11,7 @@ export type User = {
    * @description La stringa è una data nel formato yyyy-MM-dd HH:mm:ss
    */
   last_access: string;
+  expired: boolean; //per capire se l'utenza è scaduta
   user_policy: UserPolicy[];
 };
 

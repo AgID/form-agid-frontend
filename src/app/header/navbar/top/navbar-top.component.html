@@ -1,38 +1,63 @@
 <div class="it-header-slim-wrapper">
-  <div class="it-header-slim-wrapper-content ms-auto me-auto custom-max-width-1200">
-    <a class="d-none d-lg-block navbar-brand" href="#">{{"AG_AGID" | translate}}
+  <div
+    class="it-header-slim-wrapper-content ms-auto me-auto custom-max-width-1200"
+  >
+    <a class="d-none d-lg-block navbar-brand" href="https://www.agid.gov.it/"
+      >{{ "AG_AGID" | translate }}
     </a>
     <div class="nav-mobile">
       <nav aria-label="Navigazione accessoria">
-        <a class="it-opener d-lg-none" data-toggle="collapse" href="#menu1a" role="button" aria-expanded="false"
-          aria-controls="menu4">
-          <span>{{"AG_AGID_ACRONYM" | translate}} </span>
+        <a
+          class="it-opener d-lg-none"
+          data-toggle="collapse"
+          href="#menu1a"
+          role="button"
+          aria-expanded="false"
+          aria-controls="menu4"
+        >
+          <span>{{ "AG_AGID_ACRONYM" | translate }} </span>
           <svg class="icon" aria-hidden="true">
             <use href="/assets/svg/sprite.svg#it-expand"></use>
           </svg>
         </a>
         <div class="link-list-wrapper collapse" id="menu1a">
           <ul class="link-list">
-            <li><a class="list-item" href="#">{{"AG_Piano_Triennale" | translate}}</a></li>
             <li>
-              <a class="list-item" href="#" aria-current="page">{{"AG_Avanzamento_Digitale" | translate}}</a>
+              <a class="list-item" href="#">{{
+                "AG_Piano_Triennale" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="list-item" href="#" aria-current="page">{{
+                "AG_Avanzamento_Digitale" | translate
+              }}</a>
             </li>
           </ul>
         </div>
       </nav>
     </div>
     <div class="it-header-slim-right-zone">
-      <app-language-selector [isInsideForm]="false" [value]="selectedLanguage"
-        (changeLanguage)="onChangeSelectedLanguage($event)"></app-language-selector>
+      <app-language-selector
+        [isInsideForm]="false"
+        [value]="selectedLanguage"
+        (changeLanguage)="onChangeSelectedLanguage($event)"
+      ></app-language-selector>
       <div *ngIf="!isLoggedIn()" class="it-access-top-wrapper">
-        <a (click)="login()" class="btn btn-primary btn-sm">{{"AG_Accedi" | translate}}</a>
+        <a (click)="login()" class="btn btn-primary btn-sm">{{
+          "AG_Accedi" | translate
+        }}</a>
       </div>
       <div *ngIf="isLoggedIn()" class="btn-group">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
           <span style="font-size: 14px">{{
             firstName() + " " + lastName()
-            }}</span>
+          }}</span>
           <svg class="icon-expand icon icon-sm icon-light">
             <use href="../../../../assets/svg/sprite.svg#it-expand"></use>
           </svg>
@@ -41,8 +66,11 @@
           <div class="link-list-wrapper">
             <ul class="link-list">
               <li>
-                <a (click)="logout()" class="dropdown-item list-item" href="#"><span style="font-size: 14px">{{"AG_Esci"
-                    | translate}}</span></a>
+                <a (click)="logout()" class="dropdown-item list-item" href="#"
+                  ><span style="font-size: 14px">{{
+                    "AG_Esci" | translate
+                  }}</span></a
+                >
               </li>
             </ul>
           </div>

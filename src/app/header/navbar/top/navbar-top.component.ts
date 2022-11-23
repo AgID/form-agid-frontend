@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../common/auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment as ENV } from 'src/environments/environment';
+import { NavBarTopService } from '../navbar-top.service';
 
 @Component({
   selector: 'app-navbar-top',
@@ -18,7 +21,9 @@ export class NavbarTopComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private http: HttpClient,
+    private navBarTopService: NavBarTopService
   ) {}
 
   public ngOnInit(): void {
@@ -26,13 +31,12 @@ export class NavbarTopComponent implements OnInit {
   }
 
   public onChangeSelectedLanguage(lingua: string) {
-    // TODO: Ottenere la lingua selezionata dal servizio di Backend
-    const messages = {}; // FETCH BE
-
-    this.selectedLanguage = lingua;
-    localStorage.setItem('lang', lingua);
-    this.translateService.use(lingua);
-    this.translateService.setTranslation(lingua, messages);
+    this.navBarTopService.getLabelsByLang(lingua).subscribe((res: any) => {
+      this.selectedLanguage = lingua;
+      localStorage.setItem('lang', lingua);
+      this.translateService.setTranslation(lingua, res);
+      this.translateService.use(lingua);
+    });
   }
 
   public login() {

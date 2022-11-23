@@ -16,7 +16,7 @@ export interface IMetadatiType {
   };
   acl?: {
     tipo: string;
-    valore: string;
+    valore: any;
   };
   dataInizioValidita?: string;
   dataFineValidita?: string;

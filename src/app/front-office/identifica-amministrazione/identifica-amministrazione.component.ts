@@ -18,17 +18,20 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   public radioText = `Richiedo che venga inviata la chiave di accesso alla casella
   email del Responsabile della Transizione Digitale:`;
   public userMail: string = '';
+  public cod_categoria: string = '';
   public isValidKey = true;
   public showKeyChoose = false;
+  public flagOnConfirm = false;
 
   public errorMessage: Array<any> = [{ label: 'Campo obbligatorio' }];
   public typeAlert: AlertType = 'DANGER';
   public selectElement: any;
+  public entity: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private hashService: HashService,
+    public hashService: HashService,
     private authService: AuthService,
     private identAmmService: IdentificaAmministrazioneService
   ) {}
@@ -41,42 +44,72 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       autoselect: false,
       dropdownArrow: () => '',
       source: (query: string, populateResults: Function) => {
-        if (!query) return populateResults([]);
-        this.identAmmService.getAmministrazioni(query).subscribe((res: any) => {
-          populateResults(res.result.records);
-        });
+        if (!this.flagOnConfirm) {
+          if (!query) return populateResults([]);
+          this.identAmmService
+            .getAmministrazioni(query)
+            .subscribe((res: any) => {
+              this.flagOnConfirm = true;
+              populateResults(res.result.records);
+            });
+        }
       },
       onConfirm: (data: any) => {
-        //TODO:prelevare la mail e concatenare alla stringa iniziale
-        if (data && data.Codice_Categoria && data.Codice_Categoria === 'L33') {
-          //scuole
-          this.getMail(data);
-        } else {
-          this.identAmmService
-            .getCategorieEnti(data?.Codice_Categoria)
-            .subscribe((res: any) => {
-              if (res.result.records[0] && res.result.records[0].UTD === 'A') {
-                this.getMail(data);
-              } else if (
-                res.result.records[0] &&
-                res.result.records[0].UTD === 'P'
-              ) {
-                this.identAmmService
-                  .getRTD(data?.Codice_IPA)
-                  .subscribe((res: any) => {
-                    this.getMail(res.result.records[0]);
-                  });
-              }
-            });
-          this.radioText = this.radioText + ' ' + this.userMail;
+        this.flagOnConfirm = true;
+        if (this.flagOnConfirm) {
+          console.log('ONCONFIRM', data);
+          if (data)
+            this.entity = {
+              Codice_Categoria: data.Codice_Categoria,
+              Codice_IPA: data.Codice_IPA,
+              Denominazione_ente: data.Denominazione_ente,
+              Codice_fiscale_ente: data.Codice_fiscale_ente,
+              Tipologia: data.Tipologia,
+              Acronimo: data.Acronimo,
+              Sito_istituzionale: data.Sito_istituzionale,
+            };
+          if (
+            data &&
+            data.Codice_Categoria &&
+            data.Codice_Categoria === 'L33'
+          ) {
+            //scuole
+            this.getMail(data);
+            this.flagOnConfirm = false;
+          } else if (data && data.Codice_Categoria) {
+            this.identAmmService
+              .getCategorieEnti(data.Codice_Categoria)
+              .subscribe((res: any) => {
+                if (
+                  res.result.records[0] &&
+                  res.result.records[0].UTD === 'A'
+                ) {
+                  this.getMail(data);
+                  this.flagOnConfirm = false;
+                } else if (
+                  res.result.records[0] &&
+                  res.result.records[0].UTD === 'P'
+                ) {
+                  this.identAmmService
+                    .getRTD(data.Codice_IPA)
+                    .subscribe((res: any) => {
+                      this.getMail(res.result.records[0]);
+                      this.flagOnConfirm = false;
+                    });
+                }
+              });
+            this.cod_categoria = data.Codice_Categoria;
+          }
+          return data;
         }
-        return data;
       },
       templates: {
         inputValue: (data: any) => {
           if (data && data.Denominazione_ente) {
             this.showKeyChoose = true;
           }
+          this.hashService.isModified = false;
+          this.flagOnConfirm = false;
           return data?.Denominazione_ente;
         },
         suggestion: (data: any) => {
@@ -88,13 +121,24 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public getMail(data: any) {
-    let i = 0;
-    do {
-      i++;
-      if (data && data['Tipo_Mail' + i] === 'Altro') {
-        this.userMail = data['Mail' + i];
-      }
-    } while (!data['Tipo_Mail' + i] || data['Tipo_Mail' + i] === 'Altro');
+    // let i = 0;
+    // do {
+    //   i++;
+    //   if (data && data['Tipo_Mail' + i] === 'Altro') {
+    if (data && data['Mail_responsabile'])
+      this.userMail = data['Mail_responsabile'];
+    else {
+      this.hashService.isModified = true;
+      this.hashService.message = [
+        {
+          label:
+            '“Non è possibile creare un profilo RTD, bisogna prima inserire un indirizzo email nell’indice PA',
+        },
+      ];
+      this.hashService.type = 'DANGER';
+    }
+    //   }
+    // } while (!data['Tipo_Mail' + i] || data['Tipo_Mail' + i] === 'Altro');
   }
 
   public onChangeYesKey($e: any) {
@@ -103,6 +147,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public onChangeNoKey($e: any) {
+    this.radioText = this.radioText + ' ' + this.userMail;
     this.haveKey = $e.target.value;
   }
 
@@ -119,7 +164,20 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     window.location.reload();
   }
 
-  public onClickInviaMail() {}
+  public onClickInviaMail() {
+    if (this.userMail) {
+      //endpoint new-profile, passargli anche l'entity oltre alla mail e se c'è anche la policy
+      this.identAmmService
+        .nuovoProfilo({
+          email: this.userMail,
+          cod_categoria: this.cod_categoria,
+          entity: this.entity,
+        })
+        .subscribe((res: any) => {
+          console.log(res);
+        });
+    }
+  }
 
   public onClickAccedi() {}
 }

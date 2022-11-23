@@ -1,4 +1,5 @@
 export interface IForm {
+  lingua?: string;
   titolo?: string;
   titoloPattern?: string;
   descrizione?: string;

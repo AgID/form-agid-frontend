@@ -16,6 +16,7 @@ import { ROUTES } from './form-fo.routes';
 import { FormFoService } from './form-fo.service';
 import { HomeComponent } from './home/home.component';
 import { IdentificaAmministrazioneModule } from './identifica-amministrazione/identifica-amministrazione.module';
+import { SceltaUtenteModule } from './scelta-utente/scelta-utente.module';
 import { VerificaMailModule } from './verifica-mail/verifica-mail.module';
 import { VerificaOtpModule } from './verifica-otp/verifica-otp.module';
 
@@ -35,6 +36,7 @@ import { VerificaOtpModule } from './verifica-otp/verifica-otp.module';
     CommonModule,
     AppCommonModule,
     VerificaMailModule,
+    SceltaUtenteModule,
     IdentificaAmministrazioneModule,
     VerificaOtpModule,
     GestioneDichiarazioniModule,

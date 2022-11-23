@@ -99,6 +99,7 @@ export class InserimentoFormComponent implements OnInit {
   }
 
   public onClickSalvaSchemaRilevazione() {
+    console.log(this.sezioneMetadatiComponent.validate());
     if (!this.sezioneMetadatiComponent.validate()) {
       this.scrollToTop();
       return;
@@ -136,10 +137,12 @@ export class InserimentoFormComponent implements OnInit {
       acl,
       sezioniInformative,
       verificaPubblicazione,
+      lingua,
     } = this.metadati;
 
     this.form = {
       ...this.form,
+      lingua,
       titolo,
       titoloPattern,
       descrizione,
@@ -167,10 +170,6 @@ export class InserimentoFormComponent implements OnInit {
 
   public changeMetadati(event: any) {
     this.hashService.isModified = false;
-  }
-
-  public changeAcl(event: any) {
-    this.metadati.acl = event;
   }
 
   public changeForm(event: any) {

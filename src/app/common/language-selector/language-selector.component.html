@@ -20,11 +20,15 @@
         <div class="col-12">
           <div class="link-list-wrapper">
             <ul class="link-list" (click)="onChangeSelectedLanguage($event)">
-              <li data-lingua="ITA">
-                <a class="list-item"><span>ITA</span></a>
-              </li>
-              <li data-lingua="ENG">
-                <a class="list-item"><span>ENG</span></a>
+              <li
+                *ngFor="let item of languages"
+                [attr.data-lingua]="item.codice"
+              >
+                <a class="list-item"
+                  ><span>{{
+                    isInsideForm ? item.descrizione : item.codice
+                  }}</span></a
+                >
               </li>
             </ul>
           </div>

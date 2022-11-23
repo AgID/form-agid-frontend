@@ -1,19 +1,36 @@
 <div class="row mb-3">
   <div class="col-12">
-    <h3>{{"AG_Destinatario" | translate}}</h3>
+    <h3>{{ "AG_Destinatario" | translate }}</h3>
   </div>
   <div>
     <div class="form-check form-check-inline">
-      <input name="gruppo1" type="radio" id="pubblico" value="pubblico" (change)="onChangeRadioPubblico($event)"
-        [attr.checked]="metadati?.acl?.tipo === 'pubblico' ? true : undefined" />
-      <label for="pubblico">{{"AG_Pubblico" | translate}}</label>
+      <input
+        name="gruppo1"
+        type="radio"
+        id="pubblico"
+        value="pubblico"
+        (change)="onChangeRadioPubblico($event)"
+        [attr.checked]="metadati?.acl?.tipo === 'pubblico' ? true : undefined"
+      />
+      <label for="pubblico">{{ "AG_Pubblico" | translate }}</label>
     </div>
     <div class="form-check form-check-inline">
-      <input name="gruppo1" type="radio" id="privato" value="privato" (change)="onChangeRadioPrivato($event)"
-        [attr.checked]="metadati?.acl?.tipo === 'privato' ? true : undefined" />
-      <label for="privato">{{"AG_Privato" | translate}}</label>
+      <input
+        name="gruppo1"
+        type="radio"
+        id="privato"
+        value="privato"
+        (change)="onChangeRadioPrivato($event)"
+        [attr.checked]="
+          metadati?.acl?.tipo === 'privato_categoria' ||
+          metadati?.acl?.tipo === 'privato_amministrazione'
+            ? true
+            : undefined
+        "
+      />
+      <label for="privato">{{ "AG_Privato" | translate }}</label>
     </div>
-    <!-- <div class="form-check form-check-inline">
+    <div class="form-check form-check-inline">
       <input
         name="gruppo1"
         type="radio"
@@ -22,18 +39,192 @@
         (change)="onChangeRadioToken($event)"
         [attr.checked]="metadati?.acl?.tipo === 'token' ? true : undefined"
       />
-      <label for="token">Token</label>
+      <label for="token">{{ "AG_Token" | translate }}</label>
     </div>
-    <div class="form-group">
-      <label for="textToken">Token</label>
-      <input
-        type="text"
-        class="form-control"
-        id="textToken"
-        [value]="metadati?.acl?.valore"
-        (change)="onChangeToken($event)"
-        [attr.disabled]="acl.tipo !== 'token' ? true : undefined"
-      />
-    </div> -->
+  </div>
+  <div>
+    <div
+      *ngIf="
+        tipoDestinatario === 'privato' ||
+        metadati?.acl?.tipo === 'privato_categoria' ||
+        metadati?.acl?.tipo === 'privato_amministrazione'
+      "
+    >
+      <div class="form-check form-check-inline">
+        <input
+          name="gruppo2"
+          type="radio"
+          id="categoria"
+          value="categoria"
+          (change)="onChangeRadioPrivatoCategoria($event)"
+          [attr.checked]="
+            metadati?.acl?.tipo === 'privato_categoria' ? true : undefined
+          "
+        />
+        <label for="categoria">Categoria</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          name="gruppo2"
+          type="radio"
+          id="amministrazione"
+          value="amministrazione"
+          (change)="onChangeRadioPrivatoAmministrazione($event)"
+          [attr.checked]="
+            metadati?.acl?.tipo === 'privato_amministrazione' ? true : undefined
+          "
+        />
+        <label for="amministrazione">Amministrazione</label>
+      </div>
+      <div class="row" *ngIf="metadati?.acl?.tipo === 'privato_categoria'">
+        <div class="col-4">
+          <div class="select-wrapper my-4">
+            <label for="autocompleteEnti">Cerca categoria enti</label>
+            <select
+              class="form-control"
+              id="autocompleteEnti"
+              required
+            ></select>
+            <small id="autocompleteEnti" class="form-text"
+              >inserisci la denominazione della categoria dell'ente</small
+            >
+          </div>
+        </div>
+        <div class="col-4 align-self-center">
+          <div class="form-check">
+            <input
+              id="tutteLeCategorieEnti"
+              value="tutteLeCategorieEnti"
+              type="checkbox"
+              [attr.checked]="metadati.acl.valore === '*' ? true : undefined"
+              (change)="onChangeRadioIncludiTutteCategorieEnti($event)"
+            />
+            <label for="tutteLeCategorieEnti">{{
+              "AG_Categoria_Ente_Seleziona_Tutte" | translate
+            }}</label>
+          </div>
+        </div>
+        <div
+          class="row"
+          *ngIf="metadati.acl?.valore !== '*' && metadati.acl?.valore?.length"
+        >
+          <label class="mb-2">{{
+            "Categorie enti selezionate: " | translate
+          }}</label>
+          <div class="w-auto" *ngFor="let chip of metadati.acl.valore">
+            <div class="chip alert">
+              <span class="chip-label">{{ chip.descrizione }}</span>
+              <button
+                data-bs-dismiss="alert"
+                (click)="onClickRimuoviCategoriaEnte(chip)"
+              >
+                <svg class="icon">
+                  <use href="/assets/svg/sprite.svg#it-close"></use>
+                </svg>
+                <span class="visually-hidden">Elimina label</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+        *ngIf="metadati?.acl?.tipo === 'privato_amministrazione'"
+      >
+        <div class="col-4">
+          <div class="select-wrapper my-4">
+            <label for="autocompleteAmministrazioni"
+              >Cerca amministrazioni</label
+            >
+            <select
+              class="form-control"
+              id="autocompleteAmministrazioni"
+              required
+            ></select>
+            <small id="autocompleteAmministrazioni" class="form-text"
+              >inserisci la denominazione della amministrazione</small
+            >
+          </div>
+        </div>
+        <div class="col-4 align-self-center">
+          <div class="form-check">
+            <input
+              id="tutteLeAmministrazioni"
+              value="tutteLeAmministrazioni"
+              type="checkbox"
+              [attr.checked]="metadati.acl.valore === '*' ? true : undefined"
+              (change)="onChangeRadioIncludiTutteAmministrazioni($event)"
+            />
+            <label for="tutteLeAmministrazioni"
+              >Seleziona tutte le amministrazioni</label
+            >
+          </div>
+        </div>
+        <div
+          class="row"
+          *ngIf="metadati.acl?.valore !== '*' && metadati.acl?.valore?.length"
+        >
+          <label class="mb-2">Amministrazioni selezionate:</label>
+          <div class="w-auto" *ngFor="let chip of metadati.acl.valore">
+            <div class="chip alert">
+              <span class="chip-label">{{ chip.descrizione }}</span>
+              <button
+                data-bs-dismiss="alert"
+                (click)="onClickRimuoviAmministrazione(chip)"
+              >
+                <svg class="icon">
+                  <use href="/assets/svg/sprite.svg#it-close"></use>
+                </svg>
+                <span class="visually-hidden">Elimina label</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="metadati?.acl?.tipo === 'token'">
+      <div class="row mt-3">
+        <div class="col-sm-6 col-md-4">
+          <!-- Immettere text box per elenco mail separate dall'invio -->
+          <app-textarea
+            [label]="'AG_Descrizione' | translate"
+            [value]="emailValue"
+            [isValid]="emailValid"
+            [rows]="4"
+            [errorMessage]="emailErrorMessage"
+            (changeInput)="onChangeEmail($event)"
+          >
+          </app-textarea>
+        </div>
+        <div class="col-sm-6 col-md-2">
+          <button
+            class="btn btn-primary btn-xs btn-icon ms-1"
+            (click)="onClickInserisciEmail()"
+          >
+            <span>{{ "AG_Aggiungi" | translate }}</span>
+            <svg class="icon icon-light margin-left-1">
+              <use href="/assets/svg/sprite.svg#it-plus-circle"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngIf="metadati.acl.valore?.length">
+        <label class="mb-2">{{ "Email selezionate:" | translate }}</label>
+        <div class="w-auto" *ngFor="let email of metadati.acl.valore">
+          <div class="chip alert">
+            <span class="chip-label">{{ email }}</span>
+            <button
+              data-bs-dismiss="alert"
+              (click)="onClickRimuoviEmail(email)"
+            >
+              <svg class="icon">
+                <use href="/assets/svg/sprite.svg#it-close"></use>
+              </svg>
+              <span class="visually-hidden">Elimina label</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

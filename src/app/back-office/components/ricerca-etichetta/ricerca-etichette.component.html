@@ -1,16 +1,14 @@
+<app-alert *ngIf="hashService.isModified" [messaggio]="hashService.message" [type]="hashService.type"></app-alert>
 <div>
-  <h1>Ricerca etichette</h1>
+  <h1>{{"AG_Ricerca_Etichette" | translate}}</h1>
   <hr />
-  <div class="row mt-5">
+  <div class="row mt-3 ">
     <div class="form-group col-md-4 mt-3">
-      <div class="select-wrapper">
+      <div class="select-wrapper mt-3">
         <label for="defaultSelect">{{"AG_Lingua" | translate}}</label>
-        <select id="defaultSelect" (change)="onChangeLingua($event)" [value]="filters.lingua">
-          <option selected="" value="">Scegli un'opzione</option>
-          <option value="ITA">Italiano</option>
-          <option value="ENG">Inglese</option>
-          <option value="DET">Tedesco</option>
-        </select>
+        <app-language-selector class="mt-3 " [label]="'AG_Lingua_Associata_Schema' | translate"
+          [value]="filters?.lingua" [isInsideForm]="true" (changeLanguage)="onChangeLang($event)">
+        </app-language-selector>
       </div>
     </div>
   </div>

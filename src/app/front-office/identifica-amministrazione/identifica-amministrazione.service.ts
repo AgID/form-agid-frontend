@@ -10,7 +10,7 @@ export class IdentificaAmministrazioneService {
 
   public getAmministrazioni(text: string) {
     return this.http.get(
-      `${ENV.BACKEND_AMM}/3/action/datastore_search_sql?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE "Codice_IPA" LIKE '${text}%' OR "Denominazione_ente" LIKE '${text}% LIMIT 10'`
+      `${ENV.BACKEND_AMM}/3/action/datastore_search_sql?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE "Codice_IPA" LIKE '${text}%' OR "Denominazione_ente" LIKE '${text}%' LIMIT 10`
     );
   }
 
@@ -24,5 +24,25 @@ export class IdentificaAmministrazioneService {
     return this.http.get(
       `${ENV.BACKEND_AMM}/3/action/datastore_search_sql?sql=SELECT * from "41553dea-0701-429e-b906-8b71e441a281" WHERE "Codice_IPA" LIKE '${text}%' LIMIT 10`
     );
+  }
+
+  public inviaCodiceOTP(email: string) {
+    return this.http.post(
+      `${ENV.BACKEND_HOST}/v1/profile/mail/richiedi-validazione`,
+      { email },
+      {
+        headers: {
+          access_token: `${localStorage.getItem('access_token')}`,
+        },
+      }
+    );
+  }
+
+  public nuovoProfilo(body: any) {
+    return this.http.post(`${ENV.BACKEND_HOST}/v1/profile/new-profile`, body, {
+      headers: {
+        access_token: `${localStorage.getItem('access_token')}`,
+      },
+    });
   }
 }
