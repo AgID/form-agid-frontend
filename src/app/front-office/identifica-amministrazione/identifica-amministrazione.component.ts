@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as bootstrap from 'bootstrap';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { AuthService } from 'src/app/common/auth/auth.service';
 import { HashService } from 'src/app/common/hash.service';
+import { VerificaMailService } from '../verifica-mail/verifica-mail.service';
 import { IdentificaAmministrazioneService } from './identifica-amministrazione.service';
 
 @Component({
@@ -33,7 +33,8 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     private route: ActivatedRoute,
     public hashService: HashService,
     private authService: AuthService,
-    private identAmmService: IdentificaAmministrazioneService
+    private identAmmService: IdentificaAmministrazioneService,
+    private verificaMailService: VerificaMailService
   ) {}
 
   ngOnInit(): void {
@@ -57,8 +58,8 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       onConfirm: (data: any) => {
         this.flagOnConfirm = true;
         if (this.flagOnConfirm) {
-          console.log('ONCONFIRM', data);
-          if (data)
+          if (data) {
+            this.hashService.isModified = false;
             this.entity = {
               Codice_Categoria: data.Codice_Categoria,
               Codice_IPA: data.Codice_IPA,
@@ -68,37 +69,34 @@ export class IdentificaAmministrazioneComponent implements OnInit {
               Acronimo: data.Acronimo,
               Sito_istituzionale: data.Sito_istituzionale,
             };
-          if (
-            data &&
-            data.Codice_Categoria &&
-            data.Codice_Categoria === 'L33'
-          ) {
-            //scuole
-            this.getMail(data);
-            this.flagOnConfirm = false;
-          } else if (data && data.Codice_Categoria) {
-            this.identAmmService
-              .getCategorieEnti(data.Codice_Categoria)
-              .subscribe((res: any) => {
-                if (
-                  res.result.records[0] &&
-                  res.result.records[0].UTD === 'A'
-                ) {
-                  this.getMail(data);
-                  this.flagOnConfirm = false;
-                } else if (
-                  res.result.records[0] &&
-                  res.result.records[0].UTD === 'P'
-                ) {
-                  this.identAmmService
-                    .getRTD(data.Codice_IPA)
-                    .subscribe((res: any) => {
-                      this.getMail(res.result.records[0]);
-                      this.flagOnConfirm = false;
-                    });
-                }
-              });
-            this.cod_categoria = data.Codice_Categoria;
+            if (data.Codice_Categoria && data.Codice_Categoria === 'L33') {
+              //scuole
+              this.getMail(data);
+              this.flagOnConfirm = false;
+            } else if (data && data.Codice_Categoria) {
+              this.identAmmService
+                .getCategorieEnti(data.Codice_Categoria)
+                .subscribe((res: any) => {
+                  if (
+                    res.result.records[0] &&
+                    res.result.records[0].UTD === 'A'
+                  ) {
+                    this.getMail(data);
+                    this.flagOnConfirm = false;
+                  } else if (
+                    res.result.records[0] &&
+                    res.result.records[0].UTD === 'P'
+                  ) {
+                    this.identAmmService
+                      .getRTD(data.Codice_IPA)
+                      .subscribe((res: any) => {
+                        this.getMail(res.result.records[0]);
+                        this.flagOnConfirm = false;
+                      });
+                  }
+                });
+              this.cod_categoria = data.Codice_Categoria;
+            }
           }
           return data;
         }
@@ -108,7 +106,6 @@ export class IdentificaAmministrazioneComponent implements OnInit {
           if (data && data.Denominazione_ente) {
             this.showKeyChoose = true;
           }
-          this.hashService.isModified = false;
           this.flagOnConfirm = false;
           return data?.Denominazione_ente;
         },
@@ -166,18 +163,33 @@ export class IdentificaAmministrazioneComponent implements OnInit {
 
   public onClickInviaMail() {
     if (this.userMail) {
-      //endpoint new-profile, passargli anche l'entity oltre alla mail e se c'è anche la policy
-      this.identAmmService
-        .nuovoProfilo({
-          email: this.userMail,
-          cod_categoria: this.cod_categoria,
-          entity: this.entity,
-        })
-        .subscribe((res: any) => {
-          console.log(res);
-        });
+      this.verificaMailService.inviaCodiceOTP(this.userMail).subscribe(() => {
+        this.identAmmService
+          .nuovoProfiloRtd({
+            email: this.userMail,
+            cod_categoria: this.cod_categoria,
+            entity: this.entity,
+          })
+          .subscribe((res: any) => {
+            this.haveKey = 'Y';
+          });
+      });
+    } else {
+      this.hashService.isModified = true;
+      this.hashService.message = [
+        {
+          label: "La mail dell'amministrazione non esiste",
+        },
+      ];
+      this.hashService.type = 'DANGER';
     }
   }
 
-  public onClickAccedi() {}
+  public onClickAccedi() {
+    this.identAmmService
+      .validazioneAggiornamentoUtente({ codiceValidazione: this.key })
+      .subscribe(() => {
+        this.authService.getUserInfo();
+      });
+  }
 }

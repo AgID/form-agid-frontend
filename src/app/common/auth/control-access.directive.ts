@@ -15,7 +15,6 @@ export class ControlAccessDirective implements OnInit {
       this.elemRef.nativeElement.remove();
     }
 
-    // TODO Gestione basata sui ruoli
     const isAdmin =
       userInfo?.sub.slice(0, userInfo.sub.indexOf(':')) === 'Microsoft';
     // user_policy?.some((elem) => elem.policy.is_admin)

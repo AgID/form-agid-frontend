@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { AuthService } from 'src/app/common/auth/auth.service';
 import { HashService } from 'src/app/common/hash.service';
+import { SceltaUtenteService } from '../scelta-utente/scelta-utente.service';
 import { VerificaMailService } from './verifica-mail.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class VerificaMailComponent implements OnInit {
 
   constructor(
     private verificaMailService: VerificaMailService,
+    private sceltaUtenteService: SceltaUtenteService,
     private router: Router,
     private route: ActivatedRoute,
     private hashService: HashService,
@@ -26,6 +28,7 @@ export class VerificaMailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    //TODO: verificare validazione email
     this.verificaMailService
       .getStatoValidazione()
       .subscribe((response: any) => {
@@ -51,10 +54,17 @@ export class VerificaMailComponent implements OnInit {
   }
 
   public onClickInviaCodiceOTP() {
-    this.verificaMailService.inviaCodiceOTP(this.email).subscribe((res) => {
-      this.router.navigate([`../verifica-otp`], {
-        relativeTo: this.route,
+    //Creo il profilo cittadino a Pending e mando alla pagina di inserimento OTP
+    this.sceltaUtenteService
+      .nuovoProfiloCittadino({
+        email: this.email,
+      })
+      .subscribe(() => {
+        this.verificaMailService.inviaCodiceOTP(this.email).subscribe((res) => {
+          this.router.navigate([`../verifica-otp`], {
+            relativeTo: this.route,
+          });
+        });
       });
-    });
   }
 }

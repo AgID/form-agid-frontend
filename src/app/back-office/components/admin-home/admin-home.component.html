@@ -1,0 +1,57 @@
+<div class="row">
+  <!-- FRONT OFFICE CARD -->
+  <div
+    *ngIf="viewFrontOffice()"
+    class="col-12 col-lg-3 mb-3 cursor-pointer"
+    (click)="routerNavigate('elenco-form')"
+  >
+    <div class="card-wrapper">
+      <div class="card card-bg">
+        <div class="card-body align">
+          <span class="mt-5 text">Front Office</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK OFFICE CARD -->
+  <div
+    *ngIf="viewSuperAdminPages()"
+    class="col-12 col-lg-3 mb-3 cursor-pointer"
+    (click)="routerNavigate('admin')"
+  >
+    <div class="card-wrapper">
+      <div class="card card-bg">
+        <div class="card-body align">
+          <span class="mt-5 text">Back Office</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MULTILINGUISMO -->
+  <div
+    *ngIf="viewSuperAdminPages()"
+    class="col-12 col-lg-3 mb-3 cursor-pointer"
+    (click)="routerNavigate('multilanguage')"
+  >
+    <div class="card-wrapper">
+      <div class="card card-bg">
+        <div class="card-body align">
+          <span class="mt-5 text">Multilinguismo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVITI -->
+  <!-- <div class="col-12 col-lg-3 mb-3 cursor-pointer" (click)="routerNavigate('invite')">
+        <div class="card-wrapper">
+            <div class="card card-bg">
+                <div class="card-body align">
+                    <span class="mt-5 text ">Inviti</span>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

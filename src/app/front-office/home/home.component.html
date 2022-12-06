@@ -1,3 +1,4 @@
+<app-admin-home></app-admin-home>
 <h2 class="display-1 text-center">AGID Form Analytics</h2>
 <div class="d-flex justify-content-center pb-5">
   <p class="text-center">
@@ -10,7 +11,10 @@
     >
   </p>
 </div>
-<div *ngIf="statistiche && statistiche.length" class="card-wrapper card-space d-flex justify-content-center pb-5">
+<div
+  *ngIf="statistiche && statistiche.length"
+  class="card-wrapper card-space d-flex justify-content-center pb-5"
+>
   <div class="card card-bg no-after w-50">
     <div class="card-body">
       <h2 class="card-title big-heading">Conteggio</h2>
@@ -19,15 +23,17 @@
         class="table table-responsive-xl table-hover"
       >
         <thead>
-        <tr>
-          <th scope="col">Form</th>
-          <th style="text-align: right" scope="col">Numero elementi</th>
-        </tr>
+          <tr>
+            <th scope="col">Form</th>
+            <th style="text-align: right" scope="col">Numero elementi</th>
+          </tr>
         </thead>
         <tbody>
           <tr *ngFor="let stat of statistiche">
-            <td>{{stat.titolo}}</td>
-            <td style="text-align: right">{{stat.sottomissioniPubblicateCount}}</td>
+            <td>{{ stat.titolo }}</td>
+            <td style="text-align: right">
+              {{ stat.sottomissioniPubblicateCount }}
+            </td>
           </tr>
         </tbody>
       </table>

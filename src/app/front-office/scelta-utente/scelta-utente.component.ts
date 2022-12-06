@@ -32,21 +32,22 @@ export class SceltaUtenteComponent {
   public onClickConferma() {
     switch (this.typeUser) {
       case 'cittadino': {
-        if (this.authService.userInfo.email)
-          this.router.navigate(['/elenco-form']);
-        else this.router.navigate(['/verifica-mail']);
+        if (!this.authService.userInfo.email) {
+          this.router.navigate(['/verifica-mail']);
+        } else
+          this.sceltaUtenteService
+            .nuovoProfiloCittadino({
+              email: this.authService.userInfo.email,
+            })
+            .subscribe(() => {
+              this.authService.getUserInfo().then(() => {
+                this.router.navigate(['/home']);
+              });
+            });
         break;
       }
       case 'rtd': {
-        if (
-          Object.keys(this.authService.userInfo.user_policy[0].policy)
-            .length === 0
-        ) {
-          //utente non valido
-          this.router.navigate(['/identifica-amministrazione']);
-        } else {
-          this.router.navigate(['/elenco-form']);
-        }
+        this.router.navigate(['/identifica-amministrazione']);
         break;
       }
     }

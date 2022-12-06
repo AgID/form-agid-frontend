@@ -19,4 +19,16 @@ export class VerificaOtpService {
       }
     );
   }
+
+  public modificaProfilo(body: any) {
+    return this.http.patch(
+      `${ENV.BACKEND_HOST}/v1/profile/modify-profile`,
+      body,
+      {
+        headers: {
+          access_token: `${localStorage.getItem('access_token')}`,
+        },
+      }
+    );
+  }
 }

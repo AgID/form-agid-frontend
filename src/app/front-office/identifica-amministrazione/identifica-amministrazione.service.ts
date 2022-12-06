@@ -38,11 +38,27 @@ export class IdentificaAmministrazioneService {
     );
   }
 
-  public nuovoProfilo(body: any) {
-    return this.http.post(`${ENV.BACKEND_HOST}/v1/profile/new-profile`, body, {
-      headers: {
-        access_token: `${localStorage.getItem('access_token')}`,
-      },
-    });
+  public nuovoProfiloRtd(body: any) {
+    return this.http.post(
+      `${ENV.BACKEND_HOST}/v1/profile/new-profile-rtd`,
+      body,
+      {
+        headers: {
+          access_token: `${localStorage.getItem('access_token')}`,
+        },
+      }
+    );
+  }
+
+  public validazioneAggiornamentoUtente(body: any) {
+    return this.http.post(
+      `${ENV.BACKEND_HOST}/v1/profile/validazione-aggiornamento-utente`,
+      body,
+      {
+        headers: {
+          access_token: `${localStorage.getItem('access_token')}`,
+        },
+      }
+    );
   }
 }

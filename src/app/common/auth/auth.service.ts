@@ -40,35 +40,60 @@ export class AuthService {
     this.oauthService.events
       .pipe(filter((e) => ['token_received'].includes(e.type)))
       .subscribe((e) => {
-        this.oauthService.userinfoEndpoint = `${ENV.BACKEND_HOST}/v1/profile/info`; // Sovrascrittura endpoint
-        this.oauthService.loadUserProfile();
+        this.getUserInfo();
       });
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
-      //se l'utente non è associato a nessuna amministrazione
-      //TODO:controllo nuovo se l'utente non esiste o è scaduto
+      //Gestione utente SPID/CIE/CNS
       if (
-        this.userInfo &&
-        this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-          'Microsoft'
-      ) {
-        this.router.navigate(['/admin']);
-      } else if (
-        (this.userInfo &&
+        ((this.userInfo &&
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
             'SPID') ||
-        this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) === 'CIE'
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CIE' ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CNS') &&
+        this.userInfo.user_policy &&
+        Object.keys(this.userInfo.user_policy[0].policy).length === 0
       ) {
         this.router.navigate(['/scelta-utente']);
       }
-      // if (this.userInfo.id && !this.userInfo.email) {
-      //   console.log({ userInfo: this.userInfo });
-      //   this.router.navigate(['/verifica-mail']);
-      // }
-      // if (this.userInfo.expired) {
-      //   this.router.navigate(['/scelta-utente']);
-      // }
+      //Se è un cittadino in pending deve inserire l'OTP
+      else if (
+        ((this.userInfo &&
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'SPID') ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CIE' ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CNS') &&
+        this.userInfo.user_policy &&
+        this.userInfo.user_policy[0].policy.role === 'Cittadino' &&
+        this.userInfo.user_policy[0].policy.status === 'Pending'
+      ) {
+        this.router.navigate(['/verifica-otp']);
+      }
+      //Se è un RTD in pending deve essere dirottato sulla scelta dell'amministrazione
+      else if (
+        ((this.userInfo &&
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'SPID') ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CIE' ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CNS') &&
+        this.userInfo.user_policy &&
+        this.userInfo.user_policy[0].policy.role === 'RTD' &&
+        this.userInfo.user_policy[0].policy.status === 'Pending'
+      ) {
+        this.router.navigate(['/identifica-amministrazione']);
+      }
     });
+  }
+
+  async getUserInfo() {
+    this.oauthService.userinfoEndpoint = `${ENV.BACKEND_HOST}/v1/profile/info`; // Sovrascrittura endpoint
+    return this.oauthService.loadUserProfile();
   }
 
   async initAuth(): Promise<any> {

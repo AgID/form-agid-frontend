@@ -97,47 +97,41 @@ export class RisultatiEtichetteComponent {
       })
         .then((content: any) => {
           try {
-            this.risultatiEtichetteService
-              .findLabelsForParams(item.codice)
-              .subscribe((response: any) => {
-                this.etichettaToUpdate = response;
-              })
-              .add(() => {
-                if (this.etichettaToUpdate) {
-                  if (JSON.parse(content)) {
+            if (this.isJsonString(content)) {
+              this.risultatiEtichetteService
+                .findLabelsForParams(item.codice)
+                .subscribe((response: any) => {
+                  this.etichettaToUpdate = response;
+                })
+                .add(() => {
+                  if (this.etichettaToUpdate) {
                     this.etichettaToUpdate.data = JSON.parse(content);
                     this.risultatiEtichetteService
                       .updateLabel(JSON.parse(content))
-                      .subscribe((res) => {
-                        console.log('update');
-                      });
+                      .subscribe(() => {});
+                  } else {
+                    if (JSON.parse(content)) {
+                      let reqBody = JSON.parse(content);
+                      this.risultatiEtichetteService
+                        .createLabel(reqBody)
+                        .subscribe(() => {
+                          console.log('create');
+                        });
+                    }
                   }
-                } else {
-                  if (JSON.parse(content)) {
-                    let reqBody = JSON.parse(content);
-                    this.risultatiEtichetteService
-                      .createLabel(reqBody)
-                      .subscribe(() => {
-                        console.log('create');
-                      });
-                  }
-                }
-              });
-
-            /*if (JSON.parse(content)) {
-              item.data = JSON.parse(content);
-              this.risultatiEtichetteService
-                .updateLabel(item)
-                .subscribe((res) => {
-                  //TODO: chiedere a uno dei due vincenzi come poter effettuare la chiamata senza entrare nel subscribe
-                  console.log('prova');
                 });
-            }*/
-            this.hashService.isModified = true;
-            this.hashService.message = [
-              { label: 'Modifica avvenuta con successo' },
-            ];
-            this.hashService.type = 'SUCCESS';
+              this.hashService.isModified = true;
+              this.hashService.message = [
+                { label: 'Modifica avvenuta con successo' },
+              ];
+              this.hashService.type = 'SUCCESS';
+            } else {
+              this.hashService.isModified = true;
+              this.hashService.message = [
+                { label: 'Il json non è formattato correttamente' },
+              ];
+              this.hashService.type = 'DANGER';
+            }
           } catch (error) {
             //gestione errore front end
             this.hashService.isModified = true;
@@ -171,5 +165,14 @@ export class RisultatiEtichetteComponent {
 
   scrollToTop() {
     window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+  }
+
+  isJsonString(str: any) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 }

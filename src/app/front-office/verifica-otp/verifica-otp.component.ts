@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
+import { AuthService } from 'src/app/common/auth/auth.service';
 import { VerificaOtpService } from './verifica-otp.service';
 
 @Component({
@@ -11,14 +12,15 @@ import { VerificaOtpService } from './verifica-otp.service';
 export class VerificaOtpComponent {
   public otp = '';
   public isValidOtp = true;
-
+  public user_id: number;
   public errorMessage: Array<any> = [{ label: 'Campo obbligatorio' }];
   public typeAlert: AlertType = 'DANGER';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private verificaOtp: VerificaOtpService
+    private verificaOtp: VerificaOtpService,
+    private authService: AuthService
   ) {}
 
   public onKeyUpOtp(e: any) {
@@ -29,8 +31,18 @@ export class VerificaOtpComponent {
   public onClickOTP() {
     this.verificaOtp
       .effettuaValidazione({ codiceValidazione: this.otp })
-      .subscribe((res) => {
-        this.router.navigate(['/elenco-form']);
+      .subscribe(() => {
+        this.authService.userInfo.user_policy[0].policy.status = 'Active';
+        this.verificaOtp
+          .modificaProfilo(this.authService.userInfo.user_policy[0].policy)
+          .subscribe((res: any) => {
+            this.user_id = res.user_id;
+          });
+      })
+      .add(() => {
+        this.authService.getUserInfo().then(() => {
+          if (this.user_id) this.router.navigate(['/elenco-form']);
+        });
       });
   }
 }

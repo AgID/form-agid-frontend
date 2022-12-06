@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormioModule } from '@formio/angular';
 import { MarkdownModule } from 'ngx-markdown';
+import { AdminHomeComponent } from '../back-office/components/admin-home/admin-home.component';
 import { AppCommonModule } from '../common/app-common.module';
 import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
 import { DettaglioFormFoComponent } from './elenco-form/dettaglio/dettaglio-form.component';
@@ -26,6 +27,7 @@ import { VerificaOtpModule } from './verifica-otp/verifica-otp.module';
     ElencoFormFoComponent,
     DettaglioFormFoComponent,
     NuovaSottomissioneComponent,
+    AdminHomeComponent,
     RicercaSottomissioniComponent,
     DettaglioSottomissioneComponent,
     FaqComponent,

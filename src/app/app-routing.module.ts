@@ -24,7 +24,9 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    data: { breadcrumb: 'Home' },
+    data: {
+      breadcrumb: 'Home',
+    },
   },
   {
     path: 'view/:id',
@@ -35,28 +37,46 @@ const routes: Routes = [
     path: 'elenco-form',
     loadChildren: () =>
       import('./front-office/form-fo.module').then((m) => m.FormFoModule),
-    data: { breadcrumb: 'Elenco Form' },
-    // canActivate: [AuthGuard],
+    data: {
+      breadcrumb: 'Elenco Form',
+      usersAllowed: [
+        { role: UserRole.RTD, status: 'Active' },
+        { role: UserRole.CITTADINO, status: 'Active' },
+      ],
+    },
+    canActivate: [AuthGuard],
   },
   {
+    //TODO: Riflettere sul flusso
     path: 'verifica-mail',
     component: VerificaMailComponent,
-    data: { breadcrumb: 'Verifica mail' },
+    data: {
+      breadcrumb: 'Verifica mail',
+    },
   },
   {
+    //TODO: Riflettere sul flusso
     path: 'scelta-utente',
     component: SceltaUtenteComponent,
-    data: { breadcrumb: 'Scelta utente' },
+    data: {
+      breadcrumb: 'Scelta utente',
+    },
   },
   {
+    //TODO:Riflettere sul flusso
     path: 'identifica-amministrazione',
     component: IdentificaAmministrazioneComponent,
-    data: { breadcrumb: 'Identifica amministrazione' },
+    data: {
+      breadcrumb: 'Identifica amministrazione',
+    },
   },
   {
     path: 'verifica-otp',
     component: VerificaOtpComponent,
-    data: { breadcrumb: 'Verifica OTP' },
+    data: {
+      breadcrumb: 'Verifica OTP',
+      usersAllowed: [{ role: UserRole.CITTADINO, status: 'Pending' }],
+    },
     canActivate: [AuthGuard],
   },
   {
@@ -68,7 +88,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: ElencoFormComponent,
-    data: { breadcrumb: 'Elenco Form BO', usersAlowed: UserRole.ADMIN },
+    data: {
+      breadcrumb: 'Elenco Form BO',
+      usersAllowed: [{ role: UserRole.SUPER_ADMIN, status: 'Active' }],
+    },
     canActivate: [AuthGuard],
     children: [
       {
@@ -96,7 +119,10 @@ const routes: Routes = [
   {
     path: 'multilanguage',
     component: ElencoEtichetteComponent,
-    data: { breadcrumb: 'Elenco etichette', usersAlowed: UserRole.ADMIN },
+    data: {
+      breadcrumb: 'Elenco etichette',
+      usersAllowed: [{ role: UserRole.SUPER_ADMIN, status: 'Active' }],
+    },
     canActivate: [AuthGuard],
     children: [
       {
@@ -114,7 +140,10 @@ const routes: Routes = [
   {
     path: 'invite',
     component: InvitiComponent,
-    data: { breadcrumb: 'Inviti', usersAlowed: UserRole.ADMIN },
+    data: {
+      breadcrumb: 'Inviti',
+      usersAllowed: [{ role: UserRole.SUPER_ADMIN, status: 'Active' }],
+    },
     canActivate: [AuthGuard],
   },
 ];

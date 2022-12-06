@@ -38,6 +38,7 @@
               value="Y"
               id="yesKey"
               [attr.disabled]="hashService.isModified ? true : undefined"
+              [attr.checked]="haveKey === 'Y' ? true : undefined"
               (change)="onChangeYesKey($event)"
             />
             <label for="yesKey">ho già la chiave di accesso</label>
@@ -49,6 +50,7 @@
               value="N"
               id="noKey"
               [attr.disabled]="hashService.isModified ? true : undefined"
+              [attr.checked]="haveKey === 'N' ? true : undefined"
               (change)="onChangeNoKey($event)"
             />
             <label for="noKey">desidero ricevere una chiave di accesso</label>
