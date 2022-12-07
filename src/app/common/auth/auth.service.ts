@@ -44,7 +44,7 @@ export class AuthService {
       });
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
-      //Gestione utente SPID/CIE/CNS
+      //Gestione utente SPID/CIE/CNS e ha la policy vuota
       if (
         ((this.userInfo &&
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
@@ -68,10 +68,25 @@ export class AuthService {
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
             'CNS') &&
         this.userInfo.user_policy &&
-        this.userInfo.user_policy[0].policy.role === 'Cittadino' &&
+        this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
         this.userInfo.user_policy[0].policy.status === 'Pending'
       ) {
         this.router.navigate(['/verifica-otp']);
+      }
+      //Se è un cittadino in active accede direttamente all'elenco-form
+      else if (
+        ((this.userInfo &&
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'SPID') ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CIE' ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CNS') &&
+        this.userInfo.user_policy &&
+        this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
+        this.userInfo.user_policy[0].policy.status === 'Active'
+      ) {
+        this.router.navigate(['/elenco-form']);
       }
       //Se è un RTD in pending deve essere dirottato sulla scelta dell'amministrazione
       else if (
@@ -87,6 +102,21 @@ export class AuthService {
         this.userInfo.user_policy[0].policy.status === 'Pending'
       ) {
         this.router.navigate(['/identifica-amministrazione']);
+      }
+      //Se è un RTD in active deve essere dirottato sull'elenco-form'
+      else if (
+        ((this.userInfo &&
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'SPID') ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CIE' ||
+          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
+            'CNS') &&
+        this.userInfo.user_policy &&
+        this.userInfo.user_policy[0].policy.role === 'RTD' &&
+        this.userInfo.user_policy[0].policy.status === 'Active'
+      ) {
+        this.router.navigate(['/elenco-form']);
       }
     });
   }

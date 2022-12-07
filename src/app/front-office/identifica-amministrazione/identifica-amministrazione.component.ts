@@ -29,8 +29,6 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   public entity: any;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     public hashService: HashService,
     private authService: AuthService,
     private identAmmService: IdentificaAmministrazioneService,
@@ -58,6 +56,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       onConfirm: (data: any) => {
         this.flagOnConfirm = true;
         if (this.flagOnConfirm) {
+          console.log('ONCONFIRM', data);
           if (data) {
             this.hashService.isModified = false;
             this.entity = {

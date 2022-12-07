@@ -16,6 +16,7 @@ import { FooterModule } from './footer/footer.module';
 import { FormFoModule } from './front-office/form-fo.module';
 import { HeaderModule } from './header/header.module';
 import { ViewComponent } from './public/view/view.component';
+import { NgChartsModule } from 'ng2-charts';
 
 const AppConfig = {};
 
@@ -32,6 +33,8 @@ const AppConfig = {};
     AppCommonModule,
     NoopAnimationsModule,
     TranslateModule.forRoot(),
+    NgChartsModule,
+
   ],
   providers: [
     {
@@ -49,4 +52,4 @@ const AppConfig = {};
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
