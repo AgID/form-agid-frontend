@@ -1,12 +1,13 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
+import { environment as ENV } from 'src/environments/environment';
 
 export const authConfig: AuthConfig = {
-  issuer: 'https://login-test.agid.gov.it',
-  clientId: '4af1e6aa-15e2-4e22-98b0-cf6520377b52',
-  dummyClientSecret: '78bc23ef-f431-44f3-8544-c59fa0b32634',
-  useHttpBasicAuth: true,
-  redirectUri: 'http://localhost',
-  scope: 'openid profile email offline_access',
-  responseType: 'code',
-  showDebugInformation: true,
+  issuer: ENV.AUTH_ISSUER,
+  clientId: ENV.AUTH_CLIENT_ID,
+  dummyClientSecret: ENV.AUTH_DUMMY_CLIENT_SECRET,
+  useHttpBasicAuth: ENV.AUTH_BASIC_AUTH,
+  redirectUri: ENV.AUTH_REDIRECT_URI,
+  scope: ENV.AUTH_SCOPE,
+  responseType: ENV.AUTH_RESPONSE_TYPE,
+  showDebugInformation: ENV.AUTH_SHOW_DEBUG_INFORMATION,
 };
