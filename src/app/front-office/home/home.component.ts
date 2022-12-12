@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-import { an, B } from 'chart.js/dist/chunks/helpers.core';
-import { timeStamp } from 'console';
-import { elementAt } from 'rxjs';
 import { ElencoFormService } from '../elenco-form/elenco-form.service';
 
 @Component({
