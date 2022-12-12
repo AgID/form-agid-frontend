@@ -28,5 +28,5 @@ FROM nginxinc/nginx-unprivileged
 COPY default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 # Expose port http_port
-ENV HTTP_PORT 8080
+ENV HTTP_PORT 80
 EXPOSE ${HTTP_PORT}
