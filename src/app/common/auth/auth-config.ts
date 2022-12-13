@@ -10,4 +10,5 @@ export const authConfig: AuthConfig = {
   scope: ENV.AUTH_SCOPE,
   responseType: ENV.AUTH_RESPONSE_TYPE,
   showDebugInformation: ENV.AUTH_SHOW_DEBUG_INFORMATION,
+  requireHttps: ENV.AUTH_REQUIRE_HTTPS,
 };

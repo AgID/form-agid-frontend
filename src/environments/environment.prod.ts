@@ -10,4 +10,5 @@ export const environment = {
   AUTH_SCOPE: 'openid profile email offline_access',
   AUTH_RESPONSE_TYPE: 'code',
   AUTH_SHOW_DEBUG_INFORMATION: true,
+  AUTH_REQUIRE_HTTPS: false,
 };
