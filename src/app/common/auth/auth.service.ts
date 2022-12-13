@@ -119,6 +119,8 @@ export class AuthService {
         this.router.navigate(['/elenco-form']);
       }
     });
+
+    this.authConfig.tokenEndpoint = `${ENV.BACKEND_HOST}/token`;
   }
 
   async getUserInfo() {
@@ -127,6 +129,7 @@ export class AuthService {
   }
 
   async initAuth(): Promise<any> {
+    this.authConfig.tokenEndpoint = `${ENV.BACKEND_HOST}/token`;
     return this.oauthService
       .loadDiscoveryDocument()
       .then(() => this.oauthService.tryLogin())
@@ -134,6 +137,7 @@ export class AuthService {
   }
 
   public login(targetUrl?: string) {
+    this.authConfig.tokenEndpoint = `${ENV.BACKEND_HOST}/token`;
     this.oauthService.initLoginFlow(targetUrl || this.router.url);
   }
 

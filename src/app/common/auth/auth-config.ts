@@ -11,4 +11,5 @@ export const authConfig: AuthConfig = {
   responseType: ENV.AUTH_RESPONSE_TYPE,
   showDebugInformation: ENV.AUTH_SHOW_DEBUG_INFORMATION,
   requireHttps: ENV.AUTH_REQUIRE_HTTPS,
+  tokenEndpoint: `${ENV.BACKEND_HOST}/token`,
 };
