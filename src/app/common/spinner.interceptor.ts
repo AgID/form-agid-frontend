@@ -1,8 +1,13 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {finalize, Observable} from 'rxjs';
-import {NgxSpinnerService} from "ngx-spinner";
-
+import { finalize, Observable } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { environment as ENV } from 'src/environments/environment';
 
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
@@ -10,11 +15,20 @@ export class SpinnerInterceptor implements HttpInterceptor {
 
   constructor(private spinner: NgxSpinnerService) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    // Interceptor per token
+    let newReq = req;
+    if (req.url === 'https://login-test.agid.gov.it/token') {
+      newReq = req.clone({ url: `${ENV.BACKEND_HOST}/v1/profile/token` });
+    }
+
     this.service_count++; // increment count for each intercepted http request. Also display spinner.
     this.spinner.show();
 
-    return next.handle(req).pipe(
+    return next.handle(newReq).pipe(
       finalize(() => {
         this.service_count--;
         // decrement when http call is completed (success/failed both handled when finalize rxjs operator used)
@@ -23,7 +37,7 @@ export class SpinnerInterceptor implements HttpInterceptor {
           // Last http call completed so remove spinner
           this.spinner.hide();
         }
-      }),
+      })
     );
   }
 }
