@@ -119,11 +119,11 @@ export class AuthService {
         this.router.navigate(['/elenco-form']);
       }
     });
-
   }
 
   async getUserInfo() {
     this.oauthService.userinfoEndpoint = `${ENV.BACKEND_HOST}/v1/profile/info`; // Sovrascrittura endpoint
+    this.oauthService.requireHttps = false;
     return this.oauthService.loadUserProfile();
   }
 
