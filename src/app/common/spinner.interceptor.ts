@@ -25,6 +25,12 @@ export class SpinnerInterceptor implements HttpInterceptor {
       newReq = req.clone({ url: `${ENV.BACKEND_HOST}/v1/profile/token` });
     }
 
+    if (req.url === 'https://login-test.agid.gov.it/token/revocation') {
+      newReq = req.clone({
+        url: `${ENV.BACKEND_HOST}/v1/profile/token/revocation`,
+      });
+    }
+
     this.service_count++; // increment count for each intercepted http request. Also display spinner.
     this.spinner.show();
 
