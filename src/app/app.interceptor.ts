@@ -19,7 +19,7 @@ export class AppInterceptor implements HttpInterceptor {
     const accessToken = localStorage.getItem('access_token');
     const modifiedReq = accessToken
       ? request.clone({
-          headers: request.headers.set('access_token', accessToken),
+          headers: request.headers.set('access-token', accessToken),
         })
       : request;
     return next.handle(modifiedReq).pipe(

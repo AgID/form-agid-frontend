@@ -14,7 +14,7 @@ export class SceltaUtenteService {
       body,
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );

@@ -32,7 +32,7 @@ export class IdentificaAmministrazioneService {
       { email },
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );
@@ -44,7 +44,7 @@ export class IdentificaAmministrazioneService {
       body,
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );
@@ -56,7 +56,7 @@ export class IdentificaAmministrazioneService {
       body,
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );

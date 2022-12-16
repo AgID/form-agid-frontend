@@ -14,7 +14,7 @@ export class VerificaOtpService {
       data,
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );
@@ -26,7 +26,7 @@ export class VerificaOtpService {
       body,
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );

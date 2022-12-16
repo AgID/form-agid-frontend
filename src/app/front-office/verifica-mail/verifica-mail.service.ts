@@ -14,7 +14,7 @@ export class VerificaMailService {
       { email },
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );
@@ -25,7 +25,7 @@ export class VerificaMailService {
       `${ENV.BACKEND_HOST}/v1/profile/mail/stato-validazione`,
       {
         headers: {
-          access_token: `${localStorage.getItem('access_token')}`,
+          'access-token': `${localStorage.getItem('access_token')}`,
         },
       }
     );
