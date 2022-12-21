@@ -47,28 +47,34 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    //TODO: Riflettere sul flusso
     path: 'verifica-mail',
     component: VerificaMailComponent,
     data: {
       breadcrumb: 'Verifica mail',
+      usersAllowed: [{ role: undefined }],
     },
+    canActivate: [AuthGuard],
   },
   {
-    //TODO: Riflettere sul flusso
     path: 'scelta-utente',
     component: SceltaUtenteComponent,
     data: {
       breadcrumb: 'Scelta utente',
+      usersAllowed: [{ role: undefined }],
     },
+    canActivate: [AuthGuard],
   },
   {
-    //TODO:Riflettere sul flusso
     path: 'identifica-amministrazione',
     component: IdentificaAmministrazioneComponent,
     data: {
       breadcrumb: 'Identifica amministrazione',
+      usersAllowed: [
+        { role: undefined },
+        { role: UserRole.RTD, status: 'Pending' },
+      ],
     },
+    canActivate: [AuthGuard],
   },
   {
     path: 'verifica-otp',

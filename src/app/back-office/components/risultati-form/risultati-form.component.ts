@@ -81,7 +81,10 @@ export class RisultatiFormComponent implements OnInit {
   downloadFile(data: any) {
     const blob = new Blob([data], { type: data.type });
     const url = window.URL.createObjectURL(blob);
-    window.open(url);
+    const a = document.createElement('a');
+    a.href = url;
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 
   public redirectPage() {

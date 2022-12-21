@@ -142,7 +142,6 @@ export class RisultatiEtichetteComponent {
         .catch((error) => console.log(error));
       this.scrollToTop();
     }
-    console.log('file' + file);
   }
 
   public exportLabel(item: any) {

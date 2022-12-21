@@ -1,49 +1,66 @@
 <h2>Gestione compilazioni</h2>
-<app-ricerca-sottomissioni #ricercaSottomissioniComponent></app-ricerca-sottomissioni>
+<app-ricerca-sottomissioni
+  #ricercaSottomissioniComponent
+></app-ricerca-sottomissioni>
 <div class="row">
   <div class="form-group col text-right">
     <button type="submit" class="btn btn-primary" (click)="searchForm()">
-      {{"AG_Cerca" | translate}}
+      {{ "AG_Cerca" | translate }}
     </button>
   </div>
 </div>
-<table style="table-layout: fixed" class="w-100 table table-responsive-xl table-hover mt-4">
+<table
+  style="table-layout: fixed"
+  class="w-100 table table-responsive-xl table-hover mt-4"
+>
   <thead>
     <tr>
-      <th style="width: 30%" scope="col">{{"AG_Nome_Amministrazione" | translate}}</th>
-      <th style="width: 10%" scope="col">{{"AG_Email_utente" | translate}}</th>
-      <th style="width: 20%" scope="col">{{"AG_Titolo_Form" | translate}}</th>
-      <th style="width: 10%" scope="col">{{"AG_Stato" | translate}}</th>
-      <th style="width: 15%" scope="col">{{"AG_Data_Ultima_Modifica" | translate}}</th>
-      <th style="width: 15%" scope="col">{{"AG_Azioni" | translate}}</th>
+      <th style="width: 30%" scope="col">
+        {{ "AG_Nome_Amministrazione" | translate }}
+      </th>
+      <th style="width: 10%" scope="col">
+        {{ "AG_Email_utente" | translate }}
+      </th>
+      <th style="width: 20%" scope="col">{{ "AG_Titolo_Form" | translate }}</th>
+      <th style="width: 10%" scope="col">{{ "AG_Stato" | translate }}</th>
+      <th style="width: 15%" scope="col">
+        {{ "AG_Data_Ultima_Modifica" | translate }}
+      </th>
+      <th style="width: 15%" scope="col">{{ "AG_Azioni" | translate }}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of elencoForm">
       <td>
-        {{ item.ente }}
+        {{ item.ente || "-" }}
       </td>
       <td>
-        {{ item.emailUtente }}
+        {{ item.emailUtente || "-" }}
       </td>
       <td>
-        {{ item.titolo }}
+        {{ item.titolo || "-" }}
       </td>
       <td>
-        {{ item.stato }}
+        {{ item.stato || "-" }}
       </td>
-      <td>{{ item.dataUltimaModifica }}</td>
+      <td>{{ item.dataUltimaModifica || "-" }}</td>
       <td>
-        <svg class="icon cursor-pointer" (click)="goToModificaSottomissione(item)">
-          <title id="modifica">{{"AG_Modifica" | translate}}</title>
+        <svg
+          class="icon cursor-pointer"
+          (click)="goToModificaSottomissione(item)"
+        >
+          <title id="modifica">{{ "AG_Modifica" | translate }}</title>
           <use href="../../../../assets/svg/sprite.svg#it-pencil"></use>
         </svg>
-        <svg class="icon cursor-pointer" (click)="goToDettaglioSottomissione(item)">
-          <title id="dettaglio">{{"AG_Dettaglio" | translate}}</title>
+        <svg
+          class="icon cursor-pointer"
+          (click)="goToDettaglioSottomissione(item)"
+        >
+          <title id="dettaglio">{{ "AG_Dettaglio" | translate }}</title>
           <use href="../../../../assets/svg/sprite.svg#it-note"></use>
         </svg>
         <svg class="icon cursor-pointer" (click)="eliminaSottomissione(item)">
-          <title id="elimina">{{"AG_Elimina" | translate}}</title>
+          <title id="elimina">{{ "AG_Elimina" | translate }}</title>
           <use href="../../../../assets/svg/sprite.svg#it-delete"></use>
         </svg>
       </td>
@@ -53,17 +70,24 @@
 <tbody *ngIf="!elencoForm?.length">
   <tr>
     <div class="ms-3">
-      <p>Nessun risultato disponibile per la ricerca effettuata.</p>
+      <p>{{ "AG_Nessun_Risultato" | translate }}</p>
     </div>
   </tr>
 </tbody>
-<app-paginator *ngIf="totalElements" [elementsForPage]="filters.pagination.elementsForPage"
-  [(selectedPage)]="selectedPage" [totalElements]="totalElements" (selectedPageChange)="onPageChange($event)">
+<app-paginator
+  *ngIf="totalElements"
+  [elementsForPage]="filters.pagination.elementsForPage"
+  [(selectedPage)]="selectedPage"
+  [totalElements]="totalElements"
+  (selectedPageChange)="onPageChange($event)"
+>
 </app-paginator>
 <div class="mt-4 mb-3">
-  <a class="text-16p text-primary" (click)="goToTornaAllaRicercaSchemi()"><span
-      class="fa fa-angle-double-left me-1"></span>
+  <a class="text-16p text-primary" (click)="goToTornaAllaRicercaSchemi()"
+    ><span class="fa fa-angle-double-left me-1"></span>
     <label class="text-16p underline cursor cursor-pointer" style="color: #06c">
-      {{"AG_Torna_Ricerca" |translate}}</label></a>
+      {{ "AG_Torna_Ricerca" | translate }}</label
+    ></a
+  >
 </div>
 <router-outlet></router-outlet>
