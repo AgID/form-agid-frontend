@@ -15,13 +15,13 @@ import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
 import { FooterModule } from './footer/footer.module';
 import { FormFoModule } from './front-office/form-fo.module';
 import { HeaderModule } from './header/header.module';
-import { ViewComponent } from './public/view/view.component';
 import { NgChartsModule } from 'ng2-charts';
+import { ViewModule } from './public/view/view.module';
 
 const AppConfig = {};
 
 @NgModule({
-  declarations: [AppComponent, BreadcrumbComponent, ViewComponent],
+  declarations: [AppComponent, BreadcrumbComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,10 +31,10 @@ const AppConfig = {};
     FooterModule,
     CommonModule,
     AppCommonModule,
+    ViewModule,
     NoopAnimationsModule,
     TranslateModule.forRoot(),
     NgChartsModule,
-
   ],
   providers: [
     {
@@ -52,4 +52,4 @@ const AppConfig = {};
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

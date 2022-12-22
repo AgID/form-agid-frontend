@@ -1,3 +1,5 @@
+<h1>{{ submission?.titolo }}</h1>
+<p *ngIf="redattaIl">Redatta il {{ redattaIl }}</p>
 <app-formio-render
   [form]="formSchema"
   [submission]="{ data: formData }"

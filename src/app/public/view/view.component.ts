@@ -22,6 +22,8 @@ export class ViewComponent implements OnInit {
     renderMode: 'html',
   };
   public formData: any;
+  public submission: any;
+  public redattaIl: string = null;
 
   ngOnInit() {
     const idForm = this.route.snapshot.params['id'];
@@ -38,6 +40,10 @@ export class ViewComponent implements OnInit {
     this.viewService.findSottomissioneById(id).subscribe((res: any) => {
       this.formSchema = res.form[0];
       this.formData = res.datiPubblicati;
+      this.submission = res;
+      this.redattaIl = res.dataUltimaModifica
+        ? new Date(res.dataUltimaModifica).toLocaleDateString()
+        : new Date(res.dataInserimento).toLocaleDateString();
     });
   }
 }

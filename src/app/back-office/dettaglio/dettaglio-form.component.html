@@ -1,4 +1,4 @@
-<h2>Gestione compilazioni</h2>
+<h2>{{ "AG_Gestione_Compilazioni" | translate }} - {{ form?.titolo }}</h2>
 <app-ricerca-sottomissioni
   #ricercaSottomissioniComponent
 ></app-ricerca-sottomissioni>
@@ -21,8 +21,13 @@
       <th style="width: 10%" scope="col">
         {{ "AG_Email_utente" | translate }}
       </th>
-      <th style="width: 20%" scope="col">{{ "AG_Titolo_Form" | translate }}</th>
+      <th style="width: 20%" scope="col">
+        {{ "AG_Titolo_Compilazione" | translate }}
+      </th>
       <th style="width: 10%" scope="col">{{ "AG_Stato" | translate }}</th>
+      <th style="width: 15%" scope="col">
+        {{ "AG_Data_Inserimento" | translate }}
+      </th>
       <th style="width: 15%" scope="col">
         {{ "AG_Data_Ultima_Modifica" | translate }}
       </th>
@@ -43,6 +48,7 @@
       <td>
         {{ item.stato || "-" }}
       </td>
+      <td>{{ item.dataInserimento || "-" }}</td>
       <td>{{ item.dataUltimaModifica || "-" }}</td>
       <td>
         <svg

@@ -1,15 +1,20 @@
 <div class="mt-5">
   <div class="row">
     <div class="form-group col-md-3">
-      <app-input [label]="'AG_Codice_Utente' | translate" (changeInput)="onChangeCodiceUtente($event)"
-        [value]="this.filters.codiceUtenteInserimento">
+      <app-input
+        [label]="'AG_Titolo_Compilazione' | translate"
+        (changeInput)="onChangeTitoloCompilazione($event)"
+        [value]="this.filters.titolo"
+      >
       </app-input>
     </div>
     <div class="col-md-3 mt-3">
       <div class="select-wrapper">
-        <label for="selectStato">{{"AG_Stato" | translate}}</label>
+        <label for="selectStato">{{ "AG_Stato" | translate }}</label>
         <select id="selectStato" (change)="onChangeStato($event)">
-          <option selected="" value="">{{"AG_Scegli_Opzione" | translate}}</option>
+          <option selected="" value="">
+            {{ "AG_Scegli_Opzione" | translate }}
+          </option>
           <option value="Bozza">Bozza</option>
           <option value="Pubblicato">Pubblicato</option>
         </select>
@@ -17,18 +22,40 @@
     </div>
     <div class="col-12 col-md-3 mt-3">
       <div class="form-group">
-        <label class="active" for="dateInizio">{{'AG_Data_Inizio' | translate}}</label>
-        <input (change)="onChangeDataInizio($event)" [value]="filters.dataInizio" type="date" id="dateInizio"
-          name="dateInizio" />
-        <app-alert *ngIf="!isValid.dataInizio" [messaggio]="errorMessage" [type]="typeAlert"></app-alert>
+        <label class="active" for="dateInizio">{{
+          "AG_Data_Inizio" | translate
+        }}</label>
+        <input
+          (change)="onChangeDataInizio($event)"
+          [value]="filters.dataInizio"
+          type="date"
+          id="dateInizio"
+          name="dateInizio"
+        />
+        <app-alert
+          *ngIf="!isValid.dataInizio"
+          [messaggio]="errorMessage"
+          [type]="typeAlert"
+        ></app-alert>
       </div>
     </div>
     <div class="col-12 col-md-3 mt-3">
       <div class="form-group">
-        <label class="active" for="dateFine">{{'AG_Data_Fine' | translate}}</label>
-        <input (change)="onChangeDataFine($event)" [value]="filters.dataFine" type="date" id="dateFine"
-          name="dateFine" />
-        <app-alert *ngIf="!isValid.dataFine" [messaggio]="errorMessage" [type]="typeAlert"></app-alert>
+        <label class="active" for="dateFine">{{
+          "AG_Data_Fine" | translate
+        }}</label>
+        <input
+          (change)="onChangeDataFine($event)"
+          [value]="filters.dataFine"
+          type="date"
+          id="dateFine"
+          name="dateFine"
+        />
+        <app-alert
+          *ngIf="!isValid.dataFine"
+          [messaggio]="errorMessage"
+          [type]="typeAlert"
+        ></app-alert>
       </div>
     </div>
   </div>

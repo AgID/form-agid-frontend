@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as bootstrap from 'bootstrap';
 import { Utils } from 'formiojs';
 import { HashService } from 'src/app/common/hash.service';
 import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.service';
@@ -74,9 +75,9 @@ export class ModificaFormComponent implements OnInit {
         //Inizializzazione tooltip
         setTimeout(() => {
           let tooltipTitle = document.getElementById('tooltip');
-          // let tooltip = new bootstrap.Tooltip(tooltipTitle, {
-          //   title: `Stato : ${this.metadati.stato} - Versione : ${this.metadati.versione}`,
-          // });
+          let tooltip = new bootstrap.Tooltip(tooltipTitle, {
+            title: `Stato : ${this.metadati.stato} - Versione : ${this.metadati.versione}`,
+          });
         }, 500);
       })
       .add(() => {

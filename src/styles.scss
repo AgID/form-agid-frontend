@@ -15,10 +15,6 @@
   padding-left: 1.25rem !important;
 }
 
-.app .form-group.formio-component-checkbox {
-  margin-bottom: 0 !important;
-}
-
 .builder-component {
   margin-bottom: 0 !important;
 }
@@ -62,37 +58,6 @@ button.active#render {
   color: #06c;
   cursor: inherit;
 }
-// input {
-//   &[type="text"] {
-//     border: 0;
-//     border-bottom: 1px solid black;
-//     border-radius: 0;
-//   }
-
-//   &[type="checkbox"] {
-//     border: 1px solid rgb(0, 0, 0);
-//     font-size: 18px;
-//   }
-
-//   .form-check [type="radio"]:checked::before {
-//     border-color: #06c;
-//   }
-//   .form-check [type="radio"]::after,
-//   .form-check [type="radio"]::before {
-//     content: "";
-//     position: absolute;
-//     left: 0;
-//     top: 0;
-//     margin: 5px;
-//     width: 22px;
-//     height: 22px;
-//     z-index: 0;
-//     border-radius: 50%;
-//     border-style: solid;
-//     border-width: 2px;
-//     transition: 0.2s ease-out;
-//   }
-// }
 
 .ace_editor,
 .ace_editor * {
@@ -103,25 +68,59 @@ button.active#render {
   letter-spacing: 0 !important;
 }
 
-.app {
-  .form-group .col-form-label,
-  formio .formio-component-checkbox > label {
-    transform: translateY(-75%);
-    font-size: 0.777rem;
+app-formio-render {
+  .formio-component-textfield,
+  .formio-component-url,
+  .formio-component-radio,
+  .formio-component-checkbox,
+  .formio-component-textarea,
+  .formio-component-email,
+  .formio-component-datetime,
+  .formio-component-select,
+  .formio-component-number {
+    > label {
+      font-variant: small-caps !important;
+      color: #004080 !important;
+      font-size: 1.5rem !important;
+      padding-left: 0 !important;
+      margin-bottom: 0.3rem !important;
+      position: static !important;
+      line-height: 24px !important;
+      white-space: normal !important;
+    }
+    div [ref="value"] {
+      white-space: break-spaces !important;
+    }
   }
-}
-.formio-component-textfield,
-.formio-component-datetime,
-.formio-component-textarea {
-  margin-top: 3rem !important;
+  .formio-component-fieldset {
+    legend {
+      font-variant: small-caps !important;
+      color: #004080 !important;
+      font-size: 1.5rem !important;
+      margin-bottom: 0.3rem !important;
+      padding-left: 0 !important;
+      font-weight: 600 !important;
+      line-height: 24px !important;
+    }
+  }
+  .form-group {
+    margin-bottom: 1.5rem !important;
+  }
+  .form-text.text-muted {
+    display: none;
+  }
+  .formio-component-content {
+    div p {
+      font-variant: small-caps !important;
+      color: #004080 !important;
+      font-size: 1.5rem !important;
+      margin-bottom: 0.3rem !important;
+    }
+  }
 }
 
 .form-control.ui.fluid.selection.dropdown {
   border: 1px solid #979899 !important;
-}
-
-formio fieldset legend[ref="header"] {
-  margin-bottom: 1.5rem;
 }
 
 *:focus {
@@ -130,14 +129,11 @@ formio fieldset legend[ref="header"] {
   outline: none !important;
 }
 
-.formio-component {
-  margin-bottom: 2rem !important;
+.tooltip-inner {
+  background-color: #06c;
 }
 
-.formio-component-checkbox > div {
-  margin-top: 1rem !important;
-}
-
-.formio-component > label {
-  padding-left: 0 !important;
+.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before,
+.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: #06c;
 }

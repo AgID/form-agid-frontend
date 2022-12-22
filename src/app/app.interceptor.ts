@@ -26,7 +26,7 @@ export class AppInterceptor implements HttpInterceptor {
       catchError((err) => {
         // onError
         if (err instanceof HttpErrorResponse) {
-          if (err.status === 403) {
+          if (err.status === 403 || err.status === 401) {
             alert(
               'Il token è scaduto, si prega di effettuare di nuovo il login'
             );

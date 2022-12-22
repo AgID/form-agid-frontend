@@ -15,7 +15,6 @@ export class RicercaSottomissioniComponent {
   public filters = {
     titolo: '',
     stato: '',
-    codiceUtenteInserimento: '',
     dataInizio: '',
     dataFine: '',
     pagination: new Pagination(),
@@ -26,8 +25,8 @@ export class RicercaSottomissioniComponent {
     dataFine: true,
   };
 
-  public onChangeCodiceUtente($e: any) {
-    this.filters.codiceUtenteInserimento = $e.target.value;
+  public onChangeTitoloCompilazione($e: any) {
+    this.filters.titolo = $e.target.value;
   }
 
   public onChangeStato($e: any) {
