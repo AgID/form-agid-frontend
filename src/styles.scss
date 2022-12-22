@@ -137,3 +137,7 @@ app-formio-render {
 .bs-tooltip-top .tooltip-arrow::before {
   border-top-color: #06c;
 }
+
+formio.render-mode .hide-in-render {
+  display: none;
+}
