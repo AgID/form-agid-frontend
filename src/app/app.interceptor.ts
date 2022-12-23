@@ -17,11 +17,12 @@ export class AppInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('access_token');
-    const modifiedReq = accessToken
-      ? request.clone({
-          headers: request.headers.set('access-token', accessToken),
-        })
-      : request;
+    const modifiedReq =
+      accessToken && !request.url.includes('openid-configuration')
+        ? request.clone({
+            headers: request.headers.set('access-token', accessToken),
+          })
+        : request;
     return next.handle(modifiedReq).pipe(
       catchError((err) => {
         // onError

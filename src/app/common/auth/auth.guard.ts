@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   ): boolean {
     const usersAllowed: Array<UserRole> = route.data['usersAllowed'];
     const loggedUserInfo = this.authService.userInfo;
-    if (usersAllowed && loggedUserInfo) {
+    if (usersAllowed && loggedUserInfo && loggedUserInfo.user_policy.length) {
       const found = usersAllowed.find(
         (element: any) =>
           element.role === loggedUserInfo.user_policy[0].policy?.role &&

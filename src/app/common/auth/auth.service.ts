@@ -53,8 +53,9 @@ export class AuthService {
             'CIE' ||
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
             'CNS') &&
-        this.userInfo.user_policy &&
-        Object.keys(this.userInfo.user_policy[0].policy).length === 0
+        (this.userInfo.user_policy?.length === 0 ||
+          (this.userInfo.user_policy?.length &&
+            Object.keys(this.userInfo.user_policy[0].policy).length === 0))
       ) {
         this.router.navigate(['/scelta-utente']);
       }
@@ -67,7 +68,7 @@ export class AuthService {
             'CIE' ||
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
             'CNS') &&
-        this.userInfo.user_policy &&
+        this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
         this.userInfo.user_policy[0].policy.status === 'Pending'
       ) {
@@ -82,7 +83,7 @@ export class AuthService {
             'CIE' ||
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
             'CNS') &&
-        this.userInfo.user_policy &&
+        this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
         this.userInfo.user_policy[0].policy.status === 'Active'
       ) {
@@ -97,7 +98,7 @@ export class AuthService {
             'CIE' ||
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
             'CNS') &&
-        this.userInfo.user_policy &&
+        this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'RTD' &&
         this.userInfo.user_policy[0].policy.status === 'Pending'
       ) {
@@ -112,7 +113,7 @@ export class AuthService {
             'CIE' ||
           this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
             'CNS') &&
-        this.userInfo.user_policy &&
+        this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'RTD' &&
         this.userInfo.user_policy[0].policy.status === 'Active'
       ) {

@@ -43,7 +43,8 @@ export class NavbarTopComponent implements OnInit {
     this.authService.login();
   }
 
-  public logout() {
+  public logout(e: Event) {
+    e.preventDefault();
     this.authService.logout();
   }
 

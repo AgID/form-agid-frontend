@@ -84,13 +84,11 @@ export class SezioneMetadatiComponent implements OnInit {
   }
 
   public onKeyUpHome(e: any) {
-    this.metadati.sezioniInformative.home = e.target.value;
     this.isValid.home = true;
     this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyUpFaq(e: any) {
-    this.metadati.sezioniInformative.faq = e.target.value;
     this.isValid.faq = true;
     this.changeMetadati.emit(this.metadati);
   }
@@ -135,6 +133,8 @@ export class SezioneMetadatiComponent implements OnInit {
   public validate(): boolean {
     this.isValid.titoloPattern = this.verificaSegnapostiTitolo();
     this.isValid.titolo = !!this.metadati.titolo;
+    this.isValid.lingua = !!this.metadati.lingua;
+    this.isValid.dataInizioValidita = !!this.metadati.dataInizioValidita;
     this.isValid.descrizione = !!this.metadati.descrizione;
     this.isValid.home = !!this.metadati.sezioniInformative.home;
     this.isValid.faq = !!this.metadati.sezioniInformative.faq;
@@ -147,6 +147,8 @@ export class SezioneMetadatiComponent implements OnInit {
       this.isValid.descrizione &&
       this.isValid.home &&
       this.isValid.faq &&
+      this.isValid.lingua &&
+      this.isValid.dataInizioValidita &&
       this.isValid.verificaPubblicazione &&
       this.isValid.titoloPattern
     );

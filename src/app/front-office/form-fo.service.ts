@@ -30,7 +30,7 @@ export class FormFoService {
     return this.http.get(
       `${
         ENV.BACKEND_AMM
-      }/3/action/datastore_search_sql?sql=SELECT * from "84ebb2e7-0e61-427b-a1dd-ab8bb2a84f07" WHERE UPPER("Nome_categoria") LIKE '%${text.toLocaleUpperCase()}%' LIMIT 10`
+      }/v1/ipadati?sql=SELECT * from "84ebb2e7-0e61-427b-a1dd-ab8bb2a84f07" WHERE UPPER("Nome_categoria") LIKE '%${text.toLocaleUpperCase()}%' LIMIT 10`
     );
   }
 }

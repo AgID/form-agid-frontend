@@ -17,7 +17,7 @@ export class AdminHomeComponent {
   public viewFrontOffice(): boolean {
     return (
       this.authService.userInfo &&
-      this.authService.userInfo.user_policy &&
+      this.authService.userInfo.user_policy?.length &&
       ((this.authService.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
         this.authService.userInfo.user_policy[0].policy.status === 'Active') ||
         this.authService.userInfo.user_policy[0].policy.role === 'RTD')
@@ -27,7 +27,7 @@ export class AdminHomeComponent {
   public viewSuperAdminPages(): boolean {
     return (
       this.authService.userInfo &&
-      this.authService.userInfo.user_policy &&
+      this.authService.userInfo.user_policy?.length &&
       this.authService.userInfo.user_policy[0].policy.role === 'SUPER_ADMIN'
     );
   }
