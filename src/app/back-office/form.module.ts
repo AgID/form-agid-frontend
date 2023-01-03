@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormioModule } from '@formio/angular';
 import { AppCommonModule } from '../common/app-common.module';
-import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
 import { RicercaFormComponent } from './components/ricerca-form/ricerca-form.component';
 import { RicercaSottomissioniComponent } from './components/ricerca-sottomissioni/ricerca-sottomissioni.component';
 import { RisultatiFormComponent } from './components/risultati-form/risultati-form.component';
@@ -24,8 +23,6 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 import { RicercaEtichetteComponent } from './components/ricerca-etichetta/ricerca-etichette.component';
 import { ElencoEtichetteComponent } from './multilinguismo/elenco-etichette/elenco-etichette.component';
 import { RisultatiEtichetteComponent } from './components/risultati-etichette/risultati-etichette.component';
-import { ModificaEtichettaComponent } from './multilinguismo/modifica-etichetta/modifica-etichetta.component';
-import { InserimentoEtichettaComponent } from './multilinguismo/inserimento-etichetta/inserimento-etichetta.component';
 import { InvitiComponent } from './Inviti/inviti.component';
 
 @NgModule({
@@ -37,9 +34,7 @@ import { InvitiComponent } from './Inviti/inviti.component';
     RisultatiFormComponent,
     RisultatiEtichetteComponent,
     ModificaFormComponent,
-    ModificaEtichettaComponent,
     InserimentoFormComponent,
-    InserimentoEtichettaComponent,
     InvitiComponent,
     SezioneBuilderComponent,
     SezioneMetadatiComponent,
@@ -57,7 +52,6 @@ import { InvitiComponent } from './Inviti/inviti.component';
     AppCommonModule,
     HttpClientModule,
     FormioModule,
-    GestioneDichiarazioniModule,
     FormsModule, // make sure FormsModule is imported to make ngModel work
     LMarkdownEditorModule,
   ],

@@ -2,20 +2,34 @@
   <app-ricerca-etichette #ricercaEtichetteComponent></app-ricerca-etichette>
   <div class="row">
     <div class="form-group col text-right">
-      <!-- <div class="d-flex justify-content-end" *ngIf="elencoForm?.length > 0"> -->
-      <!-- <button type="button" class="btn btn-primary me-2" (click)="goToInserimentoEtichetta()">
-        {{"AG_Nuovo" | translate}}
-      </button> -->
-      <!-- </div> -->
       <button type="submit" class="btn btn-primary" (click)="searchEtichetta()">
-        {{"AG_Cerca" | translate}}
+        {{ "AG_Cerca" | translate }}
       </button>
     </div>
     <app-risultati-etichette
-      *ngIf="filters && (languagesList && languagesList.length > 0) && elencoEtichette && etichetteAvailable"
-      [filters]="filters" [languagesList]="languagesList" [elencoEtichette]="elencoEtichette"
-      [etichetteAvailable]="etichetteAvailable">
+      *ngIf="
+        filters &&
+        languagesList &&
+        languagesList.length > 0 &&
+        elencoEtichette &&
+        etichetteAvailable
+      "
+      [filters]="filters"
+      [languagesList]="languagesList"
+      [elencoEtichette]="elencoEtichette"
+      [etichetteAvailable]="etichetteAvailable"
+      (updated)="updatedLabels($event)"
+    >
     </app-risultati-etichette>
   </div>
 </div>
-<router-outlet></router-outlet>
+<div class="mb-3">
+  <a class="text-16p text-primary mt-3" (click)="goToTornaAllaRicerca()"
+    ><span class="fa fa-angle-double-left me-1"></span>
+    <label
+      class="text-16p underline cursor cursor-pointer"
+      style="color: #06c"
+      >{{ "AG_Torna_Ricerca" | translate }}</label
+    ></a
+  >
+</div>

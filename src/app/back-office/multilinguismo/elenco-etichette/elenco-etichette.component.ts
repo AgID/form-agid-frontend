@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { elementAt } from 'rxjs';
+import { HashService } from 'src/app/common/hash.service';
 import { LanguageSelectorService } from 'src/app/common/language-selector/language-selector.service';
 import { RicercaEtichetteComponent } from '../../components/ricerca-etichetta/ricerca-etichette.component';
 import { RisultatiEtichetteService } from '../../components/risultati-etichette/risultati-etichette.service';
@@ -18,16 +19,19 @@ export class ElencoEtichetteComponent {
     public route: ActivatedRoute,
     private router: Router,
     private languageSlService: LanguageSelectorService,
-    private risultatiEtichetteService: RisultatiEtichetteService
+    private risultatiEtichetteService: RisultatiEtichetteService,
+    public hashService: HashService
   ) {}
 
   public filters: any;
+  public updated: boolean = false;
   public labels: any = [];
   public languagesList: any;
   public elencoEtichette: any;
   public etichetteAvailable: any = [];
 
   public searchEtichetta() {
+    this.hashService.isModified = false;
     this.filters = this.ricercaEtichetteComponent.filters;
     this.risultatiEtichetteService.findAll().subscribe((response: any) => {
       this.elencoEtichette = response;
@@ -53,8 +57,9 @@ export class ElencoEtichetteComponent {
     }
   }
 
-  public goToInserimentoEtichetta() {
-    this.router.navigate(['/multilanguage/inserimento-etichetta']);
+  public updatedLabels(e: any) {
+    this.updated = e.updated;
+    if (this.updated) this.searchEtichetta();
   }
 
   private availableExportButton() {
@@ -69,5 +74,9 @@ export class ElencoEtichetteComponent {
         this.etichetteAvailable[i] = true;
       }
     }
+  }
+
+  public goToTornaAllaRicerca() {
+    this.router.navigate(['/']);
   }
 }

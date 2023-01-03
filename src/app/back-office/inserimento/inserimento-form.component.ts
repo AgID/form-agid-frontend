@@ -101,6 +101,9 @@ export class InserimentoFormComponent implements OnInit {
   public onClickSalvaSchemaRilevazione() {
     console.log(this.sezioneMetadatiComponent.validate());
     if (!this.sezioneMetadatiComponent.validate()) {
+      this.hashService.isModified = true;
+      this.hashService.type = 'DANGER';
+      this.hashService.message = [{ label: "Errore durante l'inserimento" }];
       this.scrollToTop();
       return;
     }
@@ -177,6 +180,7 @@ export class InserimentoFormComponent implements OnInit {
   }
 
   public goToTornaAllaRicerca() {
+    this.hashService.isModified = false;
     this.router.navigate(['/admin']);
   }
 

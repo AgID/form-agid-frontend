@@ -11,11 +11,16 @@
         disabled: selectedPage === 1
       }"
     >
-      <a class="page-link" (click)="changePage(selectedPage - 1)" tabindex="-1" aria-hidden="true">
+      <a
+        class="page-link"
+        (click)="changePage(selectedPage - 1)"
+        tabindex="-1"
+        aria-hidden="true"
+      >
         <svg class="icon icon-primary">
           <use href="/assets/svg/sprite.svg#it-chevron-left"></use>
         </svg>
-        <span class="sr-only">Pagina precedente</span>
+        <span class="sr-only">{{ "AG_Pagina_Precedente" | translate }}</span>
       </a>
     </li>
 
@@ -32,7 +37,7 @@
           [attr.aria-current]="i + 1 === selectedPage ? 'page' : null"
         >
           <span *ngIf="i + 1 === selectedPage" class="d-inline-block d-sm-none"
-            >Pagina </span
+            >{{ "AG_Pagina" | translate }} </span
           >{{ i + 1 }}
         </a>
       </li>
@@ -47,7 +52,7 @@
         }"
         (click)="changePage(selectedPage + 1)"
       >
-        <span class="sr-only">Pagina successiva</span>
+        <span class="sr-only">{{ "AG_Pagina_Successiva" | translate }}</span>
         <svg class="icon icon-primary">
           <use href="/assets/svg/sprite.svg#it-chevron-right"></use>
         </svg>

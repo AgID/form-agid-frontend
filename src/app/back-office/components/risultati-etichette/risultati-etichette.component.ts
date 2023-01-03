@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LanguageSelectorService } from 'src/app/common/language-selector/language-selector.service';
 import { HashService } from 'src/app/common/hash.service';
@@ -23,6 +23,9 @@ export class RisultatiEtichetteComponent {
   @Input()
   etichetteAvailable: any;
 
+  @Output()
+  updated: EventEmitter<unknown> = new EventEmitter();
+
   public etichettaToUpdate: any;
   public elencoLingue: Array<any>;
   public totalElements: number;
@@ -45,12 +48,6 @@ export class RisultatiEtichetteComponent {
 
   public onChangePage(e: any) {
     this.filters.pagination.currentPage = e;
-  }
-
-  public goToModificaEtichetta(item: any) {
-    // this.router.navigate([`/admin/modifica-etichetta/${item._id}`], {
-    //   relativeTo: this.route,
-    // });
   }
 
   public redirectPage() {
@@ -87,6 +84,7 @@ export class RisultatiEtichetteComponent {
   }
 
   public importLabel(file: any, item: any) {
+    this.hashService.isModified = false;
     const input = file.target;
     if (input.files.length === 1 && input.files[0].size > 0) {
       const reader = new FileReader();
@@ -108,7 +106,9 @@ export class RisultatiEtichetteComponent {
                     this.etichettaToUpdate.data = JSON.parse(content);
                     this.risultatiEtichetteService
                       .updateLabel(JSON.parse(content))
-                      .subscribe(() => {});
+                      .subscribe(() => {
+                        this.updated.emit({ updated: true });
+                      });
                   } else {
                     if (JSON.parse(content)) {
                       let reqBody = JSON.parse(content);
@@ -116,6 +116,7 @@ export class RisultatiEtichetteComponent {
                         .createLabel(reqBody)
                         .subscribe(() => {
                           console.log('create');
+                          this.updated.emit({ updated: true });
                         });
                     }
                   }

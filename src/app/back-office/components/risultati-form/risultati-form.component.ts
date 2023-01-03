@@ -29,6 +29,7 @@ export class RisultatiFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.selectedPage = this.filters.pagination?.currentPage || 1;
     this.risultatiFormService
       .findFormForParams(this.filters)
       .subscribe((response: any) => {

@@ -7,8 +7,6 @@ import { InserimentoFormComponent } from './back-office/inserimento/inserimento-
 import { InvitiComponent } from './back-office/Inviti/inviti.component';
 import { ModificaFormComponent } from './back-office/modifica/modifica-form.component';
 import { ElencoEtichetteComponent } from './back-office/multilinguismo/elenco-etichette/elenco-etichette.component';
-import { InserimentoEtichettaComponent } from './back-office/multilinguismo/inserimento-etichetta/inserimento-etichetta.component';
-import { ModificaEtichettaComponent } from './back-office/multilinguismo/modifica-etichetta/modifica-etichetta.component';
 import { AuthGuard } from './common/auth/auth.guard';
 import { UserRole } from './common/auth/role.enum';
 import { DettaglioSottomissioneComponent } from './front-office/elenco-form/dettaglio/dettaglio-sottomissione/dettaglio-sottomissione.component';
@@ -130,18 +128,6 @@ const routes: Routes = [
       usersAllowed: [{ role: UserRole.SUPER_ADMIN, status: 'Active' }],
     },
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'inserimento-etichetta',
-        component: InserimentoEtichettaComponent,
-        data: { breadcrumb: 'Inserimento Etichetta' },
-      },
-      {
-        path: 'modifica-etichetta',
-        component: ModificaEtichettaComponent,
-        data: { breadcrumb: 'Modifica Etichetta' },
-      },
-    ],
   },
   {
     path: 'invite',

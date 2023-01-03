@@ -28,7 +28,7 @@ export class BreadcrumbService {
         // Construct the breadcrumb hierarchy
         const root = this.router.routerState.snapshot.root;
         const breadcrumbs: Breadcrumb[] = [];
-        this.addBreadcrumb(root, ['#'], breadcrumbs);
+        this.addBreadcrumb(root, ['.'], breadcrumbs);
 
         // Emit the new hierarchy
         this._breadcrumbs$.next(breadcrumbs);

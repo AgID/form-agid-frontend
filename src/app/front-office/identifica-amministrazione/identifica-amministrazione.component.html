@@ -6,29 +6,26 @@
 <div class="card-wrapper card-space d-flex justify-content-center pb-5">
   <div class="card card-bg no-after w-50">
     <div class="card-body">
-      <h2 class="card-title big-heading text-center">Accedi</h2>
+      <h2 class="card-title big-heading text-center">
+        {{ "AG_Accedi" | translate }}
+      </h2>
       <div class="px-2">
-        Per poter procedere alla compilazione di un modulo è necessario
-        identificare l’amministrazione. La mail del relativo Responsabile per la
-        transizione digitale (RTD) deve essere già presente all’interno
-        dell’Indice delle Pubbliche Amministrazioni (IPA). Procedi con la scelta
-        della PA oppure leggi la guida su come accedere.
+        {{ "AG_Identifica_Amministrazione_Description" | translate }}
       </div>
       <div class="mt-5">
         <!-- Esempi -->
         <div class="select-wrapper mb-4">
-          <label for="accessibleAutocomplete"
-            >Cerca la tua amministrazione</label
-          >
+          <label for="accessibleAutocomplete">{{
+            "AG_Cerca_Amministrazione" | translate
+          }}</label>
           <select
             class="form-control"
             id="accessibleAutocomplete"
             required
           ></select>
-          <small id="accessibleAutocomplete" class="form-text"
-            >inserisci la denominazione della tua amministrazione o il codice
-            ipa</small
-          >
+          <small id="accessibleAutocomplete" class="form-text">{{
+            "AG_Inserisci_Denominazione_Amministrazione_IPA" | translate
+          }}</small>
         </div>
         <ng-container *ngIf="showKeyChoose">
           <div class="form-check">
@@ -41,7 +38,9 @@
               [attr.checked]="haveKey === 'Y' ? true : undefined"
               (change)="onChangeYesKey($event)"
             />
-            <label for="yesKey">ho già la chiave di accesso</label>
+            <label for="yesKey">{{
+              "AG_Chiave_Accesso_Posseduta" | translate
+            }}</label>
           </div>
           <div class="form-check">
             <input
@@ -53,7 +52,9 @@
               [attr.checked]="haveKey === 'N' ? true : undefined"
               (change)="onChangeNoKey($event)"
             />
-            <label for="noKey">desidero ricevere una chiave di accesso</label>
+            <label for="noKey">{{
+              "AG_Chiave_Accesso_Richiesta" | translate
+            }}</label>
           </div>
         </ng-container>
         <ng-container *ngIf="haveKey === 'Y'">
@@ -92,7 +93,7 @@
           data-focus-mouse="false"
           (click)="onClickAnnulla()"
         >
-          Annulla
+          {{ "AG_Annulla" | translate }}
         </button>
         <button
           *ngIf="haveKey === 'N'"
@@ -102,7 +103,7 @@
           data-focus-mouse="false"
           (click)="onClickInviaMail()"
         >
-          Invia email
+          {{ "AG_Invia_Email" | translate }}
         </button>
         <button
           *ngIf="haveKey === 'Y'"
@@ -112,7 +113,7 @@
           data-focus-mouse="false"
           (click)="onClickAccedi()"
         >
-          Accedi
+          {{ "AG_Accedi" | translate }}
         </button>
       </div>
     </div>

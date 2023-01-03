@@ -128,6 +128,7 @@ export class SezioneMetadatiComponent implements OnInit {
 
   public onChangeLang(lingua: any) {
     this.metadati.lingua = lingua;
+    this.isValid.lingua = true;
   }
 
   public validate(): boolean {

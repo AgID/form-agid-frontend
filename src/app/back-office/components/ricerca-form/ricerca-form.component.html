@@ -1,32 +1,54 @@
 <div>
-  <h1>{{"AG_Ricerca_Schemi" | translate}}
-  </h1>
+  <h1>{{ "AG_Ricerca_Schemi" | translate }}</h1>
   <hr />
   <div class="row mt-5">
     <div class="form-group col-md-4">
-      <app-input [label]="'AG_Titolo' | translate" (changeInput)="onChangeTitolo($event)" [value]="filters.titolo">
+      <app-input
+        [label]="'AG_Titolo' | translate"
+        (changeInput)="onChangeTitolo($event)"
+        [value]="filters.titolo"
+      >
       </app-input>
     </div>
     <div class="form-group col-md-4 mt-3">
       <div class="select-wrapper">
-        <label for="defaultSelect">{{"AG_Stato" | translate}}
-        </label>
-        <select id="defaultSelect" (change)="onChangeStato($event)" [value]="filters.stato">
-          <option selected="" value="">Scegli un'opzione</option>
-          <option value="Bozza">Bozza</option>
-          <option value="Pubblicato">Pubblicato</option>
+        <label for="defaultSelect">{{ "AG_Stato" | translate }} </label>
+        <select
+          id="defaultSelect"
+          (change)="onChangeStato($event)"
+          [value]="filters.stato"
+        >
+          <option selected="" value="">
+            {{ "AG_Scegli_Opzione" | translate }}
+          </option>
+          <option value="Bozza">{{ "AG_Bozza" | translate }}</option>
+          <option value="Pubblicato">{{ "AG_Pubblicato" | translate }}</option>
         </select>
       </div>
     </div>
     <div class="form-group col-md-4 mt-3">
-      <label class="active" for="dateInizio">{{"AG_Data_Inizio_Validita" | translate}}</label>
-      <input (change)="onChangeDataInizio($event)" [value]="filters.dataInizioValidita" type="date" id="dateInizio"
-        name="dateInizio" />
+      <label class="active" for="dateInizio">{{
+        "AG_Data_Inizio_Validita" | translate
+      }}</label>
+      <input
+        (change)="onChangeDataInizio($event)"
+        [value]="filters.dataInizioValidita"
+        type="date"
+        id="dateInizio"
+        name="dateInizio"
+      />
     </div>
     <div class="form-group col-md-4">
-      <label class="active" for="dateInizio">{{"AG_Data_Fine_Validita" | translate}}</label>
-      <input (change)="onChangeDataFine($event)" [value]="filters.dataFineValidita" type="date" id="dateFine"
-        name="dateFine" />
+      <label class="active" for="dateInizio">{{
+        "AG_Data_Fine_Validita" | translate
+      }}</label>
+      <input
+        (change)="onChangeDataFine($event)"
+        [value]="filters.dataFineValidita"
+        type="date"
+        id="dateFine"
+        name="dateFine"
+      />
     </div>
   </div>
 </div>

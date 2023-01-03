@@ -1,8 +1,12 @@
 <div class="card-wrapper card-space d-flex justify-content-center pb-5">
   <div class="card card-bg no-after w-50">
     <div class="card-body">
-      <h2 class="card-title big-heading text-center">Scelta utente</h2>
-      <div class="px-2">Scegli con quale utenza entrare</div>
+      <h2 class="card-title big-heading text-center">
+        {{ "AG_Scelta_Utente" | translate }}
+      </h2>
+      <div class="px-2">
+        {{ "AG_Scegli_Quale_Utenza_Utilizzare" | translate }}
+      </div>
       <div class="mt-5">
         <div class="form-check">
           <input
@@ -12,7 +16,7 @@
             value="cittadino"
             (change)="onChangeCittadino($event)"
           />
-          <label for="cittadino">Utente cittadino</label>
+          <label for="cittadino">{{ "AG_Utente_Cittadino" | translate }}</label>
         </div>
         <div class="form-check">
           <input
@@ -22,7 +26,7 @@
             value="rtd"
             (change)="onChangeRtd($event)"
           />
-          <label for="rtd">Utente RTD</label>
+          <label for="rtd">{{ "AG_Utente_RTD" | translate }}</label>
         </div>
       </div>
       <div class="text-end">

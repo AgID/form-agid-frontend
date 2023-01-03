@@ -12,7 +12,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AuthConfig, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
 import { AlertComponent } from './alert/alert.component';
 import { authConfig } from './auth/auth-config';
 import { AuthGuard } from './auth/auth.guard';
@@ -47,9 +46,9 @@ export function storageFactory(): OAuthStorage {
   imports: [
     CommonModule,
     FormioModule,
-    GestioneDichiarazioniModule,
     NgxSpinnerModule,
     RouterModule,
+    TranslateModule,
     OAuthModule.forRoot(),
     MarkdownModule.forRoot({
       loader: HttpClient,

@@ -23,7 +23,8 @@
               class="position-absolute mb-0"
               style="bottom: 20px"
             >
-              Scaduto il {{ dateExpiredForm[i].dataFineValidita }}
+              {{ "AG_Scaduto_Il" | translate }}
+              {{ dateExpiredForm[i].dataFineValidita }}
             </p>
             <p class="position-absolute mb-0" style="bottom: 20px; right: 20px">
               <a
@@ -39,12 +40,15 @@
     </div>
   </ng-container>
   <a
+    class="text-16p text-primary mt-3"
     *ngIf="isArchivio"
-    class="card-title cursor-pointer"
-    aria-label="Vai all'archivio delle sottomissioni"
     (click)="goToElencoForm()"
-    style="color: #06c"
-    >{{ "AG_Torna_Ricerca" | translate }}</a
+    ><span class="fa fa-angle-double-left me-1"></span>
+    <label
+      class="text-16p underline cursor cursor-pointer"
+      style="color: #06c"
+      >{{ "AG_Torna_Home" | translate }}</label
+    ></a
   >
   <a
     *ngIf="!isArchivio"
@@ -57,6 +61,6 @@
 
 <ng-template #noResult>
   <p class="card-text mb-3">
-    <span>Non ci sono moduli disponibili al momento</span>
+    <span>{{ "AG_No_Moduli" | translate }}</span>
   </p>
 </ng-template>

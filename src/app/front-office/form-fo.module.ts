@@ -5,7 +5,6 @@ import { FormioModule } from '@formio/angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { AdminHomeComponent } from '../back-office/components/admin-home/admin-home.component';
 import { AppCommonModule } from '../common/app-common.module';
-import { GestioneDichiarazioniModule } from '../gestione-dichiarazioni/gestione-dichiarazioni.module';
 import { DettaglioFormFoComponent } from './elenco-form/dettaglio/dettaglio-form.component';
 import { DettaglioSottomissioneComponent } from './elenco-form/dettaglio/dettaglio-sottomissione/dettaglio-sottomissione.component';
 import { SezioneInformativaHomeComponent } from './elenco-form/dettaglio/dichiarazione-accessibilita/sezione-informativa-home.component';
@@ -41,7 +40,6 @@ import { VerificaOtpModule } from './verifica-otp/verifica-otp.module';
     SceltaUtenteModule,
     IdentificaAmministrazioneModule,
     VerificaOtpModule,
-    GestioneDichiarazioniModule,
     FormioModule,
     RouterModule.forChild(ROUTES),
     MarkdownModule.forChild(),

@@ -1,31 +1,56 @@
-<app-alert *ngIf="typeAlert" [messaggio]="statusMessage" [type]="typeAlert"></app-alert>
+<app-alert
+  *ngIf="typeAlert"
+  [messaggio]="statusMessage"
+  [type]="typeAlert"
+></app-alert>
 <div>
   <p *ngIf="!isModifica && modifyEqualsPublish">
-    Redatta il {{ DataInserimentoForm }} sotto al titolo
+    {{ "AG_Redatta_Il" | translate }} {{ DataInserimentoForm }}
+    {{ "AG_Sotto_Al_Titolo" | translate }}
   </p>
 </div>
-<app-formio-render [form]="formSchema" [submission]="{ data: formData }" [renderOptions]="renderOptions"
-  (changeFormio)="onChangeFormio($event)"></app-formio-render>
+<app-formio-render
+  [form]="formSchema"
+  [submission]="{ data: formData }"
+  [renderOptions]="renderOptions"
+  (changeFormio)="onChangeFormio($event)"
+></app-formio-render>
 <div class="d-flex justify-content-center gap-35">
-  <i class="fa fa-file-pdf-o fa-2x custom-color-home mb-3 cursor-pointer" style="color: #06c"
-    (click)="downloadPDF()"></i>
+  <i
+    class="fa fa-file-pdf-o fa-2x custom-color-home mb-3 cursor-pointer"
+    style="color: #06c"
+    (click)="downloadPDF()"
+  ></i>
 </div>
 <div class="d-flex justify-content-center gap-35 mb-3" *ngIf="!isArchivio">
   <ng-container *ngIf="isModifica; else isVisualizzazione">
-    <button type="button" class="btn btn-outline-primary" (click)="onClickVisualizza()"
-      *ngIf="response?.stato === 'Pubblicato'">
-      {{"AG_Visualizza" | translate}}
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="onClickVisualizza()"
+      *ngIf="response?.stato === 'Pubblicato'"
+    >
+      {{ "AG_Visualizza" | translate }}
     </button>
     <button type="button" class="btn btn-primary" (click)="onClickSalvaBozza()">
-      {{"AG_Salva_Bozza" | translate}}
+      {{ "AG_Salva_Bozza" | translate }}
     </button>
   </ng-container>
   <ng-template #isVisualizzazione>
-    <button type="button" class="btn btn-outline-primary" (click)="onClickModifica()">
-      {{"AG_Modifica" | translate}}
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="onClickModifica()"
+    >
+      {{ "AG_Modifica" | translate }}
     </button>
-    <button *ngIf="!isPublished" type="button" class="btn btn-primary" (click)="onClickPubblica()">
-      {{"AG_Pubblica" | translate}}
+    <button
+      *ngIf="!isPublished"
+      type="button"
+      class="btn btn-primary"
+      (click)="onClickPubblica()"
+    >
+      {{ "AG_Pubblica" | translate }}
     </button>
   </ng-template>
 </div>
@@ -33,12 +58,25 @@
 <!-- <app-alert [messaggio]="errorMessage" [type]="typeAlert"> </app-alert> -->
 
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="publishModal" aria-labelledby="publishModalTitle">
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="publishModal"
+  aria-labelledby="publishModalTitle"
+>
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content rounded">
       <div class="modal-header">
-        <h2 class="modal-title">{{"AG_Pubblica_Link_Sito_Istituzionale" | translate}}</h2>
-        <button class="btn-close" type="button" aria-label="Close" (click)="redirectPage()">
+        <h2 class="modal-title">
+          {{ "AG_Pubblica_Link_Sito_Istituzionale" | translate }}
+        </h2>
+        <button
+          class="btn-close"
+          type="button"
+          aria-label="Close"
+          (click)="redirectPage()"
+        >
           <svg class="icon">
             <use href="/assets/svg/sprite.svg#it-close"></use>
           </svg>
@@ -48,15 +86,21 @@
         <div class="px-5 pb-5 modal-body">
           <div class="d-flex">
             <div>
-              <p class="pb-4" style="border-bottom: 1px solid rgb(204, 204, 204)">
-                {{"AG_Copia_Incolla_Link" | translate}}
+              <p
+                class="pb-4"
+                style="border-bottom: 1px solid rgb(204, 204, 204)"
+              >
+                {{ "AG_Copia_Incolla_Link" | translate }}
               </p>
               <p class="font-weight-bold pt-4">
                 <a href="{{ uuidLink }}">{{ uuidLink }}</a>
               </p>
             </div>
             <div style="width: 150px">
-              <img src="../../../../../assets/svg/uuid_modal_image_codice.svg" alt="" />
+              <img
+                src="../../../../../assets/svg/uuid_modal_image_codice.svg"
+                alt=""
+              />
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { ElencoFormService } from '../elenco-form/elenco-form.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  public showChart: boolean = false;
   constructor(private elencoFormService: ElencoFormService) {}
 
   //Struttura grafico
@@ -41,7 +42,11 @@ export class HomeComponent implements OnInit {
         this.statistiche = result;
       })
       .add(() => {
-        if (this.statistiche.length > 0) {
+        let countNotZero = this.statistiche.some(
+          (elem) => elem.sottomissioniPubblicateCount > 0
+        );
+        this.showChart = countNotZero;
+        if (this.statistiche.length > 0 && this.showChart) {
           this.statistiche.forEach((elem) => {
             //TODO: da rimuovere
             labels.push(elem.titolo);
@@ -68,7 +73,9 @@ export class HomeComponent implements OnInit {
           this.pieChart.data.datasets.splice(0, 1);
           this.pieChart.data.datasets.push(statsDatasets);
           this.pieChart.data.labels = labels;
-          new Chart('statsPie', this.pieChart);
+          setTimeout(() => {
+            new Chart('statsPie', this.pieChart);
+          });
         }
       });
   }

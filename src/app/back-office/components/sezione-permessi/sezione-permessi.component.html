@@ -61,7 +61,7 @@
             metadati?.acl?.tipo === 'privato_categoria' ? true : undefined
           "
         />
-        <label for="categoria">Categoria</label>
+        <label for="categoria">{{ "AG_Categoria" | translate }}</label>
       </div>
       <div class="form-check form-check-inline">
         <input
@@ -74,20 +74,24 @@
             metadati?.acl?.tipo === 'privato_amministrazione' ? true : undefined
           "
         />
-        <label for="amministrazione">Amministrazione</label>
+        <label for="amministrazione">{{
+          "AG_Amministrazione" | translate
+        }}</label>
       </div>
       <div class="row" *ngIf="metadati?.acl?.tipo === 'privato_categoria'">
         <div class="col-4">
           <div class="select-wrapper my-4">
-            <label for="autocompleteEnti">Cerca categoria enti</label>
+            <label for="autocompleteEnti">{{
+              "AG_Cerca_Categoria_Enti" | translate
+            }}</label>
             <select
               class="form-control"
               id="autocompleteEnti"
               required
             ></select>
-            <small id="autocompleteEnti" class="form-text"
-              >inserisci la denominazione della categoria dell'ente</small
-            >
+            <small id="autocompleteEnti" class="form-text">{{
+              "AG_Inserisci_Denominazione_Categoria_Ente" | translate
+            }}</small>
           </div>
         </div>
         <div class="col-4 align-self-center">
@@ -121,7 +125,9 @@
                 <svg class="icon">
                   <use href="/assets/svg/sprite.svg#it-close"></use>
                 </svg>
-                <span class="visually-hidden">Elimina label</span>
+                <span class="visually-hidden">{{
+                  "AG_Elimina_Label" | translate
+                }}</span>
               </button>
             </div>
           </div>
@@ -133,17 +139,17 @@
       >
         <div class="col-4">
           <div class="select-wrapper my-4">
-            <label for="autocompleteAmministrazioni"
-              >Cerca amministrazioni</label
-            >
+            <label for="autocompleteAmministrazioni">{{
+              "AG_Cerca_Amministrazione" | translate
+            }}</label>
             <select
               class="form-control"
               id="autocompleteAmministrazioni"
               required
             ></select>
-            <small id="autocompleteAmministrazioni" class="form-text"
-              >inserisci la denominazione della amministrazione</small
-            >
+            <small id="autocompleteAmministrazioni" class="form-text">{{
+              "AG_Inserisci_Denominazione_Categoria_Amministrazione" | translate
+            }}</small>
           </div>
         </div>
         <div class="col-4 align-self-center">
@@ -155,16 +161,18 @@
               [attr.checked]="metadati.acl.valore === '*' ? true : undefined"
               (change)="onChangeRadioIncludiTutteAmministrazioni($event)"
             />
-            <label for="tutteLeAmministrazioni"
-              >Seleziona tutte le amministrazioni</label
-            >
+            <label for="tutteLeAmministrazioni">{{
+              "AG_Seleziona_Tutte_Amministrazioni" | translate
+            }}</label>
           </div>
         </div>
         <div
           class="row"
           *ngIf="metadati.acl?.valore !== '*' && metadati.acl?.valore?.length"
         >
-          <label class="mb-2">Amministrazioni selezionate:</label>
+          <label class="mb-2"
+            >{{ "AG_Amministrazioni_Selezionate" | translate }}:</label
+          >
           <div class="w-auto" *ngFor="let chip of metadati.acl.valore">
             <div class="chip alert">
               <span class="chip-label">{{ chip.descrizione }}</span>
@@ -175,7 +183,9 @@
                 <svg class="icon">
                   <use href="/assets/svg/sprite.svg#it-close"></use>
                 </svg>
-                <span class="visually-hidden">Elimina label</span>
+                <span class="visually-hidden">{{
+                  "AG_Elimina_Label" | translate
+                }}</span>
               </button>
             </div>
           </div>
@@ -220,7 +230,9 @@
               <svg class="icon">
                 <use href="/assets/svg/sprite.svg#it-close"></use>
               </svg>
-              <span class="visually-hidden">Elimina label</span>
+              <span class="visually-hidden">{{
+                "AG_Elimina_Label" | translate
+              }}</span>
             </button>
           </div>
         </div>

@@ -8,9 +8,10 @@
       aria-expanded="false"
     >
       <span class="sr-only"
-        >{{ "Seleziona un'opzione" }}: {{ value || "Nessuna scelta" }}</span
+        >{{ "AG_Scegli_Opzione" | translate }}:
+        {{ value || ("AG_Nessuna_Scelta" | translate) }}</span
       >
-      <span>{{ value || "Seleziona un'opzione" }}</span>
+      <span>{{ value || ("AG_Scegli_Opzione" | translate) }}</span>
       <svg class="icon d-none d-lg-block">
         <use href="/assets/svg/sprite.svg#it-expand"></use>
       </svg>

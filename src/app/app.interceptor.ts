@@ -18,7 +18,11 @@ export class AppInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('access_token');
     const modifiedReq =
-      accessToken && !request.url.includes('openid-configuration')
+      accessToken &&
+      !(
+        request.url.includes('openid-configuration') ||
+        request.url.includes('login-test.agid.gov.it/certs')
+      )
         ? request.clone({
             headers: request.headers.set('access-token', accessToken),
           })

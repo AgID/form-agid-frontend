@@ -34,7 +34,6 @@ export default class UnknownComponent extends UnknownElement {
         console.log('test');
         break;
     }
-    console.log('this -> ', this);
     this.component.componentJson2 = JSON.stringify({ cc: 'aa' });
     return info;
   }

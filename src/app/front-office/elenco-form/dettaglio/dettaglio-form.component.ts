@@ -27,4 +27,8 @@ export class DettaglioFormFoComponent implements OnInit {
       'titoloSottomissione'
     );
   }
+
+  public goToElencoForm() {
+    this.router.navigate(['/elenco-form']);
+  }
 }
