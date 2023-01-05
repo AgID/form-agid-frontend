@@ -17,3 +17,44 @@
   width: 24px;
   height: 24px;
 }
+
+.Header-agid img {
+  vertical-align: middle;
+  width: 8rem;
+  height: 100%;
+}
+
+.separator {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: common-ligatures;
+  font-family: Titillium Web, HelveticaNeue-Light, Helvetica Neue Light,
+    Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  -webkit-box-direction: normal;
+  letter-spacing: 0.007rem !important;
+  color: #fff !important;
+  box-sizing: inherit;
+  border-left: 0.18rem solid #fff;
+  vertical-align: middle;
+  margin-right: 0.3rem;
+  margin-left: 0.5rem;
+  font-size: 1.6rem;
+}
+
+.Site-name {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: common-ligatures;
+  font-family: Titillium Web, HelveticaNeue-Light, Helvetica Neue Light,
+    Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  -webkit-box-direction: normal;
+  font-size: 2.3rem !important;
+  letter-spacing: 0.007rem !important;
+  color: #fff !important;
+  box-sizing: inherit;
+  display: inline-block;
+  width: 7rem;
+  vertical-align: middle;
+  position: relative;
+  bottom: -5px;
+}

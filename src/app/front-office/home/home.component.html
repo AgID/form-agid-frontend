@@ -2,17 +2,11 @@
 <h2 class="display-1 text-center">AGID Form</h2>
 <div class="d-flex justify-content-center pb-5">
   <p class="text-center">
-    Questa sezione espone alcuni set di dati che mostrano la maniera in cui i
-    cittadini interagiscono online con i siti web della pubblica amministrazione
-    italiana.
-    <br />
-    <span
-      >I dati analytics mostrati si riferiscono al mese solare precedente.</span
-    >
+    {{ "AG_Home_Descrizione" | translate }}
   </p>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <div
     *ngIf="statistiche && statistiche.length"
     [ngClass]="{
@@ -53,4 +47,4 @@
   <div class="col-4 p-0" *ngIf="showChart">
     <canvas id="statsPie"></canvas>
   </div>
-</div>
+</div> -->

@@ -1,10 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ElencoFormService } from './elenco-form.service';
-import { SessionStorageService } from '../../common/session-storage.service';
-import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/common/auth/auth.service';
-import { User } from 'src/app/common/types/user.type';
+import { SessionStorageService } from '../../common/session-storage.service';
+import { ElencoFormService } from './elenco-form.service';
 
 @Component({
   selector: 'app-elenco-form-fo',
@@ -36,7 +35,7 @@ export class ElencoFormFoComponent implements OnInit {
         this.elencoForm.forEach((element, index) => {
           this.dateExpiredForm.push({
             dataFineValidita: this.datePipe.transform(
-              element.dataInserimento,
+              element.dataFineValidita,
               'dd/MM/yyyy'
             ),
           });

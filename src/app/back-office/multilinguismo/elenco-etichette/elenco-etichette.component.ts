@@ -30,8 +30,10 @@ export class ElencoEtichetteComponent {
   public elencoEtichette: any;
   public etichetteAvailable: any = [];
 
-  public searchEtichetta() {
-    this.hashService.isModified = false;
+  public searchEtichetta(resetAlert: boolean = false) {
+    if (resetAlert) {
+      this.hashService.isModified = false;
+    }
     this.filters = this.ricercaEtichetteComponent.filters;
     this.risultatiEtichetteService.findAll().subscribe((response: any) => {
       this.elencoEtichette = response;
