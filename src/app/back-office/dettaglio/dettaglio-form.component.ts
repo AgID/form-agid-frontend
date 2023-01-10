@@ -31,7 +31,7 @@ export class DettaglioFormComponent implements OnInit {
 
   public filters = {
     idForm: '',
-    pagination: new Pagination(),
+    pagination: new Pagination({ elementsForPage: 200 }),
   };
   public elencoForm: Array<ISottomissione> = [];
 

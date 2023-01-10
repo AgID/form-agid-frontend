@@ -72,6 +72,7 @@ app-formio-render {
   .formio-component-textfield,
   .formio-component-url,
   .formio-component-radio,
+  .formio-component-selectboxes,
   .formio-component-checkbox,
   .formio-component-textarea,
   .formio-component-email,
@@ -117,6 +118,28 @@ app-formio-render {
       margin-bottom: 0.3rem !important;
     }
   }
+}
+
+form-builder {
+  .formio-component-radio {
+    > label {
+      padding-left: 0 !important;
+      margin-bottom: 0.3rem !important;
+      position: static !important;
+      line-height: 24px !important;
+      white-space: normal !important;
+    }
+    div [ref="value"] {
+      white-space: break-spaces !important;
+    }
+  }
+}
+
+p.formio-component-htmlelement {
+  font-variant: small-caps !important;
+  color: #004080 !important;
+  font-size: 1.5rem !important;
+  margin-bottom: 0.3rem !important;
 }
 
 .form-control.ui.fluid.selection.dropdown {

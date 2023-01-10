@@ -1,5 +1,11 @@
 export class Pagination {
-  currentPage: number = 1;
-  elementsForPage: number = 10;
-  fullTextSearch: string = '';
+  constructor(obj?: Partial<Pagination>) {
+    this.currentPage = obj?.currentPage || 1;
+    this.elementsForPage = obj?.elementsForPage || 10;
+    this.fullTextSearch = obj?.fullTextSearch || '';
+  }
+
+  currentPage: number;
+  elementsForPage: number;
+  fullTextSearch: string;
 }

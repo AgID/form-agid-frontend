@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import uswds from '@formio/uswds';
+// import uswds from '@formio/uswds';
 import { Formio } from 'formiojs';
 import { AGID_THEME } from '../agid-theme';
 
@@ -10,9 +10,12 @@ import { AGID_THEME } from '../agid-theme';
 })
 export class FormioRenderComponent implements OnInit {
   ngOnInit() {
-    const { templates, framework, components } = uswds;
+    // const { templates, framework, components } = uswds;
+    // const { radio, ...rest } = templates.uswds;
     // Formio.use({
-    //   templates,
+    //   templates: {
+    //     uswds: rest,
+    //   },
     //   framework,
     // });
     Formio.use(AGID_THEME);

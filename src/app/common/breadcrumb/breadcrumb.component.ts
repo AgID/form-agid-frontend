@@ -13,7 +13,7 @@ export class BreadcrumbComponent {
   breadcrumbs$: Observable<Breadcrumb[]>;
 
   constructor(
-    private readonly breadcrumbService: BreadcrumbService,
+    public readonly breadcrumbService: BreadcrumbService,
     private hashService: HashService
   ) {
     this.breadcrumbs$ = breadcrumbService.breadcrumbs$;

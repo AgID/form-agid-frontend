@@ -18,6 +18,8 @@ export class BreadcrumbService {
   // Observable exposing the breadcrumb hierarchy
   readonly breadcrumbs$ = this._breadcrumbs$.asObservable();
 
+  public noRoutes = false;
+
   constructor(private router: Router) {
     this.router.events
       .pipe(
@@ -29,6 +31,8 @@ export class BreadcrumbService {
         const root = this.router.routerState.snapshot.root;
         const breadcrumbs: Breadcrumb[] = [];
         this.addBreadcrumb(root, ['.'], breadcrumbs);
+
+        this.noRoutes = !breadcrumbs?.length;
 
         // Emit the new hierarchy
         this._breadcrumbs$.next(breadcrumbs);

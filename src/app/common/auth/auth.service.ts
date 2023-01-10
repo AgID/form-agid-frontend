@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, filter, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -44,15 +44,12 @@ export class AuthService {
       });
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
+      const userProvider = this.getUserProvider();
       //Gestione utente SPID/CIE/CNS e ha la policy vuota
       if (
-        ((this.userInfo &&
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'SPID') ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CIE' ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CNS') &&
+        ((this.userInfo && userProvider === 'SPID') ||
+          userProvider === 'CIE' ||
+          userProvider === 'CNS') &&
         (this.userInfo.user_policy?.length === 0 ||
           (this.userInfo.user_policy?.length &&
             Object.keys(this.userInfo.user_policy[0].policy).length === 0))
@@ -61,43 +58,33 @@ export class AuthService {
       }
       //Se è un cittadino in pending deve inserire l'OTP
       else if (
-        ((this.userInfo &&
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'SPID') ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CIE' ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CNS') &&
+        ((this.userInfo && userProvider === 'SPID') ||
+          userProvider === 'CIE' ||
+          userProvider === 'CNS') &&
         this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
         this.userInfo.user_policy[0].policy.status === 'Pending'
       ) {
         this.router.navigate(['/verifica-otp']);
       }
-      //Se è un cittadino in active accede direttamente all'elenco-form
+      //Se è un cittadino in active accede direttamente all'elenco-form se la rotta non è su "view"
       else if (
-        ((this.userInfo &&
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'SPID') ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CIE' ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CNS') &&
+        ((this.userInfo && userProvider === 'SPID') ||
+          userProvider === 'CIE' ||
+          userProvider === 'CNS') &&
         this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
         this.userInfo.user_policy[0].policy.status === 'Active'
       ) {
-        this.router.navigate(['/elenco-form']);
+        if (!window.location.pathname.includes('/view/')) {
+          this.router.navigate(['/elenco-form']);
+        }
       }
       //Se è un RTD in pending deve essere dirottato sulla scelta dell'amministrazione
       else if (
-        ((this.userInfo &&
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'SPID') ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CIE' ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CNS') &&
+        ((this.userInfo && userProvider === 'SPID') ||
+          userProvider === 'CIE' ||
+          userProvider === 'CNS') &&
         this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'RTD' &&
         this.userInfo.user_policy[0].policy.status === 'Pending'
@@ -106,20 +93,22 @@ export class AuthService {
       }
       //Se è un RTD in active deve essere dirottato sull'elenco-form'
       else if (
-        ((this.userInfo &&
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'SPID') ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CIE' ||
-          this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) ===
-            'CNS') &&
+        ((this.userInfo && userProvider === 'SPID') ||
+          userProvider === 'CIE' ||
+          userProvider === 'CNS') &&
         this.userInfo.user_policy?.length &&
         this.userInfo.user_policy[0].policy.role === 'RTD' &&
         this.userInfo.user_policy[0].policy.status === 'Active'
       ) {
-        this.router.navigate(['/elenco-form']);
+        if (!window.location.pathname.includes('/view/')) {
+          this.router.navigate(['/elenco-form']);
+        }
       }
     });
+  }
+
+  private getUserProvider(): 'SPID' | 'CIE' | 'CNS' | 'MICROSOFT' {
+    return this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) as any;
   }
 
   async getUserInfo() {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import uswds from '@formio/uswds';
+// import uswds from '@formio/uswds';
 import { Formio } from 'formiojs';
 import { AGID_THEME } from '../agid-theme';
 
@@ -19,11 +19,11 @@ export class FormioBuilderComponent implements OnInit {
   public changeFormio: EventEmitter<number> = new EventEmitter();
 
   ngOnInit() {
-    const { templates, framework, components } = uswds;
-    Formio.use({
-      templates,
-      framework,
-    });
+    // const { templates, framework, components } = uswds;
+    // Formio.use({
+    //   templates,
+    //   framework,
+    // });
     Formio.use(AGID_THEME);
   }
 
