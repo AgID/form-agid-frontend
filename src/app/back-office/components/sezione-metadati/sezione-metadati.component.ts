@@ -4,8 +4,10 @@ import {
   Input,
   OnInit,
   Output,
+  SecurityContext,
   ViewChildren,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { SharedService } from '../../inserimento/shared.service';
 import { IMetadatiType } from '../../types/metadati.type';
@@ -65,7 +67,10 @@ export class SezioneMetadatiComponent implements OnInit {
     lingua: true,
   };
 
-  constructor(private _sharedService: SharedService) {}
+  constructor(
+    private _sharedService: SharedService,
+    private domSanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
     this.metadati.lingua = localStorage.getItem('lang');
@@ -85,11 +90,19 @@ export class SezioneMetadatiComponent implements OnInit {
 
   public onKeyUpHome(e: any) {
     this.isValid.home = true;
+    this.metadati.sezioniInformative.home = this.domSanitizer.sanitize(
+      SecurityContext.HTML,
+      this.metadati.sezioniInformative.home
+    );
     this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyUpFaq(e: any) {
     this.isValid.faq = true;
+    this.metadati.sezioniInformative.faq = this.domSanitizer.sanitize(
+      SecurityContext.HTML,
+      this.metadati.sezioniInformative.faq
+    );
     this.changeMetadati.emit(this.metadati);
   }
 

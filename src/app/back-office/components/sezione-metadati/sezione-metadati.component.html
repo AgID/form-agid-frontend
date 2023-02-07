@@ -78,6 +78,7 @@
         name="home"
         [(ngModel)]="metadati.sezioniInformative.home"
         (input)="onKeyUpHome($event)"
+        (paste)="onKeyUpHome($event)"
         [height]="'400px'"
         required
       >
@@ -99,6 +100,7 @@
         name="faq"
         [(ngModel)]="metadati.sezioniInformative.faq"
         (input)="onKeyUpFaq($event)"
+        (paste)="onKeyUpFaq($event)"
         [height]="'400px'"
         required
       >

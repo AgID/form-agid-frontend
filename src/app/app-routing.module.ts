@@ -15,6 +15,7 @@ import { IdentificaAmministrazioneComponent } from './front-office/identifica-am
 import { SceltaUtenteComponent } from './front-office/scelta-utente/scelta-utente.component';
 import { VerificaMailComponent } from './front-office/verifica-mail/verifica-mail.component';
 import { VerificaOtpComponent } from './front-office/verifica-otp/verifica-otp.component';
+import { NotFoundComponent } from './public/not-found/not-found.component';
 import { ViewComponent } from './public/view/view.component';
 
 const routes: Routes = [
@@ -138,6 +139,7 @@ const routes: Routes = [
     },
     canActivate: [AuthGuard],
   },
+  { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
 
 @NgModule({

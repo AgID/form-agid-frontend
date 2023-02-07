@@ -17,11 +17,12 @@ import { FormFoModule } from './front-office/form-fo.module';
 import { HeaderModule } from './header/header.module';
 import { NgChartsModule } from 'ng2-charts';
 import { ViewModule } from './public/view/view.module';
+import { NotFoundComponent } from './public/not-found/not-found.component';
 
 const AppConfig = {};
 
 @NgModule({
-  declarations: [AppComponent, BreadcrumbComponent],
+  declarations: [AppComponent, BreadcrumbComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

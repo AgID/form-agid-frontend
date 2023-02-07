@@ -4,9 +4,11 @@ import {
   Input,
   OnChanges,
   Output,
+  SecurityContext,
 } from '@angular/core';
 import { SharedService } from '../../inserimento/shared.service';
 import { Utils } from 'formiojs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sezione-builder',
@@ -25,7 +27,10 @@ export class SezioneBuilderComponent implements OnChanges {
   @Input()
   public hasSottomissioni: boolean = false;
 
-  constructor(private _sharedService: SharedService) {}
+  constructor(
+    private _sharedService: SharedService,
+    private domSanitizer: DomSanitizer
+  ) {}
 
   public ngOnChanges(changes: any): void {
     if (changes.form && this.form?.components?.length > 0) {
@@ -107,14 +112,37 @@ export class SezioneBuilderComponent implements OnChanges {
       })
         .then((content: any) => {
           try {
-            this.form = { components: JSON.parse(content) };
+            const data = JSON.parse(content);
+            this.validateForm(data);
+            this.form = { components: data };
             this.populateSharedServiceWithFormIdFields();
-          } catch (error) {
+          } catch (error: any) {
             //gestione errore front end
-            console.log(error);
+            console.log(error?.message || error);
           }
         })
         .catch((error) => console.log(error));
+    }
+  }
+  validateForm(data: any) {
+    try {
+      Utils.eachComponent(
+        data,
+        (el: any) => {
+          if ('html' in el) {
+            el.html = this.domSanitizer.sanitize(SecurityContext.HTML, el.html);
+          }
+          if (el.type === 'htmlelement') {
+            el.content = this.domSanitizer.sanitize(
+              SecurityContext.HTML,
+              el.content
+            );
+          }
+        },
+        true
+      );
+    } catch (e) {
+      throw new Error('Importazione fallita');
     }
   }
 

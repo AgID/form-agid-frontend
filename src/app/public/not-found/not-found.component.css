@@ -1,0 +1,43 @@
+.ErrorPage {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: common-ligatures;
+  color: #1c2024;
+  -webkit-box-direction: normal;
+  box-sizing: inherit;
+  text-align: center !important;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.005em !important;
+  margin-bottom: 4em;
+  margin-top: 2em;
+}
+
+.ErrorPage-title {
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: common-ligatures;
+  -webkit-box-direction: normal;
+  text-align: center !important;
+  letter-spacing: 0.005em !important;
+  box-sizing: inherit;
+  margin: 0;
+  font-weight: 600 !important;
+  margin-top: 4rem;
+  margin-bottom: 0;
+  color: #06c !important;
+  line-height: 1 !important;
+  font-size: 11.2em;
+}
+
+.ErrorPage-subtitle {
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: common-ligatures;
+  -webkit-box-direction: normal;
+  text-align: center !important;
+  letter-spacing: 0.005em !important;
+  box-sizing: inherit;
+  margin: 0;
+  font-weight: 600 !important;
+  font-size: 2.8rem !important;
+  color: #06c !important;
+  line-height: 1 !important;
+}
