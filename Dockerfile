@@ -1,5 +1,5 @@
 #stage 1
-FROM node:14.19.0 as builder
+FROM node:14 as builder
 WORKDIR /app
 COPY . /app
 
