@@ -7,7 +7,8 @@ import {
   SecurityContext,
   ViewChildren,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { MdEditorOption } from 'ngx-markdown-editor';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { SharedService } from '../../inserimento/shared.service';
 import { IMetadatiType } from '../../types/metadati.type';
@@ -56,6 +57,13 @@ export class SezioneMetadatiComponent implements OnInit {
   public optionsCampoTarget: any = this._sharedService.optionsCampoTarget;
   public optionsTitolo: any = this._sharedService.optionsTitolo;
 
+  public editorOptions: MdEditorOption = {
+    markedjsOpt: {
+      sanitize: true,
+      sanitizer: (html: string) => this.purify(html),
+    },
+  };
+
   public isValid: any = {
     home: true,
     faq: true,
@@ -69,8 +77,12 @@ export class SezioneMetadatiComponent implements OnInit {
 
   constructor(
     private _sharedService: SharedService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: NgDompurifySanitizer
   ) {}
+
+  private purify(value: string): string {
+    return this.domSanitizer.sanitize(SecurityContext.HTML, value);
+  }
 
   ngOnInit(): void {
     this.metadati.lingua = localStorage.getItem('lang');
@@ -90,19 +102,11 @@ export class SezioneMetadatiComponent implements OnInit {
 
   public onKeyUpHome(e: any) {
     this.isValid.home = true;
-    this.metadati.sezioniInformative.home = this.domSanitizer.sanitize(
-      SecurityContext.HTML,
-      this.metadati.sezioniInformative.home
-    );
     this.changeMetadati.emit(this.metadati);
   }
 
   public onKeyUpFaq(e: any) {
     this.isValid.faq = true;
-    this.metadati.sezioniInformative.faq = this.domSanitizer.sanitize(
-      SecurityContext.HTML,
-      this.metadati.sezioniInformative.faq
-    );
     this.changeMetadati.emit(this.metadati);
   }
 

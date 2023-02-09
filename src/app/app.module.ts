@@ -17,6 +17,7 @@ import { FormFoModule } from './front-office/form-fo.module';
 import { HeaderModule } from './header/header.module';
 import { NgChartsModule } from 'ng2-charts';
 import { ViewModule } from './public/view/view.module';
+import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 import { NotFoundComponent } from './public/not-found/not-found.component';
 
 const AppConfig = {};
@@ -36,6 +37,7 @@ const AppConfig = {};
     NoopAnimationsModule,
     TranslateModule.forRoot(),
     NgChartsModule,
+    NgDompurifyModule,
   ],
   providers: [
     {

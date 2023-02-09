@@ -80,6 +80,7 @@
         (input)="onKeyUpHome($event)"
         (paste)="onKeyUpHome($event)"
         [height]="'400px'"
+        [options]="editorOptions"
         required
       >
         <slot custom-btns></slot>
@@ -102,6 +103,7 @@
         (input)="onKeyUpFaq($event)"
         (paste)="onKeyUpFaq($event)"
         [height]="'400px'"
+        [options]="editorOptions"
         required
       >
         <slot custom-btns></slot>
