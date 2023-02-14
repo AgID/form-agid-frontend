@@ -15,13 +15,13 @@
   [renderOptions]="renderOptions"
   (changeFormio)="onChangeFormio($event)"
 ></app-formio-render>
-<div class="d-flex justify-content-center gap-35">
+<!-- <div class="d-flex justify-content-center gap-35">
   <i
     class="fa fa-file-pdf-o fa-2x custom-color-home mb-3 cursor-pointer"
     style="color: #06c"
     (click)="downloadPDF()"
   ></i>
-</div>
+</div> -->
 <div class="d-flex justify-content-center gap-35 mb-3" *ngIf="!isArchivio">
   <ng-container *ngIf="isModifica; else isVisualizzazione">
     <button
@@ -84,7 +84,7 @@
       </div>
       <div class="modal-body">
         <div class="px-5 pb-5 modal-body">
-          <div class="d-flex">
+          <div class="d-flex justify-content-between">
             <div>
               <p
                 class="pb-4"
@@ -92,9 +92,18 @@
               >
                 {{ "AG_Copia_Incolla_Link" | translate }}
               </p>
-              <p class="font-weight-bold pt-4">
-                <a href="{{ uuidLink }}">{{ uuidLink }}</a>
-              </p>
+              <div class="d-flex justify-content-between align-items-end">
+                <p class="font-weight-bold pt-4">
+                  <a href="{{ uuidLink }}">{{ uuidLink }}</a>
+                </p>
+                <svg
+                  style="width: 24px !important; height: 24px !important"
+                  class="icon cursor-pointer"
+                  (click)="onClickCopiaUUIDClipboard()"
+                >
+                  <use href="/assets/svg/sprite.svg#it-copy"></use>
+                </svg>
+              </div>
             </div>
             <div style="width: 150px">
               <img

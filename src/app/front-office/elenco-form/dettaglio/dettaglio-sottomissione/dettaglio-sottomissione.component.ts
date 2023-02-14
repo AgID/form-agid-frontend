@@ -1,12 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import FormioExport from 'formio-export';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { ISottomissione } from 'src/app/front-office/types/sottomissione.type';
+import { v1 as uuidv1 } from 'uuid';
 import { ElencoFormService } from '../../elenco-form.service';
 import './dettaglio-sottomissione.component.scss';
-import { v1 as uuidv1 } from 'uuid';
-import { DatePipe } from '@angular/common';
-import FormioExport from 'formio-export';
 
 @Component({
   selector: 'app-dettaglio-sottomissione',
@@ -304,5 +304,10 @@ export class DettaglioSottomissioneComponent implements OnInit {
       },
       relativeTo: this.route,
     });
+  }
+
+  public onClickCopiaUUIDClipboard() {
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(this.uuidLink);
   }
 }

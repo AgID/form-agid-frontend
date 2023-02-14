@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/common/auth/auth.service';
 
@@ -7,12 +7,18 @@ import { AuthService } from 'src/app/common/auth/auth.service';
   templateUrl: './admin-home.component.html',
   styleUrls: ['./admin-home.component.scss'],
 })
-export class AdminHomeComponent {
+export class AdminHomeComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
+
+  ngOnInit() {
+    if (!this.viewSuperAdminPages()) {
+      this.routerNavigate('elenco-form');
+    }
+  }
 
   public viewFrontOffice(): boolean {
     return (

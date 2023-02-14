@@ -29,12 +29,12 @@
         </div>
         <ng-container *ngIf="showKeyChoose">
           <div class="form-check">
+            <!-- [attr.disabled]="hashService.isModified ? true : undefined" -->
             <input
               name="gruppo1"
               type="radio"
               value="Y"
               id="yesKey"
-              [attr.disabled]="hashService.isModified ? true : undefined"
               [attr.checked]="haveKey === 'Y' ? true : undefined"
               (change)="onChangeYesKey($event)"
             />
@@ -43,12 +43,12 @@
             }}</label>
           </div>
           <div class="form-check">
+            <!-- [attr.disabled]="hashService.isModified ? true : undefined" -->
             <input
               name="gruppo1"
               type="radio"
               value="N"
               id="noKey"
-              [attr.disabled]="hashService.isModified ? true : undefined"
               [attr.checked]="haveKey === 'N' ? true : undefined"
               (change)="onChangeNoKey($event)"
             />

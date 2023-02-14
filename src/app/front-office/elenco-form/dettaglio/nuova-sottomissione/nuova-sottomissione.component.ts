@@ -61,7 +61,7 @@ export class NuovaSottomissioneComponent implements OnInit {
       .createSubmission(this.payloadNewSubmission)
       .subscribe((response) =>
         this.router.navigate([
-          `./${response.idForm}/sottomissione/${response._id}`,
+          `/elenco-form/${response.idForm}/sottomissione/${response._id}`,
         ])
       );
   }

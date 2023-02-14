@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { AuthService } from 'src/app/common/auth/auth.service';
 import { HashService } from 'src/app/common/hash.service';
@@ -15,8 +15,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   public haveKey: string = '';
   public authorizationSend = '';
   public key = '';
-  public radioText = `Richiedo che venga inviata la chiave di accesso alla casella
-  email del Responsabile della Transizione Digitale:`;
+  public radioText = '';
   public userMail: string = '';
   public cod_categoria: string = '';
   public isValidKey = true;
@@ -32,7 +31,8 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     public hashService: HashService,
     private authService: AuthService,
     private identAmmService: IdentificaAmministrazioneService,
-    private verificaMailService: VerificaMailService
+    private verificaMailService: VerificaMailService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +48,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
           this.identAmmService
             .getAmministrazioni(query)
             .subscribe((res: any) => {
+              this.hashService.isModified = false;
               this.flagOnConfirm = true;
               populateResults(res.result.records);
             });
@@ -114,27 +115,28 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       },
       placeholder: 'Nome o codice IPA...',
     });
+
+    // Traduzioni
+    this.radioText = this.translateService.instant(
+      'AG_Mail_Chiave_Accesso_RTD'
+    );
   }
 
   public getMail(data: any) {
-    // let i = 0;
-    // do {
-    //   i++;
-    //   if (data && data['Tipo_Mail' + i] === 'Altro') {
-    if (data && data['Mail_responsabile'])
+    if (data && data['Mail_responsabile']) {
       this.userMail = data['Mail_responsabile'];
-    else {
+      this.radioText = this.radioText + ' ' + this.userMail;
+    } else {
       this.hashService.isModified = true;
       this.hashService.message = [
         {
-          label:
-            '“Non è possibile creare un profilo RTD, bisogna prima inserire un indirizzo email nell’indice PA',
+          label: this.translateService.instant(
+            'AG_Creazione_Profilo_Mail_Assente'
+          ),
         },
       ];
       this.hashService.type = 'DANGER';
     }
-    //   }
-    // } while (!data['Tipo_Mail' + i] || data['Tipo_Mail' + i] === 'Altro');
   }
 
   public onChangeYesKey($e: any) {
@@ -143,7 +145,6 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public onChangeNoKey($e: any) {
-    this.radioText = this.radioText + ' ' + this.userMail;
     this.haveKey = $e.target.value;
   }
 
@@ -152,6 +153,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public onKeyUpKey(e: any) {
+    this.hashService.isModified = false;
     this.key = e.target.value;
     this.isValidKey = true;
   }
@@ -177,18 +179,34 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       this.hashService.isModified = true;
       this.hashService.message = [
         {
-          label: "La mail dell'amministrazione non esiste",
+          label: this.translateService.instant('AG_Mail_Amm_Assente'),
         },
       ];
       this.hashService.type = 'DANGER';
     }
   }
 
+  scrollToTop() {
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+  }
+
   public onClickAccedi() {
     this.identAmmService
       .validazioneAggiornamentoUtente({ codiceValidazione: this.key })
-      .subscribe(() => {
-        this.authService.getUserInfo();
+      .subscribe({
+        next: () => {
+          this.authService.getUserInfo();
+        },
+        error: () => {
+          this.hashService.isModified = true;
+          this.hashService.message = [
+            {
+              label: this.translateService.instant('AG_Errore_Generico'),
+            },
+          ];
+          this.hashService.type = 'DANGER';
+          this.scrollToTop();
+        },
       });
   }
 }
