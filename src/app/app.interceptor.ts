@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
+import { environment as ENV } from 'src/environments/environment';
 import { AuthService } from './common/auth/auth.service';
 
 @Injectable()
@@ -17,11 +18,13 @@ export class AppInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('access_token');
+    const issuer = ENV.AUTH_ISSUER || '';
+    const issuerDomain = issuer.replace('https://', '');
     const modifiedReq =
       accessToken &&
       !(
         request.url.includes('openid-configuration') ||
-        request.url.includes('login-test.agid.gov.it/certs')
+        request.url.includes(`${issuerDomain}/certs`)
       )
         ? request.clone({
             headers: request.headers.set('access-token', accessToken),

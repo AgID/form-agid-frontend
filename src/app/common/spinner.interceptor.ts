@@ -21,11 +21,11 @@ export class SpinnerInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // Interceptor per token
     let newReq = req;
-    if (req.url === 'https://login-test.agid.gov.it/token') {
+    if (req.url === `${ENV.AUTH_ISSUER}/token`) {
       newReq = req.clone({ url: `${ENV.BACKEND_HOST}/v1/profile/token` });
     }
 
-    if (req.url === 'https://login-test.agid.gov.it/token/revocation') {
+    if (req.url === `${ENV.AUTH_ISSUER}/token/revocation`) {
       newReq = req.clone({
         url: `${ENV.BACKEND_HOST}/v1/profile/token/revocation`,
       });
