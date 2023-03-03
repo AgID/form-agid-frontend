@@ -15,9 +15,13 @@ export class AdminHomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.viewSuperAdminPages()) {
-      this.routerNavigate('elenco-form');
-    }
+    this.authService.canActivateProtectedRoutes$.subscribe((ev) => {
+      if (this.authService.userInfo.user_policy?.length) {
+        if (!this.viewSuperAdminPages()) {
+          this.routerNavigate('elenco-form');
+        }
+      }
+    });
   }
 
   public viewFrontOffice(): boolean {

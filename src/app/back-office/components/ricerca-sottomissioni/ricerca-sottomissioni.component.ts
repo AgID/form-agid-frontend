@@ -17,7 +17,7 @@ export class RicercaSottomissioniComponent {
     stato: '',
     dataInizio: '',
     dataFine: '',
-    pagination: new Pagination(),
+    pagination: new Pagination({ elementsForPage: 200 }),
   };
 
   public isValid: any = {

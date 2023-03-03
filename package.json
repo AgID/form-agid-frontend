@@ -31,7 +31,7 @@
     "ace-builds": "^1.11.2",
     "angular-oauth2-oidc": "^13.0.1",
     "bootstrap": "^5.2.0",
-    "bootstrap-italia": "2.3.2",
+    "bootstrap-italia": "2.0.2",
     "chart.js": "4.0.1",
     "dompurify": "^2.4.3",
     "font-awesome": "^4.7.0",

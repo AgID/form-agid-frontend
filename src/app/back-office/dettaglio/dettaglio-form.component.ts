@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { FormFoService } from '../../front-office/form-fo.service';
-import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.service';
-import { ISottomissione } from '../../front-office/types/sottomissione.type';
 import { Pagination } from '../../common/pagination.class';
-import { IForm } from '../types/form.type';
+import { ElencoFormService } from '../../front-office/elenco-form/elenco-form.service';
+import { FormFoService } from '../../front-office/form-fo.service';
+import { ISottomissione } from '../../front-office/types/sottomissione.type';
 import { RicercaSottomissioniComponent } from '../components/ricerca-sottomissioni/ricerca-sottomissioni.component';
-import { isNgTemplate } from '@angular/compiler';
+import { IForm } from '../types/form.type';
 
 @Component({
   selector: 'app-dettaglio-form-bo',
