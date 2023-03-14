@@ -17,11 +17,21 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit() {
     this.authService.canActivateProtectedRoutes$.subscribe((ev) => {
       if (this.authService.userInfo.user_policy?.length) {
-        if (!this.viewSuperAdminPages()) {
+        if (this.anonymousUser()) {
+          this.routerNavigate('scelta-utente');
+        } else if (!this.viewSuperAdminPages()) {
           this.routerNavigate('elenco-form');
         }
       }
     });
+  }
+
+  public anonymousUser() {
+    return (
+      this.authService.userInfo &&
+      this.authService.userInfo.user_policy?.length &&
+      Object.keys(this.authService.userInfo.user_policy[0].policy).length === 0
+    );
   }
 
   public viewFrontOffice(): boolean {
