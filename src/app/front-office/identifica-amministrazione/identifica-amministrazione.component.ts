@@ -43,21 +43,11 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       autoselect: false,
       dropdownArrow: () => '',
       source: (query: string, populateResults: Function) => {
-        if (!this.flagOnConfirm) {
-          if (!query) return populateResults([]);
-          this.identAmmService
-            .getAmministrazioni(query)
-            .subscribe((res: any) => {
-              this.hashService.isModified = false;
-              this.flagOnConfirm = true;
-              populateResults(res.result.records);
-            });
-        }
+        this.debouncedSearch(query, populateResults);
       },
       onConfirm: (data: any) => {
         this.flagOnConfirm = true;
         if (this.flagOnConfirm) {
-          console.log('ONCONFIRM', data);
           if (data) {
             this.hashService.isModified = false;
             this.entity = {
@@ -76,25 +66,51 @@ export class IdentificaAmministrazioneComponent implements OnInit {
             } else if (data && data.Codice_Categoria) {
               this.identAmmService
                 .getCategorieEnti(data.Codice_Categoria)
-                .subscribe((res: any) => {
-                  if (
-                    res.result.records[0] &&
-                    res.result.records[0].UTD === 'A'
-                  ) {
-                    this.getMail(data);
-                    this.flagOnConfirm = false;
-                  } else if (
-                    res.result.records[0] &&
-                    res.result.records[0].UTD === 'P'
-                  ) {
-                    this.identAmmService
-                      .getRTD(data.Codice_IPA)
-                      .subscribe((res: any) => {
-                        this.getMail(res.result.records[0]);
-                        this.flagOnConfirm = false;
-                      });
+                .subscribe(
+                  (res: any) => {
+                    if (
+                      res.result.records[0] &&
+                      res.result.records[0].UTD === 'A'
+                    ) {
+                      this.getMail(data);
+                      this.flagOnConfirm = false;
+                    } else if (
+                      res.result.records[0] &&
+                      res.result.records[0].UTD === 'P'
+                    ) {
+                      this.identAmmService.getRTD(data.Codice_IPA).subscribe(
+                        (res: any) => {
+                          this.getMail(res.result.records[0]);
+                          this.flagOnConfirm = false;
+                        },
+                        (err) => {
+                          this.hashService.isModified = true;
+                          this.hashService.message = [
+                            {
+                              label:
+                                this.translateService.instant(
+                                  'AG_Errore_Generico'
+                                ),
+                            },
+                          ];
+                          this.hashService.type = 'DANGER';
+                          this.scrollToTop();
+                        }
+                      );
+                    }
+                  },
+                  (err) => {
+                    this.hashService.isModified = true;
+                    this.hashService.message = [
+                      {
+                        label:
+                          this.translateService.instant('AG_Errore_Generico'),
+                      },
+                    ];
+                    this.hashService.type = 'DANGER';
+                    this.scrollToTop();
                   }
-                });
+                );
               this.cod_categoria = data.Codice_Categoria;
             }
           }
@@ -122,6 +138,39 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     );
   }
 
+  private debounce(fn: Function, ms = 500) {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    return function (this: any, ...args: any[]) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => fn.apply(this, args), ms);
+    };
+  }
+
+  private debouncedSearch = this.debounce(this.autocompleteSearch);
+
+  private autocompleteSearch(query: string, populateResults: Function) {
+    if (!this.flagOnConfirm) {
+      if (!query) return populateResults([]);
+      this.identAmmService.getAmministrazioni(query).subscribe(
+        (res: any) => {
+          this.hashService.isModified = false;
+          this.flagOnConfirm = true;
+          populateResults(res.result.records);
+        },
+        (err) => {
+          this.hashService.isModified = true;
+          this.hashService.message = [
+            {
+              label: this.translateService.instant('AG_Errore_Generico'),
+            },
+          ];
+          this.hashService.type = 'DANGER';
+          this.scrollToTop();
+        }
+      );
+    }
+  }
+
   public getMail(data: any) {
     if (data && data['Mail_responsabile']) {
       this.userMail = data['Mail_responsabile'];
@@ -141,14 +190,17 @@ export class IdentificaAmministrazioneComponent implements OnInit {
 
   public onChangeYesKey($e: any) {
     this.haveKey = $e.target.value;
+    this.hashService.isModified = false;
     this.authorizationSend = '';
   }
 
   public onChangeNoKey($e: any) {
+    this.hashService.isModified = false;
     this.haveKey = $e.target.value;
   }
 
   public onChangeRadio($e: any) {
+    this.hashService.isModified = false;
     this.authorizationSend = $e.target.checked;
   }
 
