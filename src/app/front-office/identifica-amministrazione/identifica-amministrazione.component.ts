@@ -43,7 +43,8 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       autoselect: false,
       dropdownArrow: () => '',
       source: (query: string, populateResults: Function) => {
-        this.debouncedSearch(query, populateResults);
+        const formattedQuery = query.replace(/\'/g, '');
+        this.debouncedSearch(formattedQuery, populateResults);
       },
       onConfirm: (data: any) => {
         this.flagOnConfirm = true;
