@@ -19,6 +19,8 @@ export class AdminHomeComponent implements OnInit {
       if (this.authService.userInfo.user_policy?.length) {
         if (this.anonymousUser()) {
           this.routerNavigate('scelta-utente');
+        } else if (this.checkPendingRTD()) {
+          this.routerNavigate('identifica-amministrazione');
         } else if (!this.viewSuperAdminPages()) {
           this.routerNavigate('elenco-form');
         }
@@ -31,6 +33,16 @@ export class AdminHomeComponent implements OnInit {
       this.authService.userInfo &&
       this.authService.userInfo.user_policy?.length &&
       Object.keys(this.authService.userInfo.user_policy[0].policy).length === 0
+    );
+  }
+
+  public checkPendingRTD() {
+    return (
+      this.authService.userInfo &&
+      this.authService.userInfo.user_policy?.length &&
+      Object.keys(this.authService.userInfo.user_policy[0].policy).length ===
+        0 &&
+      this.authService.userInfo.user_policy?.[0]?.policy?.status === 'PENDING'
     );
   }
 

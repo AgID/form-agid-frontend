@@ -217,17 +217,15 @@ export class IdentificaAmministrazioneComponent implements OnInit {
 
   public onClickInviaMail() {
     if (this.userMail) {
-      this.verificaMailService.inviaCodiceOTP(this.userMail).subscribe(() => {
-        this.identAmmService
-          .nuovoProfiloRtd({
-            email: this.userMail,
-            cod_categoria: this.cod_categoria,
-            entity: this.entity,
-          })
-          .subscribe((res: any) => {
-            this.haveKey = 'Y';
-          });
-      });
+      this.identAmmService
+        .nuovoProfiloRtd({
+          email: this.userMail,
+          cod_categoria: this.cod_categoria,
+          entity: this.entity,
+        })
+        .subscribe((res: any) => {
+          this.haveKey = 'Y';
+        });
     } else {
       this.hashService.isModified = true;
       this.hashService.message = [
