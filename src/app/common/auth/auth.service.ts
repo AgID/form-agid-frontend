@@ -42,6 +42,10 @@ export class AuthService {
       .subscribe((e) => {
         this.getUserInfo();
       });
+    setTimeout(() => {
+      this.getUserInfo();
+    }, 1000);
+
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
       const userProvider = this.getUserProvider();
@@ -114,7 +118,8 @@ export class AuthService {
   async getUserInfo() {
     this.oauthService.userinfoEndpoint = `${ENV.BACKEND_HOST}/v1/profile/info`; // Sovrascrittura endpoint
     this.oauthService.requireHttps = false;
-    return this.oauthService.loadUserProfile();
+    await this.oauthService.loadUserProfile();
+    this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
   }
 
   async initAuth(): Promise<any> {
