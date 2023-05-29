@@ -6,7 +6,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment as ENV } from 'src/environments/environment';
 import { AuthService } from './common/auth/auth.service';
 
@@ -41,7 +41,7 @@ export class AppInterceptor implements HttpInterceptor {
             this.authService.login();
           }
         }
-        throw new Error(err);
+        return throwError(() => err);
       })
     );
   }

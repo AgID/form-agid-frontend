@@ -118,6 +118,16 @@ app-formio-render {
       margin-bottom: 0.3rem !important;
     }
   }
+  .formio-component-select select.form-control {
+    color: #004080 !important;
+    border-bottom: 1px solid #5d7083 !important;
+    box-shadow: none !important;
+  }
+  .formio-component-textarea textarea {
+    border: 1px solid #a3a3a3 !important;
+    color: #004080 !important;
+    box-shadow: none !important;
+  }
 }
 
 form-builder {

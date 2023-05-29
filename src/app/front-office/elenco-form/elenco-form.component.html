@@ -30,6 +30,7 @@
               <a
                 class="card-title cursor-pointer"
                 aria-label="Accedi al modulo: Obiettivi di accessibilità"
+                *ngIf="!isArchivio"
                 (click)="goToRenderSubmission(item)"
                 >{{ "AG_Accedi_Modulo" | translate }}</a
               >

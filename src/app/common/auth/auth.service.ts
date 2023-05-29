@@ -107,6 +107,8 @@ export class AuthService {
         if (!window.location.pathname.includes('/view/')) {
           this.router.navigate(['/elenco-form']);
         }
+      } else {
+        this.router.navigate(['/']);
       }
     });
   }
@@ -118,15 +120,22 @@ export class AuthService {
   async getUserInfo() {
     this.oauthService.userinfoEndpoint = `${ENV.BACKEND_HOST}/v1/profile/info`; // Sovrascrittura endpoint
     this.oauthService.requireHttps = false;
-    await this.oauthService.loadUserProfile();
-    this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
+    if (this.oauthService.hasValidAccessToken()) {
+      await this.oauthService.loadUserProfile();
+      this.isAuthenticatedSubject$.next(
+        this.oauthService.hasValidAccessToken()
+      );
+    }
   }
 
   async initAuth(): Promise<any> {
-    return this.oauthService
-      .loadDiscoveryDocument()
-      .then(() => this.oauthService.tryLogin())
-      .then(() => this.isDoneLoadingSubject$.next(true));
+    return this.oauthService.loadDiscoveryDocument().then(() => {
+      try {
+        this.oauthService
+          .tryLogin()
+          .then(() => this.isDoneLoadingSubject$.next(true));
+      } catch (e) {}
+    });
   }
 
   public login(targetUrl?: string) {

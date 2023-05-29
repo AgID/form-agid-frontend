@@ -8,6 +8,7 @@ import { SezioneBuilderComponent } from '../components/sezione-builder/sezione-b
 import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione-metadati.component';
 import { IForm } from '../types/form.type';
 import { IMetadatiType } from '../types/metadati.type';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modifica-form',
@@ -57,6 +58,7 @@ export class ModificaFormComponent implements OnInit {
     private route: ActivatedRoute,
     private elencoFormService: ElencoFormService,
     private datePipe: DatePipe,
+    private translateService: TranslateService,
     public hashService: HashService
   ) {}
 
@@ -170,13 +172,17 @@ export class ModificaFormComponent implements OnInit {
         () => {
           this.hashService.isModified = true;
           this.hashService.message = [
-            { label: 'Modifica avvenuta con successo' },
+            { label: this.translateService.instant('AG_Operazione_Successo') },
           ];
           this.hashService.type = 'SUCCESS';
         },
         (err) => {
           this.hashService.isModified = true;
-          this.hashService.message = [{ label: 'Modifica non avvenuta' }];
+          const { error } = err;
+          this.hashService.message = [
+            { label: this.translateService.instant('AG_Operazione_Errore') },
+            { label: `${error.error} - ${error.message[0]}` },
+          ];
           this.hashService.type = 'DANGER';
         }
       )
@@ -206,23 +212,29 @@ export class ModificaFormComponent implements OnInit {
     this.form.stato = 'Pubblicato';
     this.elencoFormService
       .updateForm(this.form._id, this.form)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.hashService.isModified = true;
           this.hashService.message = [
-            { label: 'Modifica avvenuta con successo' },
+            { label: this.translateService.instant('AG_Operazione_Successo') },
           ];
           this.hashService.type = 'SUCCESS';
         },
-        (err) => {
+        error: (err) => {
           this.hashService.isModified = true;
-          this.hashService.message = [{ label: 'Modifica non avvenuta' }];
+          const { error } = err;
+          this.hashService.message = [
+            { label: this.translateService.instant('AG_Operazione_Errore') },
+            { label: `${error.error} - ${error.message[0]}` },
+          ];
           this.hashService.type = 'DANGER';
-        }
-      )
+        },
+      })
       .add(() => {
         this.ngOnInit();
-        this.scrollToTop();
+        setTimeout(() => {
+          this.scrollToTop();
+        }, 300);
       });
   }
 

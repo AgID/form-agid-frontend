@@ -26,6 +26,8 @@ export class DettaglioFormComponent implements OnInit {
   public selectedRow: any; //Modal
   public formatoEsportazione: string;
 
+  public selectedSottomissione: any = null;
+
   // public contentTypeMap =
 
   public filters = {
@@ -88,10 +90,17 @@ export class DettaglioFormComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
-  public eliminaSottomissione(item: any) {
-    this.elencoFormService.deleteSottomissioneById(item._id).subscribe(() => {
-      this.fetchSottomissioni();
-    });
+  public eliminaSottomissione() {
+    if (this.selectedSottomissione) {
+      this.elencoFormService
+        .deleteSottomissioneById(this.selectedSottomissione._id)
+        .subscribe(() => {
+          this.fetchSottomissioni();
+        })
+        .add(() => {
+          this.myModal.hide();
+        });
+    }
   }
 
   public redirectPage() {
@@ -113,5 +122,18 @@ export class DettaglioFormComponent implements OnInit {
       ...this.ricercaSottomissioniComponent.filters,
     };
     this.fetchSottomissioni();
+  }
+
+  public onClickEliminaSottomissione(item: any) {
+    // Modale
+    this.myModal = new (<any>window).bootstrap.Modal(
+      document.getElementById('deleteModal'),
+      {
+        keyboard: false,
+        backdrop: 'static',
+      }
+    );
+    this.myModal.show();
+    this.selectedSottomissione = item;
   }
 }
