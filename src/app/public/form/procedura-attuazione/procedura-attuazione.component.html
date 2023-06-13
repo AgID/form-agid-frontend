@@ -1,0 +1,83 @@
+<h1>{{ submission?.titolo }}</h1>
+<div *ngIf="isError">
+  {{ "AG_Operazione_Errore" | translate }}
+</div>
+<app-formio-render
+  [form]="formSchema"
+  [submission]="{ data: formData }"
+  [renderOptions]="renderOptions"
+  (changeFormio)="onChangeFormio($event)"
+></app-formio-render>
+
+<div class="d-flex justify-content-end mb-3">
+  <button
+    *ngIf="formSchema._id"
+    type="button"
+    class="btn btn-primary"
+    (click)="onClickPubblica()"
+    [disabled]="!actualFormData.isValid || !actualFormData.isModified"
+  >
+    {{ "AG_Invia" | translate }}
+  </button>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="publishProceduraAttuazioneModal"
+  aria-labelledby="publishModalTitle"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content rounded">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          {{ "AG_Grazie_Per_Averci_Contattato" | translate }}
+        </h2>
+        <button
+          class="btn-close"
+          type="button"
+          aria-label="Close"
+          (click)="redirectPage()"
+        >
+          <svg class="icon">
+            <use href="/assets/svg/sprite.svg#it-close"></use>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="px-5 pb-5 modal-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <p
+                class="pb-4"
+                style="border-bottom: 1px solid rgb(204, 204, 204)"
+              >
+                {{ "AG_Link_Alla_Compilazione" | translate }}
+              </p>
+              <div class="d-flex justify-content-between align-items-end">
+                <p class="font-weight-bold pt-4">
+                  <a href="{{ uuidLink }}">{{ uuidLink }}</a>
+                </p>
+                <svg
+                  style="width: 24px !important; height: 24px !important"
+                  class="icon cursor-pointer"
+                  (click)="onClickCopiaUUIDClipboard()"
+                >
+                  <use href="/assets/svg/sprite.svg#it-copy"></use>
+                </svg>
+              </div>
+            </div>
+            <div style="width: 150px">
+              <img
+                src="../../../../../assets/svg/uuid_modal_image_codice.svg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

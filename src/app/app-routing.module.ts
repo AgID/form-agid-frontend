@@ -17,6 +17,8 @@ import { VerificaMailComponent } from './front-office/verifica-mail/verifica-mai
 import { VerificaOtpComponent } from './front-office/verifica-otp/verifica-otp.component';
 import { NotFoundComponent } from './public/not-found/not-found.component';
 import { ViewComponent } from './public/view/view.component';
+import { FeedbackAccessibilitaComponent } from './public/form/feedback-accessibilita/feedback-accessibilita.component';
+import { ProceduraAttuazioneAccessibilitaComponent } from './public/form/procedura-attuazione/procedura-attuazione.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +32,16 @@ const routes: Routes = [
   {
     path: 'view/:id',
     component: ViewComponent,
+    data: { breadcrumb: '' },
+  },
+  {
+    path: 'form/feedback-accessibilita/:id',
+    component: FeedbackAccessibilitaComponent,
+    data: { breadcrumb: '' },
+  },
+  {
+    path: 'form/procedura-attuazione/:id',
+    component: ProceduraAttuazioneAccessibilitaComponent,
     data: { breadcrumb: '' },
   },
   {

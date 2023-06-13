@@ -19,6 +19,8 @@ import { NgChartsModule } from 'ng2-charts';
 import { ViewModule } from './public/view/view.module';
 import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 import { NotFoundComponent } from './public/not-found/not-found.component';
+import { FeedbackAccessibilitaModule } from './public/form/feedback-accessibilita/feedback-accessibilita.module';
+import { ProceduraAttuazioneAccessibilitaModule } from './public/form/procedura-attuazione/procedura-attuazione.module';
 
 const AppConfig = {};
 
@@ -34,6 +36,8 @@ const AppConfig = {};
     CommonModule,
     AppCommonModule,
     ViewModule,
+    FeedbackAccessibilitaModule,
+    ProceduraAttuazioneAccessibilitaModule,
     NoopAnimationsModule,
     TranslateModule.forRoot(),
     NgChartsModule,
