@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeedbackAccessibilitaService } from './feedback-accessibilita.service';
 import { firstValueFrom } from 'rxjs';
 import { ISottomissione } from 'src/app/front-office/types/sottomissione.type';
 import { v1 as uuidv1 } from 'uuid';
+import { Utils } from 'formiojs';
+import { VerificaOtpService } from 'src/app/front-office/verifica-otp/verifica-otp.service';
 
 @Component({
   selector: 'app-feedback-accessibilita',
@@ -14,7 +16,8 @@ export class FeedbackAccessibilitaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private feedbackAccessibilitaService: FeedbackAccessibilitaService,
-    private router: Router
+    private router: Router,
+    private verificaOtpService: VerificaOtpService
   ) {}
 
   public actualFormData: any = {};
@@ -26,10 +29,76 @@ export class FeedbackAccessibilitaComponent implements OnInit {
   public submission: any;
   public redattaIl: string = null;
   public isError: boolean = false;
+  public emailVerified = false;
 
   ngOnInit() {
     const idFormAccessibilita = this.route.snapshot.params['id'];
     this.getModuloFeedbackByIdAccessibilita(idFormAccessibilita);
+  }
+
+  @HostListener('inviaCodiceOtp') // Custom event ricevuto dal form
+  async inviaCodiceOtp() {
+    const email = this.actualFormData?.data?.email || '';
+    if (!email) return;
+
+    await firstValueFrom(
+      this.verificaOtpService.richiediValidazionePubblica({ email })
+    );
+    const codiceOtp = Utils.getComponent(
+      this.formSchema.components,
+      'codiceOtp',
+      true
+    );
+    const verificaCodiceOtp = Utils.getComponent(
+      this.formSchema.components,
+      'verificaCodiceOtp',
+      true
+    );
+
+    codiceOtp.hidden = false;
+    codiceOtp.disabled = false;
+    verificaCodiceOtp.hidden = false;
+    verificaCodiceOtp.disabled = false;
+
+    this.formSchema = { ...this.formSchema };
+  }
+
+  @HostListener('verificaCodiceOtp') // Custom event ricevuto dal form
+  async verificaCodiceOtp() {
+    const inviaCodiceOtp = Utils.getComponent(
+      this.formSchema.components,
+      'inviaCodiceOtp',
+      true
+    );
+    const codiceOtp = Utils.getComponent(
+      this.formSchema.components,
+      'codiceOtp',
+      true
+    );
+    const verificaCodiceOtp = Utils.getComponent(
+      this.formSchema.components,
+      'verificaCodiceOtp',
+      true
+    );
+
+    const email = this.actualFormData?.data?.email || '';
+    if (!email) return;
+
+    const codiceValidazione = this.actualFormData?.data?.codiceOtp || '';
+    const isValidated = await firstValueFrom(
+      this.verificaOtpService.effettuaValidazionePubblica({
+        email,
+        codiceValidazione,
+      })
+    );
+    if (isValidated) {
+      verificaCodiceOtp.disabled = true;
+      codiceOtp.disabled = true;
+      inviaCodiceOtp.disabled = true;
+      this.emailVerified = true;
+
+      this.formSchema = { ...this.formSchema };
+    }
   }
 
   private async getModuloFeedbackByIdAccessibilita(id: string) {

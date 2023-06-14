@@ -20,6 +20,23 @@ export class VerificaOtpService {
     );
   }
 
+  public richiediValidazionePubblica(data: { email: string }) {
+    return this.http.post(
+      `${ENV.BACKEND_HOST}/v1/profile/mail/richiedi-validazione-pubblica`,
+      data
+    );
+  }
+
+  public effettuaValidazionePubblica(data: {
+    codiceValidazione: string;
+    email: string;
+  }) {
+    return this.http.post(
+      `${ENV.BACKEND_HOST}/v1/profile/mail/effettua-validazione-pubblica`,
+      data
+    );
+  }
+
   public modificaProfilo(body: any) {
     return this.http.patch(
       `${ENV.BACKEND_HOST}/v1/profile/modify-profile`,

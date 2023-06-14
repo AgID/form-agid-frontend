@@ -15,7 +15,9 @@
     type="button"
     class="btn btn-primary"
     (click)="onClickPubblica()"
-    [disabled]="!actualFormData.isValid || !actualFormData.isModified"
+    [disabled]="
+      !actualFormData.isValid || !actualFormData.isModified || !emailVerified
+    "
   >
     {{ "AG_Invia" | translate }}
   </button>

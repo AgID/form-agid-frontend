@@ -18,10 +18,12 @@ export class AppInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('access_token');
+    const isPublic = request.url.includes('validazione-pubblica');
     const issuer = ENV.AUTH_ISSUER || '';
     const issuerDomain = issuer.replace('https://', '');
     const modifiedReq =
       accessToken &&
+      !isPublic &&
       !(
         request.url.includes('openid-configuration') ||
         request.url.includes(`${issuerDomain}/certs`)
