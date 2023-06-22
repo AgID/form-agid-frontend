@@ -81,24 +81,34 @@ export class ProceduraAttuazioneAccessibilitaComponent implements OnInit {
       true
     );
 
+    const codiceOtpError = Utils.getComponent(
+      this.formSchema.components,
+      'codice-otp-error',
+      true
+    );
+
     const email = this.actualFormData?.data?.email || '';
     if (!email) return;
 
     const codiceValidazione = this.actualFormData?.data?.codiceOtp || '';
-    const isValidated = await firstValueFrom(
-      this.verificaOtpService.effettuaValidazionePubblica({
-        email,
-        codiceValidazione,
-      })
-    );
-    if (isValidated) {
+    try {
+      const isValidated = await firstValueFrom(
+        this.verificaOtpService.effettuaValidazionePubblica({
+          email,
+          codiceValidazione,
+        })
+      );
       verificaCodiceOtp.disabled = true;
       codiceOtp.disabled = true;
       inviaCodiceOtp.disabled = true;
       this.emailVerified = true;
-
-      this.formSchema = { ...this.formSchema };
+      codiceOtpError.hidden = true;
+    } catch (e) {
+      if (codiceOtpError) {
+        codiceOtpError.hidden = false;
+      }
     }
+    this.formSchema = { ...this.formSchema };
   }
 
   private async getModuloProceduraAttuazioneByIdAccessibilita(id: string) {
