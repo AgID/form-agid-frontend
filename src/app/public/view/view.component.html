@@ -1,4 +1,7 @@
 <h1>{{ submission?.titolo }}</h1>
+<div *ngIf="isError">
+  {{ "AG_Operazione_Errore" | translate }}
+</div>
 <p *ngIf="redattaIl">{{ "AG_Redatta_Il" | translate }} {{ redattaIl }}</p>
 <app-formio-render
   [form]="formSchema"

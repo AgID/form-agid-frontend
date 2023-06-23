@@ -1,7 +1,6 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ElencoFormService } from 'src/app/front-office/elenco-form/elenco-form.service';
+import { firstValueFrom } from 'rxjs';
 import { ViewService } from './view.service';
 
 @Component({
@@ -24,6 +23,7 @@ export class ViewComponent implements OnInit {
   public formData: any;
   public submission: any;
   public redattaIl: string = null;
+  public isError: boolean = false;
 
   ngOnInit() {
     const idForm = this.route.snapshot.params['id'];
@@ -36,14 +36,19 @@ export class ViewComponent implements OnInit {
     }
   }
 
-  private findSottomissione(id: string) {
-    this.viewService.findSottomissioneById(id).subscribe((res: any) => {
+  private async findSottomissione(id: string) {
+    try {
+      const res: any = await firstValueFrom(
+        this.viewService.findSottomissioneById(id)
+      );
       this.formSchema = res.form[0];
       this.formData = res.datiPubblicati;
       this.submission = res;
       this.redattaIl = res.dataUltimaModifica
         ? new Date(res.dataUltimaModifica).toLocaleDateString()
         : new Date(res.dataInserimento).toLocaleDateString();
-    });
+    } catch (e) {
+      this.isError = true;
+    }
   }
 }
