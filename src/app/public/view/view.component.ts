@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ViewService } from './view.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-view',
@@ -11,7 +12,8 @@ import { ViewService } from './view.service';
 export class ViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private viewService: ViewService
+    private viewService: ViewService,
+    private translate: TranslateService
   ) {}
 
   public actualFormData: any;
@@ -24,6 +26,13 @@ export class ViewComponent implements OnInit {
   public submission: any;
   public redattaIl: string = null;
   public isError: boolean = false;
+
+  public isObiettiviAccessibilita = false;
+
+  public isDichiarazioneAccessibilita = false;
+  public preamboloDescrizioneDichiarazioneAccessibilitaHeader = '';
+  public preamboloDescrizioneDichiarazioneAccessibilitaFooter = '';
+  public preamboloDescrizioneDichiarazioneAccessibilitaSite = '';
 
   ngOnInit() {
     const idForm = this.route.snapshot.params['id'];
@@ -47,6 +56,39 @@ export class ViewComponent implements OnInit {
       this.redattaIl = res.dataUltimaModifica
         ? new Date(res.dataUltimaModifica).toLocaleDateString()
         : new Date(res.dataInserimento).toLocaleDateString();
+      this.isDichiarazioneAccessibilita = this.formSchema.titolo
+        .toLowerCase()
+        .includes('dichiarazione di accessibilit');
+      this.isObiettiviAccessibilita = this.formSchema.titolo
+        .toLowerCase()
+        .includes('obiettivi di accessibilit');
+      if (this.isDichiarazioneAccessibilita) {
+        let deviceType = this.formData['device-type'];
+        let oggettoDichiarazione =
+          deviceType === 'website'
+            ? this.translate.instant('AG_Accessibilita_Etichetta_Web')
+            : this.translate.instant('AG_Accessibilita_Etichetta_App');
+        let name =
+          deviceType === 'website'
+            ? this.formData['website-name']
+            : this.formData['app-name'];
+        this.preamboloDescrizioneDichiarazioneAccessibilitaHeader =
+          this.translate
+            .instant('AG_Accessibilita_Preambolo_Pubblico_Header')
+            .replace('{{ente}}', `<b>${this.submission.ente}</b>`)
+            .replace(
+              '{{oggetto_dichiarazione}}',
+              `<b>${oggettoDichiarazione}</b>`
+            );
+        this.preamboloDescrizioneDichiarazioneAccessibilitaFooter =
+          this.translate
+            .instant('AG_Accessibilita_Preambolo_Pubblico_Footer')
+            .replace('{{name}}', `<b>${name}</b>`);
+        this.preamboloDescrizioneDichiarazioneAccessibilitaSite =
+          deviceType === 'website'
+            ? this.formData['website-url']
+            : this.formData['app-url'];
+      }
     } catch (e) {
       this.isError = true;
     }

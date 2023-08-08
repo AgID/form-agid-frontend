@@ -2,7 +2,35 @@
 <div *ngIf="isError">
   {{ "AG_Operazione_Errore" | translate }}
 </div>
+<ng-container *ngIf="isObiettiviAccessibilita">
+  <label class="font-heading-xl my-2"
+    ><b>
+      {{ submission.ente }}
+    </b>
+  </label>
+</ng-container>
 <p *ngIf="redattaIl">{{ "AG_Redatta_Il" | translate }} {{ redattaIl }}</p>
+<ng-container *ngIf="isDichiarazioneAccessibilita">
+  <label class="font-heading-xl mb-1"
+    ><b>
+      {{ "AG_Dichiarazione_Accessibilità" | translate }}
+    </b>
+  </label>
+  <p
+    class="font-body-md mb-3"
+    [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaHeader"
+  ></p>
+  <p
+    class="font-body-md"
+    [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaFooter"
+  ></p>
+  <a
+    [attr.href]="preamboloDescrizioneDichiarazioneAccessibilitaSite"
+    target="_blank"
+    >{{ preamboloDescrizioneDichiarazioneAccessibilitaSite }}</a
+  >
+</ng-container>
+<hr class="my-5" />
 <app-formio-render
   [form]="formSchema"
   [submission]="{ data: formData }"
