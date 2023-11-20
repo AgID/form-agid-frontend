@@ -58,7 +58,8 @@ export class AuthService {
           (this.userInfo.user_policy?.length &&
             Object.keys(this.userInfo.user_policy[0].policy).length === 0))
       ) {
-        this.router.navigate(['/scelta-utente']);
+        this.router.navigate(['/identifica-amministrazione']);
+        // this.router.navigate(['/scelta-utente']);
       }
       //Se è un cittadino in pending deve inserire l'OTP
       else if (

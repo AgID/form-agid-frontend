@@ -18,7 +18,8 @@ export class AdminHomeComponent implements OnInit {
     this.authService.canActivateProtectedRoutes$.subscribe((ev) => {
       if (this.authService.userInfo.user_policy?.length) {
         if (this.anonymousUser()) {
-          this.routerNavigate('scelta-utente');
+          this.routerNavigate('identifica-amministrazione');
+          // this.routerNavigate('scelta-utente');
         } else if (this.checkPendingRTD()) {
           this.routerNavigate('identifica-amministrazione');
         } else if (!this.viewSuperAdminPages()) {
