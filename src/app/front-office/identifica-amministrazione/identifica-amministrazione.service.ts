@@ -6,8 +6,9 @@ import { environment as ENV } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class IdentificaAmministrazioneService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
+  // ENTI
   public getAmministrazioni(_text: string = '') {
     let text = _text.toLowerCase();
     return this.http.get(
@@ -15,15 +16,18 @@ export class IdentificaAmministrazioneService {
     );
   }
 
+
+  // CATEGORIE ENTI
   public getCategorieEnti(text: string) {
     return this.http.get(
-      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "84ebb2e7-0e61-427b-a1dd-ab8bb2a84f07" WHERE "Codice_categoria" LIKE '${text}%' LIMIT 10`
+      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "84ebb2e7-0e61-427b-a1dd-ab8bb2a84f07" WHERE "Codice_categoria" = '${text}' LIMIT 1`
     );
   }
 
+  // RESPONSABILI
   public getRTD(text: string) {
     return this.http.get(
-      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "41553dea-0701-429e-b906-8b71e441a281" WHERE "Codice_IPA" LIKE '${text}%' LIMIT 10`
+      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "41553dea-0701-429e-b906-8b71e441a281" WHERE "Codice_IPA" = '${text}' LIMIT 1`
     );
   }
 

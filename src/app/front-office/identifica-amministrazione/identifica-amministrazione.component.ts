@@ -173,11 +173,11 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public getMail(data: any) {
-    if (data.Codice_Categoria === 'L33' && data['Mail1']) {
-      this.userMail = data['Mail1'];
-      this.radioText = this.radioText + ' ' + this.userMail;
-    } else if (data && data['Mail_responsabile']) {
+    if (data && data['Mail_responsabile']) {
       this.userMail = data['Mail_responsabile'];
+      this.radioText = this.radioText + ' ' + this.userMail;
+    } else if (data && data['Mail1']) {
+      this.userMail = data['Mail1'];
       this.radioText = this.radioText + ' ' + this.userMail;
     } else {
       this.hashService.isModified = true;
