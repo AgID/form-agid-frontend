@@ -21,6 +21,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   public isValidKey = true;
   public showKeyChoose = false;
   public flagOnConfirm = false;
+  public isPEC = false;
 
   public errorMessage: Array<any> = [{ label: 'Campo obbligatorio' }];
   public typeAlert: AlertType = 'DANGER';
@@ -177,8 +178,21 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       this.userMail = data['Mail_responsabile'];
       this.radioText = this.radioText + ' ' + this.userMail;
     } else if (data && data['Mail1']) {
-      this.userMail = data['Mail1'];
-      this.radioText = this.radioText + ' ' + this.userMail;
+      if (data['Tipo_Mail1'] == "Altro") {
+        this.userMail = data['Mail1'];
+        this.radioText = this.radioText + ' ' + this.userMail;
+      } else {
+        for(let i = 2; i <= 5; i++){
+          if (data['Mail' + [i]] && data['Tipo_Mail' + [i]] == "Altro"){
+            this.userMail = data['Mail' + [i]];
+            this.radioText = this.radioText + ' ' + this.userMail;
+            return
+          } 
+        }
+        this.userMail = data['Mail1'];
+        this.radioText = this.radioText + ' ' + this.userMail;
+        this.isPEC = true
+      }
     } else {
       this.hashService.isModified = true;
       this.hashService.message = [
@@ -199,8 +213,21 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public onChangeNoKey($e: any) {
+    if (this.isPEC == true){
+    this.hashService.isModified = true;
+    this.haveKey = $e.target.value;
+    this.hashService.message = [
+      {
+        label: this.translateService.instant(
+          'AG_Chiave_Accesso_PEC'
+        ),
+      },
+    ];
+    this.hashService.type = 'DANGER';
+    } else {
     this.hashService.isModified = false;
     this.haveKey = $e.target.value;
+    }
   }
 
   public onChangeRadio($e: any) {
@@ -219,7 +246,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public onClickInviaMail() {
-    if (this.userMail) {
+    if (this.userMail){
       this.identAmmService
         .nuovoProfiloRtd({
           email: this.userMail,
