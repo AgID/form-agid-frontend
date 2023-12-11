@@ -46,6 +46,9 @@ export class AuthService {
       this.getUserInfo();
     }, 1000);
 
+    const publicPages = ['/media-policy', '/note-legali', '/privacy-policy', '/sitemap', '/not-found']
+    const routerIgnoreCondition: boolean = publicPages.includes(window.location.pathname);
+
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
       const userProvider = this.getUserProvider();
@@ -81,7 +84,7 @@ export class AuthService {
         this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
         this.userInfo.user_policy[0].policy.status === 'Active'
       ) {
-        if (!window.location.pathname.includes('/view/')) {
+        if (!window.location.pathname.includes('/view/') && !routerIgnoreCondition) {
           this.router.navigate(['/elenco-form']);
         }
       }
@@ -105,10 +108,10 @@ export class AuthService {
         this.userInfo.user_policy[0].policy.role === 'RTD' &&
         this.userInfo.user_policy[0].policy.status === 'Active'
       ) {
-        if (!window.location.pathname.includes('/view/')) {
+        if (!window.location.pathname.includes('/view/') && !routerIgnoreCondition) {
           this.router.navigate(['/elenco-form']);
         }
-      } else {
+      } else if (!routerIgnoreCondition) {
         this.router.navigate(['/']);
       }
     });
@@ -135,7 +138,7 @@ export class AuthService {
         this.oauthService
           .tryLogin()
           .then(() => this.isDoneLoadingSubject$.next(true));
-      } catch (e) {}
+      } catch (e) { }
     });
   }
 
