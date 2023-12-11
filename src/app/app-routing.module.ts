@@ -16,6 +16,10 @@ import { SceltaUtenteComponent } from './front-office/scelta-utente/scelta-utent
 import { VerificaMailComponent } from './front-office/verifica-mail/verifica-mail.component';
 import { VerificaOtpComponent } from './front-office/verifica-otp/verifica-otp.component';
 import { NotFoundComponent } from './public/not-found/not-found.component';
+import { MediaPolicyComponent } from './public/media-policy/media-policy.component';
+import { SitemapComponent } from './public/sitemap/sitemap.component';
+import { NoteLegaliComponent } from './public/note-legali/note-legali.component';
+import { PrivacyPolicyComponent } from './public/privacy-policy/privacy-policy.component';
 import { ViewComponent } from './public/view/view.component';
 import { FeedbackAccessibilitaComponent } from './public/form/feedback-accessibilita/feedback-accessibilita.component';
 import { ProceduraAttuazioneAccessibilitaComponent } from './public/form/procedura-attuazione/procedura-attuazione.component';
@@ -27,6 +31,34 @@ const routes: Routes = [
     component: HomeComponent,
     data: {
       breadcrumb: 'Home',
+    },
+  },
+  {
+    path: 'media-policy',
+    component: MediaPolicyComponent,
+    data: {
+      breadcrumb: 'Media policy',
+    },
+  },
+  {
+    path: 'sitemap',
+    component: SitemapComponent,
+    data: {
+      breadcrumb: 'Mappa del sito',
+    },
+  },
+  {
+    path: 'note-legali',
+    component: NoteLegaliComponent,
+    data: {
+      breadcrumb: 'Note legali',
+    },
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    data: {
+      breadcrumb: 'Informativa sul trattamento dei dati personali',
     },
   },
   {

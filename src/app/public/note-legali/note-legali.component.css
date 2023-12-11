@@ -1,0 +1,22 @@
+.Legal-page{
+font-family: Lora,Georgia,serif;
+}
+
+@media (min-width:992px) {
+  .Legal-page{
+    max-width: 65% !important;
+  }
+}
+
+.Legal-title{
+color: #036;
+}
+
+.Legal-subtitle{
+  color: #213242;
+}
+
+.Legal-paragraph{
+color: black;
+font-size: 18px;
+}

@@ -1,0 +1,35 @@
+.Sitemap-page {
+  max-width: 65%;
+  font-family: Lora, Georgia, serif;
+}
+
+@media (min-width: 992px) {
+  .Sitemap-page {
+    max-width: 65% !important;
+  }
+}
+
+.Sitemap-title {
+  color: #036;
+}
+
+.Sitemap-subtitle {
+  color: #213242;
+}
+
+.Sitemap-paragraph {
+  color: black;
+  font-size: 18px;
+}
+
+.Wip-title{
+  font-weight: bold;
+  font-family: monospace !important;
+  color: #036;
+}
+
+.Wip-paragraph{
+  font-style: italic;
+  font-size: 18px;
+  color: black;
+}

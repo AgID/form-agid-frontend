@@ -1,0 +1,23 @@
+.Privacy-page{
+max-width: 65%;
+font-family: Lora,Georgia,serif;
+}
+
+@media (min-width:992px) {
+  .Privacy-page{
+    max-width: 65% !important;
+  }
+}
+
+.Privacy-title{
+color: #036;
+}
+
+.Privacy-subtitle{
+  color: #213242;
+}
+
+.Privacy-paragraph{
+color: black;
+font-size: 18px;
+}

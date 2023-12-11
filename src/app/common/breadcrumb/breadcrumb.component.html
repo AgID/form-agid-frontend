@@ -5,10 +5,13 @@
 >
   <ol class="breadcrumb">
     <li>
-      <i
-        class="fa fa-home custom-color-home"
-        style="width: 18px; height: 16px"
-      ></i>
+      <a [attr.href]="'/home'">
+        <i
+          class="fa fa-home custom-color-home"
+          style="width: 18px; height: 16px"
+        ></i>
+      </a>
+
     </li>
 
     <li *ngIf="breadcrumbService.noRoutes" class="breadcrumb-item">

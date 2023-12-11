@@ -1,0 +1,35 @@
+.Media-page {
+  max-width: 65%;
+  font-family: Lora, Georgia, serif;
+}
+
+@media (min-width: 992px) {
+  .Media-page {
+    max-width: 65% !important;
+  }
+}
+
+.Media-title {
+  color: #036;
+}
+
+.Media-subtitle {
+  color: #213242;
+}
+
+.Media-paragraph {
+  color: black;
+  font-size: 18px;
+}
+
+.Wip-title{
+  font-weight: bold;
+  font-family: monospace !important;
+  color: #036;
+}
+
+.Wip-paragraph{
+  font-style: italic;
+  font-size: 18px;
+  color: black;
+}
