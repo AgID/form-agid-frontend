@@ -43,7 +43,7 @@
         (changeLanguage)="onChangeSelectedLanguage($event)"
       ></app-language-selector>
       <div *ngIf="!isLoggedIn()" class="it-access-top-wrapper">
-        <a (click)="login()" class="btn btn-primary btn-sm">{{
+        <a (click)="login()" class="btn btn-primary btn-sm" role="dialog">{{
           "AG_Accedi" | translate
         }}</a>
       </div>

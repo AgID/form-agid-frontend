@@ -5,6 +5,7 @@ export interface ISottomissione {
   titolo?: string;
   ente?: string;
   emailUtente?: string;
+  emailRTD?: string;
   codiceUtenteInserimento?: string;
   dataInserimento?: Date;
   codiceUtenteModifica?: string;

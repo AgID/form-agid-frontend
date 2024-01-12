@@ -7,6 +7,7 @@ import { ISottomissione } from 'src/app/front-office/types/sottomissione.type';
 import { v1 as uuidv1 } from 'uuid';
 import { ElencoFormService } from '../../elenco-form.service';
 import './dettaglio-sottomissione.component.scss';
+import { IdentificaAmministrazioneService } from 'src/app/front-office/identifica-amministrazione/identifica-amministrazione.service';
 
 @Component({
   selector: 'app-dettaglio-sottomissione',
@@ -31,6 +32,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   public modifyEqualsPublish: boolean;
   public isPubblicazioneAbilitata: boolean;
 
+  public RTDemail: string;
   public response: any;
 
   // Formio
@@ -77,7 +79,8 @@ export class DettaglioSottomissioneComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private elencoFormService: ElencoFormService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private identAmmService: IdentificaAmministrazioneService
   ) {}
 
   private overwriteRoutingBehaviour() {
@@ -257,15 +260,81 @@ export class DettaglioSottomissioneComponent implements OnInit {
     });
   }
 
+  public getMail(data: any) {
+    if (data && data['Mail_responsabile']) {
+      this.RTDemail = data['Mail_responsabile'];
+    } else if (data && data['Mail1']) {
+      if (data['Tipo_Mail1'] == "Altro") {
+        this.RTDemail = data['Mail1'];
+      } else {
+        for (let i = 2; i <= 5; i++) {
+          if (data['Mail' + [i]] && data['Tipo_Mail' + [i]] == "Altro") {
+            this.RTDemail = data['Mail' + [i]];
+            return
+          }
+        }
+        this.RTDemail = data['Mail1'];
+      }
+    }
+  }
+
   public onClickPubblica() {
+    const ente = this.response.ente;
+    console.log("parte1:", ente)
+
+    this.identAmmService.getAmministrazioniDenominazioneEnte(ente).subscribe((dataEnte: any) => {
+      if (dataEnte.success && dataEnte.result.records.length > 0) {
+        const firstRecord = dataEnte.result.records[0];
+        console.log("parte2:", firstRecord);
+
+        if (firstRecord['Codice_Categoria'] === 'L33') {
+          this.getMail(firstRecord);
+          this.pubblicaSottomissione()
+          console.log("parte4L33:", this.RTDemail)
+        } else {
+            this.identAmmService.getCategorieEnti(firstRecord.Codice_Categoria).subscribe((res: any) => {
+              if (
+                res.result.records[0] &&
+                res.result.records[0].UTD === 'A'
+              ) {
+                this.getMail(firstRecord);
+                this.pubblicaSottomissione()
+              } else if (
+                res.result.records[0] &&
+                res.result.records[0].UTD === 'P'
+              ) {
+                console.log("partedimezzo: sono una P")
+                this.identAmmService.getRTD(firstRecord.Codice_IPA).subscribe((dataRTD: any) => {
+                  console.log("sono nel getRTD", dataRTD )
+                  if (dataRTD.success && dataRTD.result.records.length > 0) {
+                    console.log("sono nell'if del getRTD")
+                    const firstRTDRecord = dataRTD.result.records[0];
+                    this.getMail(firstRTDRecord);
+                    this.pubblicaSottomissione()
+                    console.log("parte3:", firstRTDRecord);
+                    console.log("parte4RTD:", this.RTDemail)
+                  }
+                });
+              }
+            },
+          );
+        }
+      }
+    });
+  }
+
+  public pubblicaSottomissione(){
     const idPubblicazione = this.isPubblicazioneAbilitata ? uuidv1() : '';
+
     const updateBody: ISottomissione = {
       datiPubblicati: this.formData,
       stato: 'Pubblicato',
+      emailRTD: this.RTDemail,
       versione: (this.response.versione || 0) + 1,
       versioneForm: this.response.form[0].versione,
       idPubblicazione: idPubblicazione,
     };
+
     this.elencoFormService
       .updateSottomissione(this.id, updateBody)
       .subscribe((response) => {
