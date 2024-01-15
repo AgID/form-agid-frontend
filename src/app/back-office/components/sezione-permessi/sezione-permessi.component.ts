@@ -40,7 +40,7 @@ export class SezionePermessiComponent implements AfterViewInit, OnChanges {
       valore: '',
     },
   };
-
+  public codiciIpa: Array<any>;
   public flagOnConfirm = false;
   public emailValid = true;
   public emailValue = '';
@@ -54,7 +54,7 @@ export class SezionePermessiComponent implements AfterViewInit, OnChanges {
   constructor(
     private formFoService: FormFoService,
     private identAmmService: IdentificaAmministrazioneService
-  ) {}
+  ) { }
 
   public ngAfterViewInit(): void {
     this.initAutocomplete();
@@ -261,9 +261,14 @@ export class SezionePermessiComponent implements AfterViewInit, OnChanges {
         if (!this.flagOnConfirm) {
           if (!query) return populateResults([]);
           this.identAmmService
-            .getAmministrazioni(query)
+            .getAmministrazioniCodiceIpa(query)
             .subscribe((res: any) => {
-              populateResults(res.result.records);
+              this.codiciIpa = res.result.records
+              this.identAmmService
+                .getAmministrazioniDenominazioneEnte(query)
+                .subscribe((res: any) => {
+                  populateResults([...this.codiciIpa, ...res.result.records]);
+                });
             });
         }
       },

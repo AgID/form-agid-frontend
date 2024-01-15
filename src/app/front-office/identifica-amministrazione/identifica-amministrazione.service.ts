@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { environment as ENV } from 'src/environments/environment';
 
 @Injectable({
@@ -9,10 +10,17 @@ export class IdentificaAmministrazioneService {
   constructor(private http: HttpClient) { }
 
   // ENTI
-  public getAmministrazioni(_text: string = '') {
+  public getAmministrazioniCodiceIpa(_text: string = '') {
     let text = _text.toLowerCase();
     return this.http.get(
-      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE LOWER("Codice_IPA") LIKE '%${text}%' OR LOWER("Denominazione_ente") LIKE '%${text}%' LIMIT 10`
+      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE LOWER("Codice_IPA") LIKE '${text}%' LIMIT 10`
+    );
+  }
+
+  public getAmministrazioniDenominazioneEnte(_text: string = '') {
+    let text = _text.toLowerCase();
+    return this.http.get(
+      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE LOWER("Denominazione_ente") LIKE '${text}%' LIMIT 10`
     );
   }
 

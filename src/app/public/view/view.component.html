@@ -1,31 +1,37 @@
-<h1>{{ submission?.titolo }}</h1>
+<div role="main">
+ <h1>{{ submission?.titolo }}</h1>
+</div>
 <div *ngIf="isError">
   {{ "AG_Operazione_Errore" | translate }}
 </div>
 <ng-container *ngIf="isObiettiviAccessibilita">
-  <label class="font-heading-xl my-2"
+  <label class="font-heading-xl my-2"     role="dialog"
     ><b>
       {{ submission.ente }}
     </b>
   </label>
 </ng-container>
-<p *ngIf="redattaIl">{{ "AG_Redatta_Il" | translate }} {{ redattaIl }}</p>
+<p *ngIf="redattaIl" role="dialog">{{ "AG_Redatta_Il" | translate }} {{ redattaIl }}</p>
 <ng-container *ngIf="isDichiarazioneAccessibilita">
-  <label class="font-heading-xl mb-1"
+  <label class="font-heading-xl mb-1" role="dialog"
     ><b>
       {{ "AG_Dichiarazione_Accessibilità" | translate }}
     </b>
   </label>
   <p
     class="font-body-md mb-3"
+    role="dialog"
     [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaHeader"
   ></p>
   <p
+    role="dialog"
     class="font-body-md"
     [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaFooter"
   ></p>
   <a
     [attr.href]="preamboloDescrizioneDichiarazioneAccessibilitaSite"
+    role="dialog"
+    [attr.aria-label]="preamboloDescrizioneDichiarazioneAccessibilitaSite"
     target="_blank"
     >{{ preamboloDescrizioneDichiarazioneAccessibilitaSite }}</a
   >
