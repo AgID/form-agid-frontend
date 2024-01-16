@@ -22,6 +22,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   public showKeyChoose = false;
   public flagOnConfirm = false;
   public isPEC = false;
+  public codiciIpa: Array<any>;
 
   public errorMessage: Array<any> = [{ label: 'Campo obbligatorio' }];
   public typeAlert: AlertType = 'DANGER';
@@ -153,10 +154,28 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   private autocompleteSearch(query: string, populateResults: Function) {
     if (!this.flagOnConfirm) {
       if (!query) return populateResults([]);
-      this.identAmmService.getAmministrazioni(query).subscribe(
+      this.identAmmService.getAmministrazioniCodiceIpa(query).subscribe(
         (res: any) => {
           this.hashService.isModified = false;
           this.flagOnConfirm = true;
+          this.codiciIpa = res.result.records
+          this.identAmmService.getAmministrazioniDenominazioneEnte(query).subscribe(
+            (res: any) => {
+              this.hashService.isModified = false;
+              this.flagOnConfirm = true;
+              populateResults([...this.codiciIpa, ...res.result.records]);
+            },
+            (err) => {
+              this.hashService.isModified = true;
+              this.hashService.message = [
+                {
+                  label: this.translateService.instant('AG_Errore_Generico'),
+                },
+              ];
+              this.hashService.type = 'DANGER';
+              this.scrollToTop();
+            }
+          );
           populateResults(res.result.records);
         },
         (err) => {
@@ -182,12 +201,12 @@ export class IdentificaAmministrazioneComponent implements OnInit {
         this.userMail = data['Mail1'];
         this.radioText = this.radioText + ' ' + this.userMail;
       } else {
-        for(let i = 2; i <= 5; i++){
-          if (data['Mail' + [i]] && data['Tipo_Mail' + [i]] == "Altro"){
+        for (let i = 2; i <= 5; i++) {
+          if (data['Mail' + [i]] && data['Tipo_Mail' + [i]] == "Altro") {
             this.userMail = data['Mail' + [i]];
             this.radioText = this.radioText + ' ' + this.userMail;
             return
-          } 
+          }
         }
         this.userMail = data['Mail1'];
         this.radioText = this.radioText + ' ' + this.userMail;
@@ -213,20 +232,20 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public onChangeNoKey($e: any) {
-    if (this.isPEC == true){
-    this.hashService.isModified = true;
-    this.haveKey = $e.target.value;
-    this.hashService.message = [
-      {
-        label: this.translateService.instant(
-          'AG_Chiave_Accesso_PEC'
-        ),
-      },
-    ];
-    this.hashService.type = 'DANGER';
+    if (this.isPEC == true) {
+      this.hashService.isModified = true;
+      this.haveKey = $e.target.value;
+      this.hashService.message = [
+        {
+          label: this.translateService.instant(
+            'AG_Chiave_Accesso_PEC'
+          ),
+        },
+      ];
+      this.hashService.type = 'DANGER';
     } else {
-    this.hashService.isModified = false;
-    this.haveKey = $e.target.value;
+      this.hashService.isModified = false;
+      this.haveKey = $e.target.value;
     }
   }
 
@@ -246,7 +265,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public onClickInviaMail() {
-    if (this.userMail){
+    if (this.userMail) {
       this.identAmmService
         .nuovoProfiloRtd({
           email: this.userMail,

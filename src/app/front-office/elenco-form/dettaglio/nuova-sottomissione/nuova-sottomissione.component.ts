@@ -24,6 +24,7 @@ export class NuovaSottomissioneComponent implements OnInit {
     idPubblicazione: 'UID',
     datiPubblicati: {},
     datiBozza: {},
+    emailRTD: 'string'
   };
 
   public data = {};

@@ -46,7 +46,7 @@ export class AuthService {
       this.getUserInfo();
     }, 1000);
 
-    const publicPages = ['/media-policy', '/note-legali', '/privacy-policy', '/sitemap', '/not-found']
+    const publicPages = ['/media-policy', '/note-legali', '/privacy-policy', '/not-found']
     const routerIgnoreCondition: boolean = publicPages.includes(window.location.pathname);
 
     this.canActivateProtectedRoutes$.subscribe((_) => {

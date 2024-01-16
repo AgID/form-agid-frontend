@@ -17,7 +17,6 @@ import { VerificaMailComponent } from './front-office/verifica-mail/verifica-mai
 import { VerificaOtpComponent } from './front-office/verifica-otp/verifica-otp.component';
 import { NotFoundComponent } from './public/not-found/not-found.component';
 import { MediaPolicyComponent } from './public/media-policy/media-policy.component';
-import { SitemapComponent } from './public/sitemap/sitemap.component';
 import { NoteLegaliComponent } from './public/note-legali/note-legali.component';
 import { PrivacyPolicyComponent } from './public/privacy-policy/privacy-policy.component';
 import { ViewComponent } from './public/view/view.component';
@@ -38,13 +37,6 @@ const routes: Routes = [
     component: MediaPolicyComponent,
     data: {
       breadcrumb: 'Media policy',
-    },
-  },
-  {
-    path: 'sitemap',
-    component: SitemapComponent,
-    data: {
-      breadcrumb: 'Mappa del sito',
     },
   },
   {
