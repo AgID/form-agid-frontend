@@ -3,6 +3,11 @@
   [messaggio]="hashService.message"
   [type]="hashService.type"
 ></app-alert>
+<app-alert
+  *ngIf="true"
+  [messaggio]="[{ label: ('AG_Info_Ricerca_Ente' | translate) }]"
+  [type]="'WARNING'"
+></app-alert>
 <div class="card-wrapper card-space d-flex justify-content-center pb-5">
   <div class="card card-bg no-after w-50">
     <div class="card-body">
