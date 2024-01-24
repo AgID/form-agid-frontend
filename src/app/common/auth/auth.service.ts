@@ -147,7 +147,7 @@ export class AuthService {
   }
 
   public logout() {
-    this.oauthService.revokeTokenAndLogout();
+    this.oauthService.logOut();
   }
 
   public hasValidToken() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from 'src/app/common/pagination.class';
 import { SessionStorageService } from 'src/app/common/session-storage.service';
@@ -32,7 +32,8 @@ export class RicercaSottomissioniComponent implements OnInit {
     private route: ActivatedRoute,
     private formFoService: FormFoService,
     private elencoFormService: ElencoFormService,
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
+    @Inject('Window') private window: Window
   ) {}
 
   ngOnInit(): void {
@@ -42,9 +43,17 @@ export class RicercaSottomissioniComponent implements OnInit {
     });
     this.filters.idForm = this.id;
     this.titolo = this.sessionStorageService.getItem('titoloSottomissione');
-    this.fetchSottomissioni();
+    this.fetchSottomissioni();   
   }
 
+  getLocation(): string {
+    return this.window.location.origin;
+  }
+
+  get isDichiarazione(): boolean {
+    return this.elencoForm?.some(item => item.idForm === '633a9e4a435bb1b2ad44be35');
+  }
+  
   private fetchSottomissioni() {
     this.formFoService.findSottomissioni(this.filters).subscribe((response) => {
       this.elencoForm = response.extraParams;

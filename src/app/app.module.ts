@@ -56,6 +56,7 @@ const AppConfig = {};
       useClass: AppInterceptor,
       multi: true,
     },
+    { provide: 'Window', useValue: window }
   ],
   bootstrap: [AppComponent],
 })
