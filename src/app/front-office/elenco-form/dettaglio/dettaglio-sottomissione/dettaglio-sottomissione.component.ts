@@ -336,7 +336,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
     this.elencoFormService
       .updateSottomissione(this.id, updateBody)
       .subscribe((response) => {
-        if (!this.response.datiPubblicati && this.isPubblicazioneAbilitata) {
+        if (this.isPubblicazioneAbilitata) {
           const location = window.location.origin + '/view/';
           this.uuidLink = `${location}${updateBody.idPubblicazione}`;
           // Modale
