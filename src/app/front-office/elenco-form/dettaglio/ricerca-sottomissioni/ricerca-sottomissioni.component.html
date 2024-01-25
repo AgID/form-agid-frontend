@@ -19,6 +19,7 @@
       <th style="width: 25%" scope="col">
         {{ "AG_Data_Ultima_Modifica" | translate }}
       </th>
+      <th *ngIf="isDichiarazione" style="width: 15%" scope="col">Link</th>
       <th style="width: 15%" scope="col">{{ "AG_Azioni" | translate }}</th>
     </tr>
   </thead>
@@ -36,6 +37,16 @@
         Consiglio. -->
       </td>
       <td>{{ item.dataUltimaModifica }}</td>
+      <td *ngIf="item.idForm === '633a9e4a435bb1b2ad44be35'">
+        <a [href]="getLocation() + '/view/' + item.idPubblicazione">
+          <svg
+          class="icon cursor-pointer"
+        >
+          <title id="link">Link</title>
+          <use href="../../../../assets/svg/sprite.svg#it-link"></use>
+        </svg>
+        </a>
+      </td>
       <td>
         <svg
           *ngIf="!isArchivio"
