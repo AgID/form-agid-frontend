@@ -22,17 +22,25 @@
 }
 
 .upper-footer{
-  background-color: #0059b3 !important;
+  background-color: #0066cc !important;
+}
+
+.footerCard{
+  border-radius: 4px;
 }
 
 .footerCard:after {
   display: none;
 }
 
+.iconCustomColor{
+  fill: #0057AD !important
+}
+
 .footerCard > .card-body > .card-title{
   font-size: 1.15em !important;
   font-weight: 700;
-  color: #17324d;
+  color: #0057AD;
   margin-bottom: 16px;
 }
 
