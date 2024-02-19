@@ -20,3 +20,35 @@
 .app .list-inline-item:not(:last-child) {
   margin-right: 3.2rem !important;
 }
+
+.upper-footer{
+  background-color: #0066cc !important;
+}
+
+.footerCard{
+  border-radius: 4px;
+}
+
+.footerCard:after {
+  display: none;
+}
+
+.iconCustomColor{
+  fill: #0057AD !important
+}
+
+.footerCard > .card-body > .card-title{
+  font-size: 1.15em !important;
+  font-weight: 700;
+  color: #0057AD;
+  margin-bottom: 16px;
+}
+
+.footerCard > .card-body > .card-text{
+  font-size: 0.9em !important;
+  line-height: 1.5em;
+}
+
+.footerCard > .card-body > .card-text a{
+  color: #0057ad !important;
+}
