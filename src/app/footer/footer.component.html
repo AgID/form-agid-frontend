@@ -1,24 +1,53 @@
 <footer class="it-footer">
-  <div class="it-footer-main">
+  <div class="upper-footer py-4">
     <div class="container">
-      <!-- <section>
-        <div class="row clearfix">
-          <div class="col-sm-12 col-md-6 col-lg-6">
-            <div class="it-brand-wrapper">
-              <a class="button" href="https://www.agid.gov.it/">
-                <img
-                  class="Logo-img"
-                  src="/assets/img/footer/AGIDLogo.png#agid-logo"
-                  alt="Agenzia per l'Italia digitale logo"
-                />
-                <div class="it-brand-text">
-                  <span class="custom-footer-title">FORM</span>
-                </div>
-              </a>
+      <div class="row mx-0 d-flex justify-content-center">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="card-wrapper">
+            <div class="card footerCard">
+              <div class="card-body">
+                <p class="card-title">
+                  <svg class="icon me-lg-2 iconCustomColor">
+                    <use href="/assets/svg/sprite.svg#it-tool"></use>
+                  </svg>
+                  {{"AG_Manuale_Utente" | translate}}
+                </p>
+                <p class="card-text">
+                  {{"AG_Visualizza_Manuale" | translate}}
+                  <a href="/assets/documents/Manuale Utente.pdf" alt="Manuale utente" target="_blank" download>
+                    {{"AG_Manuale_Utente" | translate}}
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </section> -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="card-wrapper">
+            <div class="card footerCard">
+              <div class="card-body">
+                <p class="card-title">
+                  <svg class="icon me-lg-2 iconCustomColor">
+                    <use href="/assets/svg/sprite.svg#it-file"></use>
+                  </svg>
+                  {{"AG_Guida_Compilazione" | translate}}
+                </p>
+                <p class="card-text">
+                  {{"AG_Visualizza_Guida" | translate}}
+                  <a href="/assets/documents/Dichiarazione di accessibilità - Guida alla compilazione.pdf"
+                    alt="Guida alla compilazione delle dichiarazioni di accessibilità" target="_blank" download>
+                    {{"AG_Guida_Compilazione" | translate}}
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="it-footer-main">
+    <div class="container">
       <section class="pt-3">
         <div class="row justify-content-between">
           <p class="pb-2 col-2">
@@ -28,19 +57,6 @@
               href="https://ec.europa.eu/info/strategy/recovery-plan-europe_en"><img class="LogoDTD-img"
                 src="/assets/img/footer/UE.png#UE-logo" alt="Finanziato dall'unione europea" /></a>
           </p>
-          <!-- <p class="pb-2 col-2">
-            <a
-              class="button"
-              aria-label="sito Fondo europeo di sviluppo regionale - Collegamento a sito esterno - Nuova finestra"
-              title="Collegamento a sito esterno"
-              target="_blank"
-              href="https://ec.europa.eu/regional_policy/it/funding/erdf/"
-              ><img
-                src="data:image/png;base64,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"
-                alt="Visita il sito del Fondo europeo di sviluppo regionale"
-                class="img-fluid"
-            /></a>
-          </p> -->
           <p class="pb-2 pt-1 col-2">
             <a class="button d-flex"
               aria-label="sito dell' agenzia per la coesione territoriale - Collegamento a sito esterno - Nuova finestra"
@@ -84,7 +100,7 @@
                 }}</a>
             </li>
             <li class="list-inline-item" title="Versione" style='color: #00264d !important'>
-              Release: 25/1
+              Release: 16/02
             </li>
           </ul>
         </div>
