@@ -50,8 +50,8 @@ export class RicercaSottomissioniComponent implements OnInit {
     return this.window.location.origin;
   }
 
-  get isDichiarazione(): boolean {
-    return this.elencoForm?.some(item => item.idForm === '633a9e4a435bb1b2ad44be35');
+  get isDichiarazioneObiettivi(): boolean {
+    return this.elencoForm?.some(item => item.idForm === '633a9e4a435bb1b2ad44be35' || item.idForm === '633aa0471332d9221c08a2ea');
   }
   
   private fetchSottomissioni() {
