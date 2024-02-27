@@ -3,7 +3,7 @@
     <nav class="sidebar-wrapper it-line-right-side">
       <div class="sidebar-linklist-wrapper">
         <div class="link-list-wrapper">
-          <h2 class="display-3 no_toc mb-4">
+          <h1 class="display-3 no_toc mb-4">
             <a
               class="primary-color-a12 text-decoration-none"
               style="font-size: xx-large"
@@ -11,7 +11,7 @@
               [routerLink]="['/']"
               ><span class="primary-color-a9">&lt;</span> Form</a
             >
-          </h2>
+          </h1>
           <ul class="link-list">
             <li
               [routerLinkActive]="'selector'"
@@ -19,13 +19,13 @@
             >
               <a
                 *ngIf="!isArchivio"
-                class="list-item large"
+                class="list-item large pageOpt"
                 [routerLink]="['./']"
                 ><span>{{ titoloSottomissione }}</span></a
               >
               <a
                 *ngIf="isArchivio"
-                class="list-item large"
+                class="list-item large pageOpt"
                 [routerLink]="['./']"
                 [queryParams]="{ isArchivio: true }"
                 ><span>{{ titoloSottomissione }}</span></a
@@ -35,14 +35,14 @@
               <a
                 *ngIf="!isArchivio"
                 aria-current="page"
-                class="list-item large"
+                class="list-item large pageOpt"
                 [routerLink]="['./ricerca']"
                 ><span>{{ "AG_Gestione_Compilazioni" | translate }}</span></a
               >
               <a
                 *ngIf="isArchivio"
                 aria-current="page"
-                class="list-item large"
+                class="list-item large pageOpt"
                 [routerLink]="['./ricerca']"
                 [queryParams]="{ isArchivio: true }"
                 ><span>{{ "AG_Gestione_Compilazioni" | translate }}</span></a
@@ -52,13 +52,13 @@
             <li [routerLinkActive]="'selector'">
               <a
                 *ngIf="!isArchivio"
-                class="list-item large"
+                class="list-item large pageOpt"
                 [routerLink]="['./faq']"
                 ><span>{{ "AG_Faq" | translate }}</span></a
               >
               <a
                 *ngIf="isArchivio"
-                class="list-item large"
+                class="list-item large pageOpt"
                 [routerLink]="['./faq']"
                 [queryParams]="{ isArchivio: true }"
                 ><span>{{ "AG_Faq" | translate }}</span></a
@@ -76,7 +76,8 @@
     ><span class="fa fa-angle-double-left me-1"></span>
     <label
       class="text-16p underline cursor cursor-pointer"
-      style="color: #06c"
+      aria-label="torna indietro" role="region"
+      style="color: #0057ad"
       >{{ "AG_Torna_Home" | translate }}</label
     ></a
   >
