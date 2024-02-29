@@ -4,6 +4,7 @@ import { Pagination } from 'src/app/common/pagination.class';
 import { SessionStorageService } from 'src/app/common/session-storage.service';
 import { FormFoService } from 'src/app/front-office/form-fo.service';
 import { ISottomissione } from 'src/app/front-office/types/sottomissione.type';
+import { Title } from '@angular/platform-browser';
 import { ElencoFormService } from '../../elenco-form.service';
 
 @Component({
@@ -32,11 +33,14 @@ export class RicercaSottomissioniComponent implements OnInit {
     private route: ActivatedRoute,
     private formFoService: FormFoService,
     private elencoFormService: ElencoFormService,
+    private titleService: Title,
     private sessionStorageService: SessionStorageService,
     @Inject('Window') private window: Window
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('AGID Form | Gestione compilazioni');
+
     this.id = this.route.parent.snapshot.paramMap.get('id');
     this.route.queryParams.subscribe((params) => {
       this.isArchivio = params['isArchivio'];

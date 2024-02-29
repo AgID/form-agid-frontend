@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/common/auth/auth.service';
 import { SessionStorageService } from '../../common/session-storage.service';
 import { ElencoFormService } from './elenco-form.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-elenco-form-fo',
@@ -21,10 +22,12 @@ export class ElencoFormFoComponent implements OnInit {
     private elencoFormService: ElencoFormService,
     private sessionStorageService: SessionStorageService,
     private datePipe: DatePipe,
-    private authService: AuthService
+    private authService: AuthService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('AGID Form | Elenco form');
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.queryParams.subscribe((params) => {
       this.isArchivio = params['isArchivio'];

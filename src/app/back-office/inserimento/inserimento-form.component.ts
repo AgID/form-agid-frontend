@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IMetadatiType } from '../types/metadati.type';
 import { DatePipe } from '@angular/common';
 import { HashService } from 'src/app/common/hash.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-inserimento-form',
@@ -50,10 +51,12 @@ export class InserimentoFormComponent implements OnInit {
     private router: Router,
     private elencoFormService: ElencoFormService,
     private datePipe: DatePipe,
-    public hashService: HashService
+    public hashService: HashService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
+    this.titleService.setTitle('AGID Form | Nuovo inserimento');
     const idFormDaDuplicare = this.route.snapshot.queryParamMap.get('duplica');
     if (idFormDaDuplicare) {
       this.elencoFormService

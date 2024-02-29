@@ -10,15 +10,21 @@
                   <svg class="icon me-lg-2 iconCustomColor">
                     <use href="/assets/svg/sprite.svg#it-tool"></use>
                   </svg>
-                  {{"AG_Manuale_Utente" | translate}}
-                  </p>
+                  {{ "AG_Manuale_Utente" | translate }}
+                </p>
                 <p class="card-text">
-                  {{"AG_Visualizza_Manuale" | translate}}
-                  <a href="/assets/documents/Manuale Utente.pdf" alt="Manuale utente" target="_blank" download>
-                    {{"AG_Manuale_Utente" | translate}}
+                  {{ "AG_Visualizza_Manuale" | translate }}
+                  <a
+                    href="/assets/documents/Manuale-Utente.pdf"
+                    aria-label="Manuale utente"
+                    title="Scarica il file PDF"
+                    target="_blank"
+                    download
+                  >
+                    {{ "AG_Manuale_Utente" | translate }}
                   </a>
                 </p>
-            </div>
+              </div>
             </div>
           </div>
         </div>
@@ -30,16 +36,28 @@
                   <svg class="icon me-lg-2 iconCustomColor">
                     <use href="/assets/svg/sprite.svg#it-file"></use>
                   </svg>
-                  {{"AG_Guida_Compilazione" | translate}}
+                  {{ "AG_Guida_Compilazione" | translate }}
                 </p>
                 <p class="card-text">
-                  {{"AG_Visualizza_Guida" | translate}} <br>
-                  <a href="/assets/documents/Dichiarazione di accessibilità - Guida alla compilazione.pdf" alt="Guida alla compilazione delle dichiarazioni di accessibilità" target="_blank" download>
-                    {{"AG_Guida_Dichiarazioni" | translate}}
+                  {{ "AG_Visualizza_Guida" | translate }} <br />
+                  <a
+                    href="/assets/documents/Guida-alla-compilazione-delle-Dichiarazioni-di-accessibilità.pdf"
+                    aria-label="Guida alla compilazione delle dichiarazioni di accessibilità"
+                    title="Scarica il file PDF"
+                    target="_blank"
+                    download
+                  >
+                    {{ "AG_Guida_Dichiarazioni" | translate }}
                   </a>
-                  <br>
-                  <a href="/assets/documents/Guida alla compilazione degli Obiettiviti di Accessibilità.pdf" alt="Guida alla compilazione degli obiettivi di accessibilità" target="_blank" download>
-                    {{"AG_Guida_Obiettivi" | translate}}
+                  <br />
+                  <a
+                    href="/assets/documents/Guida-alla-compilazione-degli-Obiettiviti-di-Accessibilità.pdf"
+                    aria-label="Guida alla compilazione degli obiettivi di accessibilità"
+                    title="Scarica il file PDF"
+                    target="_blank"
+                    download
+                  >
+                    {{ "AG_Guida_Obiettivi" | translate }}
                   </a>
                 </p>
               </div>
@@ -53,35 +71,35 @@
     <div class="container">
       <section class="pt-3">
         <div class="row justify-content-between">
-          <p class="pb-2 col-2">
+          <div class="col-12 col-sm-6 col-lg-4 py-2 my-auto">
             <a
               class="button"
-              aria-label="sito del dipartimento della funzione pubblica - Collegamento a sito esterno - Nuova finestra"
+              aria-label="Sito NextGenerationEU - Collegamento a sito esterno - Nuova finestra"
               title="Collegamento a sito esterno"
               target="_blank"
               href="https://ec.europa.eu/info/strategy/recovery-plan-europe_en"
               ><img
-                class="LogoDTD-img"
+                class="img-fluid footerLogosImgs"
                 src="/assets/img/footer/UE.png#UE-logo"
-                alt="Finanziato dall'unione europea"
+                alt="NextGenerationEU - Finanziato dall'unione europea"
             /></a>
-          </p>
-          <p class="pb-2 pt-1 col-2">
+          </div>
+          <div class="col-12 col-sm-6 col-lg-4 py-2 my-auto">
             <a
               class="button d-flex"
-              aria-label="sito dell' agenzia per la coesione territoriale - Collegamento a sito esterno - Nuova finestra"
+              aria-label="Sito Dipartimento per la trasformazione digitale - Collegamento a sito esterno - Nuova finestra"
               title="Collegamento a sito esterno"
               target="_blank"
               href="https://innovazione.gov.it/"
             >
               <img
-                class="LogoDTD-img"
+                class="img-fluid footerLogosImgs"
                 src="/assets/img/footer/DTD.png#agid-logo"
-                alt="Visita il sito dell' agenzia per la coesione territoriale"
+                alt="Dipartimento per la trasformazione digitale"
               />
             </a>
-          </p>
-          <p class="pb-2 col-2">
+          </div>
+          <div class="col-12 col-lg-4 py-2 my-auto">
             <a
               class="button"
               aria-label="sito dell' Agenzia per l'Italia digitale - Collegamento a sito esterno - Nuova finestra"
@@ -93,19 +111,22 @@
                 alt="Visita il sito dell'Agenzia per l'Italia digitale"
                 class="img-fluid"
             /></a>
-          </p>
+          </div>
         </div>
       </section>
       <section class="py-4 px-0 border-white border-top">
         <div class="container px-0">
           <p class="sr-only">{{ "AG_Sezione_Link_Utili" | translate }}</p>
           <ul
-            class="it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row"
+            class="it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-lg-row"
           >
             <li class="list-inline-item">
-              <a href="https://form.agid.gov.it/view/c299ac76-6d08-4c34-9957-00519dde4ea9" title="Dichiarazione accessibilita">{{
-                "AG_Dichiarazione_Accessibilità" | translate
-              }}</a>
+              <a
+                href="https://form.agid.gov.it/view/c299ac76-6d08-4c34-9957-00519dde4ea9"
+                title="Dichiarazione accessibilita"
+                target="_blank"
+                >{{ "AG_Dichiarazione_Accessibilità" | translate }}</a
+              >
             </li>
             <li class="list-inline-item">
               <a href="/media-policy" title="Media Policy">{{
@@ -122,7 +143,11 @@
                 "AG_Privacy_Policy" | translate
               }}</a>
             </li>
-            <li class="list-inline-item" title="Versione" style='color: #00264d !important'>
+            <li
+              class="list-inline-item"
+              title="Versione"
+              style="color: #00264d !important"
+            >
               Release: 26/02
             </li>
           </ul>
