@@ -8,6 +8,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { ElencoFormService } from '../../elenco-form.service';
 import './dettaglio-sottomissione.component.scss';
 import { IdentificaAmministrazioneService } from 'src/app/front-office/identifica-amministrazione/identifica-amministrazione.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dettaglio-sottomissione',
@@ -80,7 +81,8 @@ export class DettaglioSottomissioneComponent implements OnInit {
     private route: ActivatedRoute,
     private elencoFormService: ElencoFormService,
     private datePipe: DatePipe,
-    private identAmmService: IdentificaAmministrazioneService
+    private identAmmService: IdentificaAmministrazioneService,
+    private titleService: Title
   ) {}
 
   private overwriteRoutingBehaviour() {
@@ -207,6 +209,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('AGID Form | Dettaglio sottomissione');
     this.overwriteRoutingBehaviour();
     this.readParams();
     this.findSottomissione();

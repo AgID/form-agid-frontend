@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,4 +6,12 @@ import { Component } from '@angular/core';
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.css'],
 })
-export class NotFoundComponent {}
+export class NotFoundComponent {
+  constructor(
+    private titleService: Title
+  ) {}
+
+  ngOnInit() {
+    this.titleService.setTitle('AGID Form | Pagina non trovata');
+  }
+}

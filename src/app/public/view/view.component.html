@@ -5,19 +5,19 @@
   {{ "AG_Operazione_Errore" | translate }}
 </div>
 <ng-container *ngIf="isObiettiviAccessibilita">
-  <label class="font-heading-xl my-2"     role="dialog"
+  <h2 class="font-heading-xl my-2" role="region" title="ente"
     ><b>
       {{ submission.ente }}
     </b>
-  </label>
+  </h2>
 </ng-container>
 <p *ngIf="redattaIl" role="dialog">{{ "AG_Redatta_Il" | translate }} {{ redattaIl }}</p>
 <ng-container *ngIf="isDichiarazioneAccessibilita">
-  <label class="font-heading-xl mb-1" role="dialog"
+  <h2 class="font-heading-xl mb-1" role="region" title="Dichiarazione di accessibilità"
     ><b>
       {{ "AG_Dichiarazione_Accessibilità" | translate }}
     </b>
-  </label>
+  </h2>
   <p
     class="font-body-md mb-3"
     role="dialog"
@@ -30,8 +30,9 @@
   ></p>
   <a
     [attr.href]="preamboloDescrizioneDichiarazioneAccessibilitaSite"
-    role="dialog"
+    role="region"
     [attr.aria-label]="preamboloDescrizioneDichiarazioneAccessibilitaSite"
+    title="Il link si apre in una nuova finestra"
     target="_blank"
     >{{ preamboloDescrizioneDichiarazioneAccessibilitaSite }}</a
   >

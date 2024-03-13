@@ -52,3 +52,16 @@
 .footerCard > .card-body > .card-text a{
   color: #0057ad !important;
 }
+
+@media (min-width: 376px) and (max-width: 575px) {
+  .footerLogosImgs{
+    max-width: 60%;
+  }
+}
+
+@media (min-width: 992px){
+  .footerLogosImgs{
+    max-width: 65%;
+  }
+}
+

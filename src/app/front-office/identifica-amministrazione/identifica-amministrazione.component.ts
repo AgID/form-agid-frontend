@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/common/auth/auth.service';
 import { HashService } from 'src/app/common/hash.service';
 import { VerificaMailService } from '../verifica-mail/verifica-mail.service';
 import { IdentificaAmministrazioneService } from './identifica-amministrazione.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-identifica-amministrazione',
@@ -34,10 +35,12 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     private authService: AuthService,
     private identAmmService: IdentificaAmministrazioneService,
     private verificaMailService: VerificaMailService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('AGID Form | Identifica amministrazione');
     this.selectElement = document.querySelector('#accessibleAutocomplete');
     new (<any>window).bootstrap.SelectAutocomplete(this.selectElement, {
       showAllValues: true,

@@ -5,6 +5,7 @@ import { HashService } from 'src/app/common/hash.service';
 import { LanguageSelectorService } from 'src/app/common/language-selector/language-selector.service';
 import { RicercaEtichetteComponent } from '../../components/ricerca-etichetta/ricerca-etichette.component';
 import { RisultatiEtichetteService } from '../../components/risultati-etichette/risultati-etichette.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-elenco-etichette',
@@ -20,7 +21,8 @@ export class ElencoEtichetteComponent {
     private router: Router,
     private languageSlService: LanguageSelectorService,
     private risultatiEtichetteService: RisultatiEtichetteService,
-    public hashService: HashService
+    public hashService: HashService,
+    private titleService: Title
   ) {}
 
   public filters: any;
@@ -80,5 +82,9 @@ export class ElencoEtichetteComponent {
 
   public goToTornaAllaRicerca() {
     this.router.navigate(['/']);
+  }
+
+  ngOnInit() {
+    this.titleService.setTitle('AGID Form | Multilinguismo');
   }
 }

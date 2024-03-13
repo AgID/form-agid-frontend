@@ -2,7 +2,7 @@
   <div
     class="it-header-slim-wrapper-content ms-auto me-auto custom-max-width-1200"
   >
-    <a class="d-none d-lg-block navbar-brand" href="https://www.agid.gov.it/"
+    <a class="d-none d-lg-block navbar-brand" href="https://www.agid.gov.it/" role="region" title="Agenzia per l'Italia Digitale"
       >{{ "AG_AGID" | translate }}
     </a>
     <div class="nav-mobile">
@@ -13,7 +13,7 @@
           href="#menu1a"
           role="button"
           aria-expanded="false"
-          aria-controls="menu4"
+          aria-controls="menu1a"
         >
           <span>{{ "AG_AGID_ACRONYM" | translate }} </span>
           <svg class="icon" aria-hidden="true">
@@ -42,10 +42,11 @@
         [value]="selectedLanguage"
         (changeLanguage)="onChangeSelectedLanguage($event)"
       ></app-language-selector>
+      <div role="region" aria-label="Login Area">
       <div *ngIf="!isLoggedIn()" class="it-access-top-wrapper">
-        <a (click)="login()" class="btn btn-primary btn-sm" role="dialog">{{
-          "AG_Accedi" | translate
-        }}</a>
+        <button (click)="login()" class="btn btn-primary btn-sm" role="button">
+          {{ "AG_Accedi" | translate }}
+        </button>
       </div>
       <div *ngIf="isLoggedIn()" class="btn-group">
         <button
@@ -55,9 +56,9 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <span style="font-size: 14px"  role="dialog">{{
-            firstName() + " " + lastName()
-          }}</span>
+          <span style="font-size: 14px" role="dialog">
+            {{ firstName() + " " + lastName() }}
+          </span>
           <svg class="icon-expand icon icon-sm icon-light">
             <use href="../../../../assets/svg/sprite.svg#it-expand"></use>
           </svg>
@@ -66,16 +67,17 @@
           <div class="link-list-wrapper">
             <ul class="link-list">
               <li>
-                <a (click)="logout($event)" class="dropdown-item list-item" href="#"
-                  ><span style="font-size: 14px">{{
-                    "AG_Esci" | translate
-                  }}</span></a
-                >
+                <a (click)="logout($event)" class="dropdown-item list-item" href="#">
+                  <span style="font-size: 14px">
+                    {{ "AG_Esci" | translate }}
+                  </span>
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </div>

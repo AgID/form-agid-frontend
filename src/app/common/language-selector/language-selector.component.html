@@ -1,44 +1,36 @@
-<div [ngClass]="{ 'form-group mt-3': isInsideForm }">
-  <label *ngIf="label" class="active" [attr.for]="ident" role="dialog">{{ label }}</label>
+<div [ngClass]="{ 'form-group mt-3': isInsideForm }" role="form">
+  <label *ngIf="label" class="active" [attr.for]="ident">{{ label }}</label>
   <div class="nav-item dropdown">
-    <a
+    <button
       class="nav-link dropdown-toggle custom-flex"
       [attr.id]="ident"
       data-bs-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      type="button"
+      style="background: none !important; color: white !important;"
     >
-      <span class="sr-only" role="dialog"
-        >{{ "AG_Scegli_Opzione" | translate }}:
-        {{ value || ("AG_Nessuna_Scelta" | translate) }}</span
-      >
-      <span role="dialog">{{ value || ("AG_Scegli_Opzione" | translate) }}</span>
-      <svg class="icon d-none d-lg-block">
+      <span class="sr-only">{{ "AG_Scegli_Opzione" | translate }}: {{ value || ("AG_Nessuna_Scelta" | translate) }}</span>
+      <span>{{ value || ("AG_Scegli_Opzione" | translate) }}</span>
+      <svg class="icon d-none icon-white d-lg-block">
         <use href="/assets/svg/sprite.svg#it-expand"></use>
       </svg>
-    </a>
-    <ul class="dropdown-menu" [attr.aria-labelledby]="ident">
+    </button>
+    <div class="dropdown-menu" [attr.aria-labelledby]="ident">
       <div class="row">
         <div class="col-12">
           <div class="link-list-wrapper">
-            <ul class="link-list" (click)="onChangeSelectedLanguage($event)">
-              <li
-                *ngFor="let item of languages"
-                [attr.data-lingua]="item.codice"
-              >
-                <a class="list-item"
-                  ><span>{{
-                    isInsideForm ? item.descrizione : item.codice
-                  }}</span></a
-                >
+            <ul class="link-list">
+              <li *ngFor="let item of languages" [attr.data-lingua]="item.codice">
+                <a class="dropdown-item list-item" href="#" role="button" (click)="onChangeSelectedLanguage($event)">
+                  <span>{{ isInsideForm ? item.descrizione : item.codice }}</span>
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-    </ul>
+    </div>
   </div>
-  <app-alert
-    *ngIf="!isValid"
-    [messaggio]="errorMessage"
-    [type]="errorType"
-  ></app-alert>
+  <app-alert *ngIf="!isValid" [messaggio]="errorMessage" [type]="errorType"></app-alert>
 </div>
