@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/common/auth/auth.service';
 import { HashService } from 'src/app/common/hash.service';
 import { SceltaUtenteService } from './scelta-utente.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-scelta-utente',
@@ -18,6 +19,7 @@ export class SceltaUtenteComponent {
     private router: Router,
     private route: ActivatedRoute,
     private hashService: HashService,
+    private titleService: Title,
     private authService: AuthService
   ) {}
 
@@ -51,5 +53,8 @@ export class SceltaUtenteComponent {
         break;
       }
     }
+  }
+  ngOnInit() {
+    this.titleService.setTitle('AGID Form | Scelta utente');
   }
 }

@@ -9,6 +9,7 @@ import { SezioneMetadatiComponent } from '../components/sezione-metadati/sezione
 import { IForm } from '../types/form.type';
 import { IMetadatiType } from '../types/metadati.type';
 import { TranslateService } from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-modifica-form',
@@ -59,10 +60,12 @@ export class ModificaFormComponent implements OnInit {
     private elencoFormService: ElencoFormService,
     private datePipe: DatePipe,
     private translateService: TranslateService,
-    public hashService: HashService
+    public hashService: HashService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
+    this.titleService.setTitle('AGID Form | Modifica form');
     this.id = this.route.snapshot.paramMap.get('id');
     this.elencoFormService
       .getFormsById(this.id)

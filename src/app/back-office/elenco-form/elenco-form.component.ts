@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RicercaFormComponent } from '../components/ricerca-form/ricerca-form.component';
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-elenco-form-bo',
   templateUrl: './elenco-form.component.html',
@@ -9,7 +11,11 @@ import { RicercaFormComponent } from '../components/ricerca-form/ricerca-form.co
 export class ElencoFormComponent {
   @ViewChild('ricercaFormComponent') ricercaFormComponent: RicercaFormComponent;
 
-  constructor(public route: ActivatedRoute, private router: Router) {}
+  constructor(
+    public route: ActivatedRoute,
+    private router: Router, 
+    private titleService: Title
+    ) {}
 
   public filters: any;
 
@@ -22,5 +28,9 @@ export class ElencoFormComponent {
 
   public goToInserimentoForm() {
     this.router.navigate(['/admin/inserimento-form']);
+  }
+
+  ngOnInit() {
+    this.titleService.setTitle('AGID Form | Elenco form');
   }
 }

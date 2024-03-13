@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertType } from 'src/app/common/alert/types/alert.type';
 import { AuthService } from 'src/app/common/auth/auth.service';
 import { VerificaOtpService } from './verifica-otp.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-verifica-otp',
@@ -20,6 +21,7 @@ export class VerificaOtpComponent {
     private router: Router,
     private route: ActivatedRoute,
     private verificaOtp: VerificaOtpService,
+    private titleService: Title,
     private authService: AuthService
   ) {}
 
@@ -44,5 +46,9 @@ export class VerificaOtpComponent {
           if (this.user_id) this.router.navigate(['/elenco-form']);
         });
       });
+  }
+
+  ngOnInit() {
+    this.titleService.setTitle('AGID Form | Verifica OTP');
   }
 }

@@ -7,6 +7,7 @@ import { FormFoService } from '../../front-office/form-fo.service';
 import { ISottomissione } from '../../front-office/types/sottomissione.type';
 import { RicercaSottomissioniComponent } from '../components/ricerca-sottomissioni/ricerca-sottomissioni.component';
 import { IForm } from '../types/form.type';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dettaglio-form-bo',
@@ -40,10 +41,12 @@ export class DettaglioFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formFoService: FormFoService,
-    private elencoFormService: ElencoFormService
+    private elencoFormService: ElencoFormService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
+    this.titleService.setTitle('AGID Form | Gestione compilazioni');
     this.id = this.route.snapshot.paramMap.get('id');
     this.filters.idForm = this.id;
     forkJoin({

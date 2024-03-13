@@ -6,6 +6,7 @@ import { ISottomissione } from 'src/app/front-office/types/sottomissione.type';
 import { v1 as uuidv1 } from 'uuid';
 import { Utils } from 'formiojs';
 import { VerificaOtpService } from 'src/app/front-office/verifica-otp/verifica-otp.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-procedura-attuazione',
@@ -17,7 +18,8 @@ export class ProceduraAttuazioneAccessibilitaComponent implements OnInit {
     private route: ActivatedRoute,
     private proceduraAttuazioneAccessibilitaService: ProceduraAttuazioneAccessibilitaService,
     private router: Router,
-    private verificaOtpService: VerificaOtpService
+    private verificaOtpService: VerificaOtpService,
+    private titleService: Title
   ) {}
 
   public actualFormData: any = {};
@@ -32,6 +34,7 @@ export class ProceduraAttuazioneAccessibilitaComponent implements OnInit {
   public emailVerified = false;
 
   ngOnInit() {
+    this.titleService.setTitle('AGID Form | Procedura attuazione');
     const idFormAccessibilita = this.route.snapshot.params['id'];
     this.getModuloProceduraAttuazioneByIdAccessibilita(idFormAccessibilita);
   }

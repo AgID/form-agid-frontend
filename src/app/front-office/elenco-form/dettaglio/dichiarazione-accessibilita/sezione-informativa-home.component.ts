@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ElencoFormService } from '../../elenco-form.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sezione-informativa-home',
@@ -14,10 +15,12 @@ export class SezioneInformativaHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private titleService: Title,
     private elencoFormService: ElencoFormService
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('AGID Form | Descrizione form');
     this.id = this.route.parent.snapshot.paramMap.get('id');
     this.elencoFormService.getFormsById(this.id).subscribe((res) => {
       this.titoloSottomissione = res.titolo;

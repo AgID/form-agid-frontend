@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ViewService } from './view.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view',
@@ -13,7 +14,8 @@ export class ViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private viewService: ViewService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private titleService: Title
   ) {}
 
   public actualFormData: any;
@@ -35,6 +37,7 @@ export class ViewComponent implements OnInit {
   public preamboloDescrizioneDichiarazioneAccessibilitaSite = '';
 
   ngOnInit() {
+    this.titleService.setTitle('AGID Form | Dettaglio pubblicazione');
     const idForm = this.route.snapshot.params['id'];
     this.findSottomissione(idForm);
   }

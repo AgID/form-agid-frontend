@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/common/auth/auth.service';
 import { HashService } from 'src/app/common/hash.service';
 import { SceltaUtenteService } from '../scelta-utente/scelta-utente.service';
 import { VerificaMailService } from './verifica-mail.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-verifica-mail',
@@ -24,10 +25,12 @@ export class VerificaMailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private hashService: HashService,
+    private titleService: Title,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('AGID Form | Verifica Mail');
     //TODO: verificare validazione email
     this.verificaMailService
       .getStatoValidazione()

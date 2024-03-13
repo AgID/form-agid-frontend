@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ElencoFormService } from '../elenco-form/elenco-form.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,10 @@ import { ElencoFormService } from '../elenco-form/elenco-form.service';
 })
 export class HomeComponent implements OnInit {
   public showChart: boolean = false;
-  constructor(private elencoFormService: ElencoFormService) {}
+  constructor(
+    private elencoFormService: ElencoFormService,
+    private titleService: Title
+    ) {}
 
   //Struttura grafico
   public pieChart: any = {
@@ -34,6 +38,7 @@ export class HomeComponent implements OnInit {
   statistiche: any[] = [];
 
   ngOnInit(): void {
+    this.titleService.setTitle('AGID Form | Home');
     let colors = new Array<any>();
     let labels = new Array<any>();
     this.elencoFormService
