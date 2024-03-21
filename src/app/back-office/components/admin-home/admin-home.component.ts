@@ -12,10 +12,13 @@ export class AdminHomeComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.canActivateProtectedRoutes$.subscribe((ev) => {
+      console.log("this.checkPendingRTD()", this.checkPendingRTD());
+
+
       if (this.authService.userInfo.user_policy?.length) {
         if (this.anonymousUser()) {
           this.routerNavigate('identifica-amministrazione');
@@ -41,20 +44,18 @@ export class AdminHomeComponent implements OnInit {
     return (
       this.authService.userInfo &&
       this.authService.userInfo.user_policy?.length &&
-      Object.keys(this.authService.userInfo.user_policy[0].policy).length ===
-        0 &&
-      this.authService.userInfo.user_policy?.[0]?.policy?.status === 'PENDING'
+      Object.keys(this.authService.userInfo.user_policy[0].policy).length &&
+      (this.authService.userInfo.user_policy?.[0]?.policy?.status === 'PENDING' || this.authService.userInfo.user_policy?.[0]?.policy?.status === 'Pending')
     );
   }
 
   public viewFrontOffice(): boolean {
-    return (
-      this.authService.userInfo &&
+    if (this.authService.userInfo &&
       this.authService.userInfo.user_policy?.length &&
-      ((this.authService.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
-        this.authService.userInfo.user_policy[0].policy.status === 'Active') ||
-        this.authService.userInfo.user_policy[0].policy.role === 'RTD')
-    );
+      (this.authService.userInfo.user_policy[0].policy.role === 'RTD' && this.authService.userInfo.user_policy[0].policy.status === 'Active')) {
+      return true
+    }
+    return false;
   }
 
   public viewSuperAdminPages(): boolean {
