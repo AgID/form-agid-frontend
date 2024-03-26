@@ -196,6 +196,9 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   }
 
   public getMail(data: any) {
+    this.radioText = this.translateService.instant(
+      'AG_Mail_Chiave_Accesso_RTD'
+    );
     if (data && data['Mail_responsabile']) {
       this.userMail = data['Mail_responsabile'];
       this.radioText = this.radioText + ' ' + this.userMail;
