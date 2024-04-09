@@ -58,7 +58,8 @@ export class ElencoFormFoComponent implements OnInit {
       });
     }
 
-    let ente = this.authService.userInfo?.user_policy[0]?.policy.entity["Denominazione_ente"] ?? '-';
+    const userInfo = this.elencoFormService.getUserInfo()
+    let ente = userInfo?.user_policy[0]?.policy.entity["Denominazione_ente"] ?? '-';
     this.enteAssociatoUtente = this.translate
       .instant('AG_RTD_Associato')
       .replace('{{ente}}', `<b>${ente}</b>`);

@@ -3,15 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment as ENV } from 'src/environments/environment';
 import { ISottomissione } from '../types/sottomissione.type';
+import { AuthService } from 'src/app/common/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ElencoFormService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService) { }
 
   public getForms(): Observable<any> {
     return this.http.get(`${ENV.BACKEND_HOST}/v1/form`);
+  }
+
+  public getUserInfo(): any {
+    return this.authService.userInfo
   }
 
   public getFormsExpired(): Observable<any> {

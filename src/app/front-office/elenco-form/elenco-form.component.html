@@ -1,67 +1,36 @@
-<app-alert
-  [messaggio]="alertMessages"
-  [type]="'WARNING'"
-></app-alert>
+<app-alert [messaggio]="alertMessages" [type]="'WARNING'"></app-alert>
 <div class="row">
   <ng-container *ngIf="elencoForm?.length; else noResult">
-    <div
-      class="col-12 col-lg-4 mb-3"
-      *ngFor="let item of elencoForm; let i = index"
-    >
+    <div class="col-12 col-lg-4 mb-3" *ngFor="let item of elencoForm; let i = index">
       <div class="card-wrapper">
         <div class="card card-bg">
           <div class="card-body position-relative">
             <h5 class="card-title">
-              <a
-                class="cursor-pointer"
-                style="color: #06c; text-decoration: underline"
-                (click)="goToRender(item)"
-                >{{ item.titolo }}</a
-              >
+              <a class="cursor-pointer" style="color: #06c; text-decoration: underline" (click)="goToRender(item)">{{
+                item.titolo }}</a>
             </h5>
             <p class="card-text mb-5">
               <span>{{ item.descrizione }}</span>
             </p>
-            <p
-              *ngIf="isArchivio"
-              class="position-absolute mb-0"
-              style="bottom: 20px"
-            >
+            <p *ngIf="isArchivio" class="position-absolute mb-0" style="bottom: 20px">
               {{ "AG_Scaduto_Il" | translate }}
               {{ dateExpiredForm[i].dataFineValidita }}
             </p>
             <p class="position-absolute mb-0" style="bottom: 20px; right: 20px">
-              <a
-                class="card-title cursor-pointer"
-                aria-label="Accedi al modulo: Obiettivi di accessibilità"
-                *ngIf="!isArchivio"
-                (click)="goToRenderSubmission(item)"
-                >{{ "AG_Accedi_Modulo" | translate }}</a
-              >
+              <a class="card-title cursor-pointer" aria-label="Accedi al modulo: Obiettivi di accessibilità"
+                *ngIf="!isArchivio" (click)="goToRenderSubmission(item)">{{ "AG_Accedi_Modulo" | translate }}</a>
             </p>
           </div>
         </div>
       </div>
     </div>
   </ng-container>
-  <a
-    class="text-16p text-primary mt-3"
-    *ngIf="isArchivio"
-    (click)="goToElencoForm()"
-    ><span class="fa fa-angle-double-left me-1"></span>
-    <label
-      class="text-16p underline cursor cursor-pointer"
-      style="color: #06c"
-      >{{ "AG_Torna_Home" | translate }}</label
-    ></a
-  >
-  <a
-    *ngIf="!isArchivio"
-    class="card-title cursor-pointer d-flex justify-content-end"
-    aria-label="Vai all'archivio delle sottomissioni"
-    (click)="goToArchivio()"
-    >{{ "AG_Archivio" | translate }}</a
-  >
+  <a class="text-16p text-primary mt-3" *ngIf="isArchivio" (click)="goToElencoForm()"><span
+      class="fa fa-angle-double-left me-1"></span>
+    <label class="text-16p underline cursor cursor-pointer" style="color: #06c">{{ "AG_Torna_Home" | translate
+      }}</label></a>
+  <a *ngIf="!isArchivio" class="card-title cursor-pointer d-flex justify-content-end"
+    aria-label="Vai all'archivio delle sottomissioni" (click)="goToArchivio()">{{ "AG_Archivio" | translate }}</a>
 </div>
 
 <ng-template #noResult>
