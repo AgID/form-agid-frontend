@@ -22,6 +22,7 @@ import { PrivacyPolicyComponent } from './public/privacy-policy/privacy-policy.c
 import { ViewComponent } from './public/view/view.component';
 import { FeedbackAccessibilitaComponent } from './public/form/feedback-accessibilita/feedback-accessibilita.component';
 import { ProceduraAttuazioneAccessibilitaComponent } from './public/form/procedura-attuazione/procedura-attuazione.component';
+import { ElencoFormFoComponent } from './front-office/elenco-form/elenco-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -70,8 +71,8 @@ const routes: Routes = [
   },
   {
     path: 'elenco-form',
-    loadChildren: () =>
-      import('./front-office/form-fo.module').then((m) => m.FormFoModule),
+    component: ElencoFormFoComponent,
+
     data: {
       breadcrumb: 'Elenco Form',
       usersAllowed: [
@@ -186,4 +187,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
