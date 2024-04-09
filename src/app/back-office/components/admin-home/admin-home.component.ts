@@ -16,8 +16,6 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit() {
     this.authService.canActivateProtectedRoutes$.subscribe((ev) => {
-      console.log("this.checkPendingRTD()", this.checkPendingRTD());
-
 
       if (this.authService.userInfo.user_policy?.length) {
         if (this.anonymousUser()) {

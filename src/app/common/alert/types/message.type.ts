@@ -1,6 +1,7 @@
 export interface IAlertMessageType {
-  label: string;
+  label?: string;
   routerlink?: boolean;
   link?: string;
   params?: Object;
+  htmlContent?: string;
 }

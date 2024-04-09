@@ -28,7 +28,6 @@ export class AuthService {
 
   constructor(
     private oauthService: OAuthService,
-    private authConfig: AuthConfig,
     private router: Router
   ) {
     this.oauthService.events.subscribe((_) => {

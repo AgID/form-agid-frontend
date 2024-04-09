@@ -42,10 +42,12 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('AGID Form | Identifica amministrazione');
     this.selectElement = document.querySelector('#accessibleAutocomplete');
-    new (<any>window).bootstrap.SelectAutocomplete(this.selectElement, {
+
+    setTimeout(() => {   
+      new (<any>window).bootstrap.SelectAutocomplete(this.selectElement, {
       showAllValues: true,
       defaultValue: '',
-      autoselect: false,
+      autoselect: true,
       dropdownArrow: () => '',
       source: (query: string, populateResults: Function) => {
         const formattedQuery = query.replace(/\'/g, '');
@@ -137,6 +139,8 @@ export class IdentificaAmministrazioneComponent implements OnInit {
       },
       placeholder: 'Nome o codice IPA...',
     });
+  }, 100);
+
 
     // Traduzioni
     this.radioText = this.translateService.instant(
