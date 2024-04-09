@@ -1,3 +1,7 @@
+<app-alert
+  [messaggio]="alertMessages"
+  [type]="'WARNING'"
+></app-alert>
 <div class="row">
   <ng-container *ngIf="elencoForm?.length; else noResult">
     <div

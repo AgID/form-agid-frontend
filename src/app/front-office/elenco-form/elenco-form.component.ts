@@ -1,10 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/common/auth/auth.service';
+import { AuthService } from '../../common/auth/auth.service';
 import { SessionStorageService } from '../../common/session-storage.service';
 import { ElencoFormService } from './elenco-form.service';
+import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
+import { IAlertMessageType } from '../../common/alert/types/message.type';
 
 @Component({
   selector: 'app-elenco-form-fo',
@@ -15,18 +17,28 @@ export class ElencoFormFoComponent implements OnInit {
   public elencoForm: Array<any> = [];
   public dateExpiredForm: Array<any> = [];
   public isArchivio: any;
+  public enteAssociatoUtente = '';
+  public alertMessages: IAlertMessageType[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private elencoFormService: ElencoFormService,
     private sessionStorageService: SessionStorageService,
+    private translate: TranslateService,
     private datePipe: DatePipe,
     private authService: AuthService,
     private titleService: Title
   ) {}
 
   ngOnInit(): void {
+
+    let ente = this.authService.userInfo?.user_policy[0].policy.entity["Denominazione_ente"] || '-';
+    this.enteAssociatoUtente = this.translate
+      .instant('AG_RTD_Associato')
+      .replace('{{ente}}', `<b>${ente}</b>`);
+    this.alertMessages.push({ htmlContent: this.enteAssociatoUtente });
+
     this.titleService.setTitle('AGID Form | Elenco form');
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.queryParams.subscribe((params) => {
