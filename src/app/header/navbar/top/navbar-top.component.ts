@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../common/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { environment as ENV } from 'src/environments/environment';
 import { NavBarTopService } from '../navbar-top.service';
 
 @Component({
@@ -22,9 +21,8 @@ export class NavbarTopComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private translateService: TranslateService,
-    private http: HttpClient,
     private navBarTopService: NavBarTopService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.getSelectedLanguage();
