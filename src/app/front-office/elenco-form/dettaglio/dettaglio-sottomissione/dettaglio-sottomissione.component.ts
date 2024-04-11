@@ -83,7 +83,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
     private datePipe: DatePipe,
     private identAmmService: IdentificaAmministrazioneService,
     private titleService: Title
-  ) {}
+  ) { }
 
   private overwriteRoutingBehaviour() {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -95,13 +95,13 @@ export class DettaglioSottomissioneComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.isModifica = this.route.snapshot.queryParamMap.get('isModifica')
       ? this.route.snapshot.queryParamMap
-          .get('isModifica')
-          .toLocaleLowerCase() === 'true'
+        .get('isModifica')
+        .toLocaleLowerCase() === 'true'
       : false;
     this.isPublished = this.route.snapshot.queryParamMap.get('isPublished')
       ? this.route.snapshot.queryParamMap
-          .get('isPublished')
-          .toLocaleLowerCase() === 'true'
+        .get('isPublished')
+        .toLocaleLowerCase() === 'true'
       : false;
     this.route.queryParams.subscribe((params) => {
       this.isArchivio = params['isArchivio'];
@@ -114,7 +114,8 @@ export class DettaglioSottomissioneComponent implements OnInit {
       .subscribe((res: any) => {
         this.response = res;
         if (
-          this.isPublished ||
+          (this.isPublished && this.response.datiPubblicati &&
+            Object.keys(this.response.datiPubblicati).length !== 0) ||
           (this.isModifica &&
             this.response.datiBozza &&
             Object.keys(this.response.datiBozza).length === 0) ||
@@ -284,7 +285,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   public onClickPubblica() {
     const codiceIPA = this.response.gruppo;
     this.identAmmService
-      .getAmministrazioniCodiceIpa(codiceIPA)
+      .getAmministrazioniCodiceIpaForPublish(codiceIPA)
       .subscribe((dataEnte: any) => {
         if (dataEnte.success && dataEnte.result.records.length > 0) {
           const firstRecord = dataEnte.result.records[0];

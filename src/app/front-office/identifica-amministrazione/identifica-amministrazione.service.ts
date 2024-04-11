@@ -17,6 +17,13 @@ export class IdentificaAmministrazioneService {
     );
   }
 
+  public getAmministrazioniCodiceIpaForPublish(_text: string = '') {
+    let text = _text.toLowerCase();
+    return this.http.get(
+      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE "Codice_IPA" = '${text}'`
+    );
+  }
+
   public getAmministrazioniDenominazioneEnte(_text: string = '') {
     let text = _text.toLowerCase();
     return this.http.get(
