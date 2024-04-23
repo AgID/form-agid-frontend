@@ -1,12 +1,16 @@
 <div [ngClass]="{ 'form-group mt-3': isInsideForm }" role="form">
   <label *ngIf="label" class="active" [attr.for]="ident">{{ label }}</label>
   <div class="nav-item dropdown">
-    <button class="nav-link dropdown-toggle custom-flex" [attr.id]="ident" data-bs-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false" type="button"
-      style="background: none !important; color: white !important; border: none !important;">
-      >
-      <span class="sr-only">{{ "AG_Scegli_Opzione" | translate }}: {{ value || ("AG_Nessuna_Scelta" | translate)
-        }}</span>
+    <button
+      class="nav-link dropdown-toggle custom-flex"
+      [attr.id]="ident"
+      data-bs-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      type="button"
+      style="background: none !important; color: white !important;"
+    >
+      <span class="sr-only">{{ "AG_Scegli_Opzione" | translate }}: {{ value || ("AG_Nessuna_Scelta" | translate) }}</span>
       <span>{{ value || ("AG_Scegli_Opzione" | translate) }}</span>
       <svg class="icon d-none icon-white d-lg-block" aria-label="espandi">
         <use href="/assets/svg/sprite.svg#it-expand"></use>
