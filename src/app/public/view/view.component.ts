@@ -78,15 +78,15 @@ export class ViewComponent implements OnInit {
         this.preamboloDescrizioneDichiarazioneAccessibilitaHeader =
           this.translate
             .instant('AG_Accessibilita_Preambolo_Pubblico_Header')
-            .replace('{{ente}}', `<b>${this.submission.ente}</b>`)
+            .replace('{{ente}}', `<strong>${this.submission.ente}</strong>`)
             .replace(
               '{{oggetto_dichiarazione}}',
-              `<b>${oggettoDichiarazione}</b>`
+              `<strong>${oggettoDichiarazione}</strong>`
             );
         this.preamboloDescrizioneDichiarazioneAccessibilitaFooter =
           this.translate
             .instant('AG_Accessibilita_Preambolo_Pubblico_Footer')
-            .replace('{{name}}', `<b>${name}</b>`);
+            .replace('{{name}}', `<strong>${name}</strong>`);
         this.preamboloDescrizioneDichiarazioneAccessibilitaSite =
           deviceType === 'website'
             ? this.formData['website-url']

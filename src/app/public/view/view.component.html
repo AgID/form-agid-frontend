@@ -1,5 +1,5 @@
-<div role="main">
- <h1>{{ submission?.titolo }}</h1>
+<div role="main" aria-label="titolo">
+ <h1 [attr.aria-label]="submission?.titolo">{{ submission?.titolo }}</h1>
 </div>
 <div *ngIf="isError">
   {{ "AG_Operazione_Errore" | translate }}
@@ -14,9 +14,9 @@
 <p *ngIf="redattaIl" role="dialog">{{ "AG_Redatta_Il" | translate }} {{ redattaIl }}</p>
 <ng-container *ngIf="isDichiarazioneAccessibilita">
   <h2 class="font-heading-xl mb-1" role="region" title="Dichiarazione di accessibilità"
-    ><b>
+    ><strong>
       {{ "AG_Dichiarazione_Accessibilità" | translate }}
-    </b>
+    </strong>
   </h2>
   <p
     class="font-body-md mb-3"
