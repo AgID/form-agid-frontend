@@ -55,7 +55,11 @@
   </ng-template>
 </div>
 
-<!-- <app-alert [messaggio]="errorMessage" [type]="typeAlert"> </app-alert> -->
+<app-alert
+  *ngIf="pubblicazioneFallita"
+  [messaggio]="errorMessage"
+  [type]="'DANGER'"
+></app-alert>
 
 <!-- Modal -->
 <div
