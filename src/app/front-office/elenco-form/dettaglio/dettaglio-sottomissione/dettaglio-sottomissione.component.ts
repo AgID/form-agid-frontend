@@ -67,7 +67,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   //Alert
   public statusMessage: Array<any> = [];
   public errorMessage: Array<any> = [{
-    label: "Nessuna risposta da IPA. Si prega contattare accessibilita@agid.gov.it riportando l’errore",
+    label: "Tasto Pubblica: Nessuna risposta da IPA. Si prega contattare accessibilita@agid.gov.it riportando l’errore",
   }];
   public htmlMessage: string;
   public typeAlert: AlertType;
