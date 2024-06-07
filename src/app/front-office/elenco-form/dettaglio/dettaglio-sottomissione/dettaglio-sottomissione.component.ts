@@ -16,13 +16,6 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./dettaglio-sottomissione.component.scss'],
 })
 export class DettaglioSottomissioneComponent implements OnInit {
-  public errorMessage: Array<any> = [
-    {
-      label:
-        '<strong>Attenzione</strong> Alcuni campi inseriti sono da controllare.',
-    },
-  ];
-
   public id: string;
   public DataInserimentoForm: string;
   public uuidLink: string = 'UUID_PLACEHOLDER';
@@ -73,8 +66,12 @@ export class DettaglioSottomissioneComponent implements OnInit {
 
   //Alert
   public statusMessage: Array<any> = [];
+  public errorMessage: Array<any> = [{
+    label: "Tasto Pubblica: Nessuna risposta da IPA. Si prega contattare accessibilita@agid.gov.it riportando l’errore",
+  }];
   public htmlMessage: string;
   public typeAlert: AlertType;
+  public pubblicazioneFallita: boolean = false;
 
   constructor(
     private router: Router,
@@ -317,12 +314,17 @@ export class DettaglioSottomissioneComponent implements OnInit {
                         this.getMail(firstRTDRecord);
                         this.pubblicaSottomissione();
                       }
-                    });
+                    },
+                  );
                 }
-              });
+              },
+            );
           }
+        } else {
+          this.pubblicazioneFallita = true;
         }
-      });
+      },
+    );
   }
 
   public pubblicaSottomissione() {
@@ -355,7 +357,8 @@ export class DettaglioSottomissioneComponent implements OnInit {
         } else {
           this.redirectPage();
         }
-      });
+      },
+    );
   }
 
   public redirectPage() {
