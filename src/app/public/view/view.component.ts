@@ -16,7 +16,7 @@ export class ViewComponent implements OnInit {
     private viewService: ViewService,
     private translate: TranslateService,
     private titleService: Title
-  ) {}
+  ) { }
 
   public actualFormData: any;
   public formSchema: any;
@@ -66,6 +66,8 @@ export class ViewComponent implements OnInit {
         .toLowerCase()
         .includes('obiettivi di accessibilit');
       if (this.isDichiarazioneAccessibilita) {
+        const formSchemaResp: any = await firstValueFrom(this.viewService.findFormById("667ac89a34ab6f99edd71b91"))
+        this.formSchema = formSchemaResp;
         let deviceType = this.formData['device-type'];
         let oggettoDichiarazione =
           deviceType === 'website'
@@ -92,6 +94,7 @@ export class ViewComponent implements OnInit {
             ? this.formData['website-url']
             : this.formData['app-url'];
       }
+      this.isLoading = false
     } catch (e) {
       this.isError = true;
     }
