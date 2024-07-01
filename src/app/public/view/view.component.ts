@@ -94,7 +94,6 @@ export class ViewComponent implements OnInit {
             ? this.formData['website-url']
             : this.formData['app-url'];
       }
-      this.isLoading = false
     } catch (e) {
       this.isError = true;
     }
