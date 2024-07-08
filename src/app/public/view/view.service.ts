@@ -15,4 +15,8 @@ export class ViewService {
   public findFormById(id: string) {
     return this.http.get(`${ENV.BACKEND_HOST}/v1/form/${id}`);
   }
+
+  public findPublicFormById(id: string) {
+    return this.http.get(`${ENV.BACKEND_HOST}/v1/form/public/${id}`);
+  }
 }
