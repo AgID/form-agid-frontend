@@ -13,7 +13,7 @@ export class IdentificaAmministrazioneService {
   public getAmministrazioniCodiceIpa(_text: string = '') {
     let text = _text
     return this.http.get(
-      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE LOWER("Codice_IPA") LIKE '${text}%' LIMIT 10`
+      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE ("Codice_IPA") LIKE '${text}%' LIMIT 10`
     );
   }
 
@@ -27,7 +27,7 @@ export class IdentificaAmministrazioneService {
   public getAmministrazioniDenominazioneEnte(_text: string = '') {
     let text = _text
     return this.http.get(
-      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE LOWER("Denominazione_ente") LIKE '${text}%' LIMIT 10`
+      `${ENV.BACKEND_AMM}/v1/ipadati?sql=SELECT * from "d09adf99-dc10-4349-8c53-27b1e5aa97b6" WHERE ("Denominazione_ente") LIKE '${text}%' LIMIT 10`
     );
   }
 
