@@ -55,6 +55,17 @@ export class ViewComponent implements OnInit {
       );
       this.formSchema = res.form[0];
       this.formData = res.datiPubblicati;
+      Object.keys(this.formData).forEach(
+        (key: string): void => {
+          if (typeof this.formData[key] == "string") {
+            this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;");
+          }
+        }
+      )
       this.submission = res;
       this.redattaIl = res.dataUltimaModifica
         ? new Date(res.dataUltimaModifica).toLocaleDateString()
