@@ -59,10 +59,10 @@ export class ViewComponent implements OnInit {
         (key: string): void => {
           if (typeof this.formData[key] == "string") {
             this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
-              .replace(/</g, "&lt;")
-              .replace(/>/g, "&gt;")
-              .replace(/"/g, "&quot;")
-              .replace(/'/g, "&#39;");
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
           }
         }
       )
@@ -77,7 +77,7 @@ export class ViewComponent implements OnInit {
         .toLowerCase()
         .includes('obiettivi di accessibilit');
       if (this.isDichiarazioneAccessibilita) {
-        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById("668bb38cb6543e592b18fe32"))
+        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById("667a7778eb31fe541e761a46"))
         let oggettoNome = "";
         let oggettoUrl = "";
         let specsLink = "";
