@@ -147,7 +147,6 @@ export class DettaglioSottomissioneComponent implements OnInit {
                   .replace(/'/g, "&#39;");
               }
             }
-
           )
         }
         //PDF
@@ -246,8 +245,21 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public onClickSalvaBozza() {
+    console.log("sta salvando")
+    let formattedData = this.actualFormData.data;
+    Object.keys(formattedData).forEach(
+      (key: string): void => {
+        if (typeof formattedData[key] == "string") {
+          formattedData[key] = formattedData[key].replace(/&amp;/g, "&")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, "\"")
+            .replace(/&#39;/g, "'&#39;'");
+        }
+      }
+    )
     const updateBody: ISottomissione = {
-      datiBozza: this.actualFormData.data,
+      datiBozza: formattedData,
       versioneForm: this.response.form[0].versione,
     };
     this.elencoFormService
@@ -353,10 +365,22 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public pubblicaSottomissione() {
+    console.log("sta pubblicando")
+    let formattedData = this.formData;
+    Object.keys(formattedData).forEach(
+      (key: string): void => {
+        if (typeof formattedData[key] == "string") {
+          formattedData[key] = formattedData[key].replace(/&amp;/g, "&")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, "\"")
+            .replace(/&#39;/g, "'&#39;'");
+        }
+      }
+    )
     const idPubblicazione = this.isPubblicazioneAbilitata ? uuidv1() : '';
-
     const updateBody: ISottomissione = {
-      datiPubblicati: this.formData,
+      datiPubblicati: formattedData,
       stato: 'Pubblicato',
       emailRTD: this.RTDemail,
       versione: (this.response.versione || 0) + 1,

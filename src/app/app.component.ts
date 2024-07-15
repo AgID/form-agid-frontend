@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None,
 })
 
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  ngOnInit() {
+    console.log("Versione 15/07/2024 11:40");
+
+  }
+}

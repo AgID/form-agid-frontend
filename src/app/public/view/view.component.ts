@@ -55,6 +55,17 @@ export class ViewComponent implements OnInit {
       );
       this.formSchema = res.form[0];
       this.formData = res.datiPubblicati;
+      Object.keys(this.formData).forEach(
+        (key: string): void => {
+          if (typeof this.formData[key] == "string") {
+            this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;");
+          }
+        }
+      )
       this.submission = res;
       this.redattaIl = res.dataUltimaModifica
         ? new Date(res.dataUltimaModifica).toLocaleDateString()
@@ -66,7 +77,7 @@ export class ViewComponent implements OnInit {
         .toLowerCase()
         .includes('obiettivi di accessibilit');
       if (this.isDichiarazioneAccessibilita) {
-        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById("668ea87117d3f009654e916b"))
+        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById("667a7778eb31fe541e761a46"))
         let oggettoNome = "";
         let oggettoUrl = "";
         let specsLink = "";
