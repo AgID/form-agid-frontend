@@ -31,7 +31,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
 
   // Formio
   public formSchema: any; // From BE
-  public formData: unknown; // From BE
+  public formData: any; // From BE
   public myModal: any; //Modal
   public actualFormData: any;
   public renderOptions: any = {};
@@ -106,6 +106,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   private findSottomissione() {
+
     this.elencoFormService
       .findSottomissioneById(this.id)
       .subscribe((res: any) => {
@@ -123,13 +124,37 @@ export class DettaglioSottomissioneComponent implements OnInit {
             Object.keys(this.response.datiBozza).length === 0)
         ) {
           this.formData = this.response.datiPubblicati;
+          Object.keys(this.formData).forEach(
+            (key: string): void => {
+              if (typeof this.formData[key] == "string") {
+                this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
+                  .replace(/</g, "&lt;")
+                  .replace(/>/g, "&gt;")
+                  .replace(/"/g, "&quot;")
+                  .replace(/'/g, "&#39;");
+              }
+            }
+          )
         } else {
           this.formData = this.response.datiBozza;
+          Object.keys(this.formData).forEach(
+            (key: string): void => {
+              if (typeof this.formData[key] == "string") {
+                this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
+                  .replace(/</g, "&lt;")
+                  .replace(/>/g, "&gt;")
+                  .replace(/"/g, "&quot;")
+                  .replace(/'/g, "&#39;");
+              }
+            }
+
+          )
         }
         //PDF
         this.component.title = this.response.form[0].titolo;
         this.data = this.formData;
         this.formSchema = this.response.form[0];
+        console.log("formSchema", this.formSchema);
         this.component.components = this.formSchema.components;
 
         this.isPubblicazioneAbilitata =
@@ -315,16 +340,16 @@ export class DettaglioSottomissioneComponent implements OnInit {
                         this.pubblicaSottomissione();
                       }
                     },
-                  );
+                    );
                 }
               },
-            );
+              );
           }
         } else {
           this.pubblicazioneFallita = true;
         }
       },
-    );
+      );
   }
 
   public pubblicaSottomissione() {
@@ -358,7 +383,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
           this.redirectPage();
         }
       },
-    );
+      );
   }
 
   public redirectPage() {
