@@ -130,9 +130,9 @@ export class ViewComponent implements OnInit {
         }
 
         if (this.formData['reason-no-law'] == true || this.formData['reason-no-law'] == "reason-no-law") {
-          this.formData['reason-no-law'] = "No"
-        } else {
           this.formData['reason-no-law'] = "Sì"
+        } else {
+          this.formData['reason-no-law'] = "No"
           this.formData['reason-no-law-text'] = "N/A"
         }
 
