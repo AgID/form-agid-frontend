@@ -1,46 +1,28 @@
 <div role="main" aria-label="titolo">
- <h1 [attr.aria-label]="submission?.titolo">{{ submission?.titolo }}</h1>
+  <h1 [attr.aria-label]="submission?.titolo">{{ submission?.titolo }}</h1>
 </div>
 <div *ngIf="isError">
   {{ "AG_Operazione_Errore" | translate }}
 </div>
 <ng-container *ngIf="isObiettiviAccessibilita">
-  <h2 class="font-heading-xl my-2" role="region" title="ente"
-    ><b>
+  <h2 class="font-heading-xl my-2" role="region" title="ente"><b>
       {{ submission.ente }}
     </b>
   </h2>
 </ng-container>
 <p *ngIf="redattaIl" role="dialog">{{ "AG_Redatta_Il" | translate }} {{ redattaIl }}</p>
 <ng-container *ngIf="isDichiarazioneAccessibilita">
-  <h2 class="font-heading-xl mb-1" role="region" title="Dichiarazione di accessibilità"
-    ><strong>
+  <h2 class="font-heading-xl mb-1" role="region" title="Dichiarazione di accessibilità"><strong>
       {{ "AG_Dichiarazione_Accessibilità" | translate }}
     </strong>
   </h2>
-  <p
-    class="font-body-md mb-3"
-    role="dialog"
-    [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaHeader"
-  ></p>
-  <p
-    role="dialog"
-    class="font-body-md"
-    [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaFooter"
-  ></p>
-  <a
-    [attr.href]="preamboloDescrizioneDichiarazioneAccessibilitaSite"
-    role="region"
-    [attr.aria-label]="preamboloDescrizioneDichiarazioneAccessibilitaSite"
-    title="Il link si apre in una nuova finestra"
-    target="_blank"
-    >{{ preamboloDescrizioneDichiarazioneAccessibilitaSite }}</a
-  >
+  <p class="font-body-md mb-3" role="dialog" [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaHeader"></p>
+  <p role="dialog" class="font-body-md" [innerHTML]="preamboloDescrizioneDichiarazioneAccessibilitaFooter"></p>
+  <a [attr.href]="preamboloDescrizioneDichiarazioneAccessibilitaSite" role="region"
+    [attr.aria-label]="preamboloDescrizioneDichiarazioneAccessibilitaSite" title="Il link si apre in una nuova finestra"
+    target="_blank">{{
+    preamboloDescrizioneDichiarazioneAccessibilitaSite }}</a>
 </ng-container>
 <hr class="my-5" />
-<app-formio-render
-  [form]="formSchema"
-  [submission]="{ data: formData }"
-  [renderOptions]="renderOptions"
-  (changeFormio)="onChangeFormio($event)"
-></app-formio-render>
+<app-formio-render [form]="formSchema" [submission]="{ data: formData }"
+  [renderOptions]="renderOptions"></app-formio-render>
