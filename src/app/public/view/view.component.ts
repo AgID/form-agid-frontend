@@ -77,7 +77,7 @@ export class ViewComponent implements OnInit {
         .toLowerCase()
         .includes('obiettivi di accessibilit');
       if (this.isDichiarazioneAccessibilita) {
-        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById("668ea87117d3f009654e916b"))
+        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById("669f6ce7ceb80982138a9f9a"))
         let oggettoNome = "";
         let oggettoUrl = "";
         let specsLink = "";
