@@ -16,22 +16,21 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    const usersAllowed: Array<UserRole> = route.data['usersAllowed'];
+    const usersAllowed: Array<{ role: UserRole; status: string }> = route.data['usersAllowed'];
     const loggedUserInfo = this.authService.userInfo;
     if (usersAllowed && loggedUserInfo && loggedUserInfo.user_policy?.length) {
-      const found = usersAllowed.find(
-        (element: any) =>
-          element.role === loggedUserInfo.user_policy[0].policy?.role &&
-          element.status === loggedUserInfo.user_policy[0].policy?.status
+      const entities = loggedUserInfo.user_policy[0].policy.entity;
+      console.log('Enti:', entities);
+      
+      const found = entities.find((policy: { role: UserRole; status: string; }) =>
+        usersAllowed.some(allowed =>
+          allowed.role === policy.role && allowed.status.toLowerCase() === policy.status.toLowerCase()
+        )
       );
+      console.log('Ente:', found);
       return !!found;
-      // return (
-      //   // loggedUserInfo?.sub.slice(0, loggedUserInfo.sub.indexOf(':')) ===
-      //   // 'Microsoft'
-      //   loggedUserInfo?.user_policy[3].policy.role === 'SUPER_ADMIN'
-      // );
-      /* user_policy.some((el) => el.policy.is_admin) */
     }
+    console.log('No enti');
     return !!loggedUserInfo;
   }
 }

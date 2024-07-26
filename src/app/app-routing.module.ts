@@ -22,6 +22,7 @@ import { PrivacyPolicyComponent } from './public/privacy-policy/privacy-policy.c
 import { ViewComponent } from './public/view/view.component';
 import { FeedbackAccessibilitaComponent } from './public/form/feedback-accessibilita/feedback-accessibilita.component';
 import { ProceduraAttuazioneAccessibilitaComponent } from './public/form/procedura-attuazione/procedura-attuazione.component';
+import { CambioEnteComponent } from './front-office/cambio-ente/cambio-ente.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -100,13 +101,35 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'lista-amministrazioni',
+    component: CambioEnteComponent,
+    data: {
+      breadcrumb: 'Lista amministrazioni',
+      usersAllowed: [
+        { role: UserRole.RTD, status: 'Active' },
+      ],
+    },
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'identifica-amministrazione',
     component: IdentificaAmministrazioneComponent,
     data: {
       breadcrumb: 'Identifica amministrazione',
       usersAllowed: [
-        { role: undefined },
-        { role: UserRole.RTD, status: 'Pending' },
+       { role: undefined },
+       { role: UserRole.RTD, status: 'Pending' },
+      ],
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'aggiungi-amministrazione',
+    component: IdentificaAmministrazioneComponent,
+    data: {
+      breadcrumb: 'Identifica amministrazione',
+      usersAllowed: [
+       { role: UserRole.RTD, status: 'Active' },
       ],
     },
     canActivate: [AuthGuard],
