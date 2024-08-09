@@ -102,7 +102,6 @@ export class InserimentoFormComponent implements OnInit {
   }
 
   public onClickSalvaSchemaRilevazione() {
-    console.log(this.sezioneMetadatiComponent.validate());
     if (!this.sezioneMetadatiComponent.validate()) {
       this.hashService.isModified = true;
       this.hashService.type = 'DANGER';

@@ -117,12 +117,12 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Identifica amministrazione',
       usersAllowed: [
-       { role: undefined },
-       { role: UserRole.RTD, status: 'Pending' },
+        { role: undefined, firstAccess: true },
+        { role: UserRole.RTD, status: 'Pending' },
       ],
     },
     canActivate: [AuthGuard],
-  },
+  },  
   {
     path: 'aggiungi-amministrazione',
     component: IdentificaAmministrazioneComponent,

@@ -8,8 +8,7 @@ interface Entity {
   Codice_Categoria: string;
   Codice_IPA: string;
   Denominazione_ente: string;
-  Mail_responsabile?: string;
-  email?: string | null;
+  email: string;
   isActiveEntity: boolean;
   status: "Active" | "Pending" | "Disabled";
   role: "RTD"  | "AMMINISTRATORE_DELEGATO"  | "DIRIGENTE_SCOLATISCO"  | "ADMIN"  | "SUPER_ADMIN";
@@ -65,13 +64,13 @@ export class NavbarTopComponent implements OnInit {
 
   public isRTD(): boolean {
     const userInfo = this.authService.userInfo;
-    if (!userInfo || !userInfo.user_policy || !userInfo.user_policy[0] || !userInfo.user_policy[0].policy || !userInfo.user_policy[0].policy.entity) {
-      return false;
+    const policy = userInfo.user_policy.find(userPolicy => userPolicy.entity === null)?.policy;
+    if (!userInfo || !userInfo.user_policy || !policy || !policy.entity) {
+      return false
     }
-    return userInfo.user_policy[0].policy.entity.some(
-      (el: Entity) => el.role === "RTD"
-    );
+    return policy.entity.some((el: Entity) => el.role === "RTD");
   }
+  
 
   public firstName(): string {
     return this.authService.userInfo?.firstname ?? '-';

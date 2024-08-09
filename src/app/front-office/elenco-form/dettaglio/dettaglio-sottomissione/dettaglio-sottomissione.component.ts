@@ -153,7 +153,6 @@ export class DettaglioSottomissioneComponent implements OnInit {
         this.component.title = this.response.form[0].titolo;
         this.data = this.formData;
         this.formSchema = this.response.form[0];
-        console.log("formSchema", this.formSchema);
         this.component.components = this.formSchema.components;
 
         this.isPubblicazioneAbilitata =
@@ -245,7 +244,6 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public onClickSalvaBozza() {
-    console.log("sta salvando")
     let formattedData = this.actualFormData.data;
     Object.keys(formattedData).forEach(
       (key: string): void => {
@@ -365,7 +363,6 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public pubblicaSottomissione() {
-    console.log("sta pubblicando")
     let formattedData = this.formData;
     Object.keys(formattedData).forEach(
       (key: string): void => {

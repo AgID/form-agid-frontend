@@ -9,7 +9,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 export class AppComponent implements OnInit {
   ngOnInit() {
-    console.log("Versione 15/07/2024 11:40");
-
+    console.log("Versione 09/08/2024");
   }
 }
