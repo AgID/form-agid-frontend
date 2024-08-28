@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, filter, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment as ENV } from 'src/environments/environment';
@@ -36,6 +36,7 @@ export class AuthService {
       );
     });
 
+
     this.oauthService.events
       .pipe(filter((e) => ['token_received'].includes(e.type)))
       .subscribe((e) => {
@@ -51,63 +52,38 @@ export class AuthService {
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
       const userProvider = this.getUserProvider();
-      //Gestione utente SPID/CIE/CNS e ha la policy vuota
+      const policy = this.userInfo.user_policy.find(userPolicy => userPolicy.entity === null)?.policy;;
       if (
-        ((this.userInfo && userProvider === 'SPID') ||
-          userProvider === 'CIE' ||
-          userProvider === 'CNS') &&
+        this.checkRoleStatus(policy, 'RTD', 'Active') && window.location.pathname.includes('/aggiungi-amministrazione')) {
+        this.router.navigate(['/aggiungi-amministrazione']);
+      }
+      else if (
+        this.checkRoleStatus(policy, 'RTD', 'Active') && window.location.pathname.includes('/lista-amministrazioni')) {
+        this.router.navigate(['/lista-amministrazioni']);
+      }
+      //Gestione utente SPID/CIE/CNS e ha la policy vuota
+      else if (
+        this.checkProvider(userProvider) &&
         (this.userInfo.user_policy?.length === 0 ||
-          (this.userInfo.user_policy?.length &&
-            Object.keys(this.userInfo.user_policy[0].policy).length === 0))
+          (this.userInfo.user_policy?.length && policy?.entity?.length === 0))
       ) {
         this.router.navigate(['/identifica-amministrazione']);
         // this.router.navigate(['/scelta-utente']);
       }
-      //Se è un cittadino in pending deve inserire l'OTP
-      else if (
-        ((this.userInfo && userProvider === 'SPID') ||
-          userProvider === 'CIE' ||
-          userProvider === 'CNS') &&
-        this.userInfo.user_policy?.length &&
-        this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
-        this.userInfo.user_policy[0].policy.status === 'Pending'
-      ) {
-        this.router.navigate(['/verifica-otp']);
-      }
-      //Se è un cittadino in active accede direttamente all'elenco-form se la rotta non è su "view"
-      else if (
-        ((this.userInfo && userProvider === 'SPID') ||
-          userProvider === 'CIE' ||
-          userProvider === 'CNS') &&
-        this.userInfo.user_policy?.length &&
-        this.userInfo.user_policy[0].policy.role === 'CITTADINO' &&
-        this.userInfo.user_policy[0].policy.status === 'Active'
-      ) {
-        if (!window.location.pathname.includes('/view/') && !routerIgnoreCondition) {
-          this.router.navigate(['/elenco-form']);
-        }
-      }
       //Se è un RTD in pending deve essere dirottato sulla scelta dell'amministrazione
       else if (
-        ((this.userInfo && userProvider === 'SPID') ||
-          userProvider === 'CIE' ||
-          userProvider === 'CNS') &&
-        this.userInfo.user_policy?.length &&
-        this.userInfo.user_policy[0].policy.role === 'RTD' &&
-        this.userInfo.user_policy[0].policy.status === 'Pending'
+        this.checkProvider(userProvider) &&
+        this.checkRoleStatus(policy, 'RTD', 'Pending')
       ) {
         this.router.navigate(['/identifica-amministrazione']);
       }
       //Se è un RTD in active deve essere dirottato sull'elenco-form'
       else if (
-        ((this.userInfo && userProvider === 'SPID') ||
-          userProvider === 'CIE' ||
-          userProvider === 'CNS') &&
-        this.userInfo.user_policy?.length &&
-        this.userInfo.user_policy[0].policy.role === 'RTD' &&
-        this.userInfo.user_policy[0].policy.status === 'Active'
+        this.checkProvider(userProvider) &&
+        policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Active')
       ) {
-        if (!window.location.pathname.includes('/view/') && !routerIgnoreCondition) {
+        if (!window.location.pathname.includes('/view/') && !routerIgnoreCondition &&
+          !window.location.pathname.includes('/elenco-form')) {
           this.router.navigate(['/elenco-form']);
         }
       } else if (!routerIgnoreCondition) {
@@ -116,8 +92,18 @@ export class AuthService {
     });
   }
 
+  private checkProvider(userProvider: String) {
+    return (this.userInfo && userProvider === 'SPID') ||
+      userProvider === 'CIE' ||
+      userProvider === 'CNS'
+  }
+
   private getUserProvider(): 'SPID' | 'CIE' | 'CNS' | 'MICROSOFT' {
     return this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) as any;
+  }
+
+  private checkRoleStatus(policy: any, role: String, status: String) {
+    return policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === role && entity.status === status)
   }
 
   async getUserInfo() {

@@ -16,8 +16,10 @@ export type User = {
 };
 
 type UserPolicy = {
-  entity: any;
-  policy: any;
+  entity: null;
+  policy: {
+    entity: EntityPolicy[];
+  };
   /**
    * @description La stringa è una data nel formato yyyy-MM-dd HH:mm:ss
    */
@@ -26,4 +28,16 @@ type UserPolicy = {
    * @description La stringa è una data nel formato yyyy-MM-dd HH:mm:ss
    */
   valid_to: string;
+};
+
+export type EntityPolicy = {
+  Codice_Categoria: string;
+  Codice_IPA: string;
+  Denominazione_ente: string;
+  email: string;
+  isActiveEntity: boolean;
+  status: any;
+  role: any
+  valid_from: string;
+  valid_to: null
 };

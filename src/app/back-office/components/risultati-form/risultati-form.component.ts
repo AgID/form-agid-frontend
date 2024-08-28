@@ -97,7 +97,6 @@ export class RisultatiFormComponent implements OnInit {
   }
 
   public duplicaSottomissione(form: any) {
-    console.log('duplicato', form);
     const { _id } = form;
     this.router.navigate(['./inserimento-form'], {
       queryParams: {

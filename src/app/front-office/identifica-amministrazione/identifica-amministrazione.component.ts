@@ -6,6 +6,7 @@ import { HashService } from 'src/app/common/hash.service';
 import { VerificaMailService } from '../verifica-mail/verifica-mail.service';
 import { IdentificaAmministrazioneService } from './identifica-amministrazione.service';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-identifica-amministrazione',
@@ -36,7 +37,8 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     private identAmmService: IdentificaAmministrazioneService,
     private verificaMailService: VerificaMailService,
     private translateService: TranslateService,
-    private titleService: Title
+    private titleService: Title,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -53,19 +55,23 @@ export class IdentificaAmministrazioneComponent implements OnInit {
         const formattedQuery = query.replace(/\'/g, '');
         this.debouncedSearch(formattedQuery, populateResults);
       },
-      onConfirm: (data: any) => {
+      onConfirm: async (data: any) => {
         this.flagOnConfirm = true;
         if (this.flagOnConfirm) {
           if (data) {
+            let currentDate = new Date().toISOString().split('T')[0]
+            let entityEmail = await this.getEntityEmail(data)
             this.hashService.isModified = false;
             this.entity = {
               Codice_Categoria: data.Codice_Categoria,
               Codice_IPA: data.Codice_IPA,
               Denominazione_ente: data.Denominazione_ente,
-              Codice_fiscale_ente: data.Codice_fiscale_ente,
-              Tipologia: data.Tipologia,
-              Acronimo: data.Acronimo,
-              Sito_istituzionale: data.Sito_istituzionale,
+              email: entityEmail,
+              isActiveEntity: false,
+              status: "Pending",
+              role: "RTD",
+              valid_from: currentDate,
+              valid_to: null
             };
             if (data.Codice_Categoria && data.Codice_Categoria === 'L33') {
               //scuole
@@ -146,6 +152,30 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     this.radioText = this.translateService.instant(
       'AG_Mail_Chiave_Accesso_RTD'
     );
+  }
+
+  private async getEntityEmail(data: any): Promise<string> {
+    // Codice_Categoria C17, S01 sono UTD A
+    if (data.Codice_Categoria !== 'L33' && data.Codice_Categoria !== 'C17' && data.Codice_Categoria !== 'S01') {
+      const rtdResponse: any = await this.identAmmService.getRTD(data.Codice_IPA).toPromise();
+      const rtdData = rtdResponse.result.records[0];
+      if (rtdData && rtdData['Mail_responsabile']) {
+        return rtdData['Mail_responsabile'];
+      } else {
+        return this.findAlternativeEmail(data);
+      }
+    } else {
+      return this.findAlternativeEmail(data);
+    }
+  }
+  
+  private findAlternativeEmail(data: any): string {
+    for (let i = 1; i <= 5; i++) {
+      if (data["Mail" + i] && data['Tipo_Mail' + i] === "Altro") {
+        return data["Mail" + i];
+      }
+    }
+    return data["Mail1"];
   }
 
   private debounce(fn: Function, ms = 500) {
@@ -274,16 +304,33 @@ export class IdentificaAmministrazioneComponent implements OnInit {
     window.location.reload();
   }
 
+  public isAggiungiAmministrazione(): boolean {
+    return this.router.url === '/aggiungi-amministrazione';
+  }
+  
+  public goBack(): void {
+    this.router.navigate(['/elenco-form']);
+  }
+
   public onClickInviaMail() {
     if (this.userMail) {
       this.identAmmService
         .nuovoProfiloRtd({
           email: this.userMail,
-          cod_categoria: this.cod_categoria,
+          Codice_Categoria: this.cod_categoria,
           entity: this.entity,
         })
         .subscribe((res: any) => {
           this.haveKey = 'Y';
+        }, (err) => {
+          console.error('Errore da onClickInviaMail - nuovoProfiloRtd:', err);
+          this.hashService.isModified = true;
+          this.hashService.message = [
+            {
+              label: this.translateService.instant('AG_Errore_Generico'),
+            },
+          ];
+          this.hashService.type = 'DANGER';
         });
     } else {
       this.hashService.isModified = true;
@@ -302,10 +349,11 @@ export class IdentificaAmministrazioneComponent implements OnInit {
 
   public onClickAccedi() {
     this.identAmmService
-      .validazioneAggiornamentoUtente({ codiceValidazione: this.key })
+      .validazioneAggiornamentoUtente({ codiceValidazione: this.key, codiceIPA: this.entity.Codice_IPA})
       .subscribe({
-        next: () => {
-          this.authService.getUserInfo();
+        next: async () => {
+          await this.authService.getUserInfo();
+          this.router.navigate(['/elenco-form']);
         },
         error: () => {
           this.hashService.isModified = true;
