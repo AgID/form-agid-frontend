@@ -35,7 +35,7 @@ export class AuthService {
         this.oauthService.hasValidAccessToken()
       );
     });
-    
+
 
     this.oauthService.events
       .pipe(filter((e) => ['token_received'].includes(e.type)))
@@ -53,11 +53,12 @@ export class AuthService {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
       const userProvider = this.getUserProvider();
       const policy = this.userInfo.user_policy.find(userPolicy => userPolicy.entity === null)?.policy;;
-
-      if(policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Active') && window.location.pathname.includes('/aggiungi-amministrazione')) {
+      if (
+        this.checkRoleStatus(policy, 'RTD', 'Active') && window.location.pathname.includes('/aggiungi-amministrazione')) {
         this.router.navigate(['/aggiungi-amministrazione']);
       }
-      else if(policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Active') && window.location.pathname.includes('/lista-amministrazioni')) {
+      else if (
+        this.checkRoleStatus(policy, 'RTD', 'Active') && window.location.pathname.includes('/lista-amministrazioni')) {
         this.router.navigate(['/lista-amministrazioni']);
       }
       //Gestione utente SPID/CIE/CNS e ha la policy vuota
@@ -72,7 +73,7 @@ export class AuthService {
       //Se è un RTD in pending deve essere dirottato sulla scelta dell'amministrazione
       else if (
         this.checkProvider(userProvider) &&
-        policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Pending')
+        this.checkRoleStatus(policy, 'RTD', 'Pending')
       ) {
         this.router.navigate(['/identifica-amministrazione']);
       }
@@ -81,7 +82,8 @@ export class AuthService {
         this.checkProvider(userProvider) &&
         policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Active')
       ) {
-        if (!window.location.pathname.includes('/view/') && !routerIgnoreCondition) {                    
+        if (!window.location.pathname.includes('/view/') && !routerIgnoreCondition &&
+          !window.location.pathname.includes('/elenco-form')) {
           this.router.navigate(['/elenco-form']);
         }
       } else if (!routerIgnoreCondition) {
@@ -92,12 +94,16 @@ export class AuthService {
 
   private checkProvider(userProvider: String) {
     return (this.userInfo && userProvider === 'SPID') ||
-          userProvider === 'CIE' ||
-          userProvider === 'CNS'
+      userProvider === 'CIE' ||
+      userProvider === 'CNS'
   }
 
   private getUserProvider(): 'SPID' | 'CIE' | 'CNS' | 'MICROSOFT' {
     return this.userInfo?.sub.slice(0, this.userInfo.sub.indexOf(':')) as any;
+  }
+
+  private checkRoleStatus(policy: any, role: String, status: String) {
+    return policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === role && entity.status === status)
   }
 
   async getUserInfo() {

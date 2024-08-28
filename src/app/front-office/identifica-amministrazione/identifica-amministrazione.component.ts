@@ -307,6 +307,7 @@ export class IdentificaAmministrazioneComponent implements OnInit {
   public isAggiungiAmministrazione(): boolean {
     return this.router.url === '/aggiungi-amministrazione';
   }
+  
   public goBack(): void {
     this.router.navigate(['/elenco-form']);
   }

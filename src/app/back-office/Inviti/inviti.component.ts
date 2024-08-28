@@ -23,6 +23,5 @@ export class InvitiComponent {
   }
 
   public inviaEmail(email: string) {
-    console.log(email);
   }
 }

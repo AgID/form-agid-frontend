@@ -16,22 +16,22 @@ export class AuthGuard implements CanActivate {
 
       if (nullEntityPolicy) {
         const entities = nullEntityPolicy.policy.entity;
-        console.log('Enti:', entities);
 
-        if (entities.length === 0) {
+        if (entities?.length === 0) {
           const firstAccessAllowed = usersAllowed.some(allowed => allowed.firstAccess === true);
           return firstAccessAllowed;
         }
 
-        const found = entities.find((policy: { role: UserRole; status: string }) =>
-          usersAllowed.some(allowed =>
+        const found = entities.find((policy: { role: UserRole; status: string; isActiveEntity: boolean }) =>
+          policy.isActiveEntity && usersAllowed.some(allowed =>
             allowed.role === policy.role && allowed.status.toLowerCase() === policy.status.toLowerCase()
           )
         );
         return !!found;
+      } else {
+        return false;
       }
     }
-    console.log('No enti');
     return !!loggedUserInfo;
   }
 }

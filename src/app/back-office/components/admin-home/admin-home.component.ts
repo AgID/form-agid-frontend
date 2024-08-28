@@ -30,10 +30,10 @@ export class AdminHomeComponent implements OnInit {
   }
 
   private findPolicyWithEntityNull(userPolicyArray: any[]) {
-    return userPolicyArray.find(userPolicy => userPolicy.entity === null)?.policy;
+    return userPolicyArray ? userPolicyArray.find(userPolicy => userPolicy?.entity === null)?.policy : null;
   }
 
-  public anonymousUser() {
+  public anonymousUser() {    
     const policy = this.findPolicyWithEntityNull(this.authService.userInfo.user_policy);
     return policy && policy.entity?.length === 0;
   }
@@ -46,7 +46,9 @@ export class AdminHomeComponent implements OnInit {
   }
 
   public viewFrontOffice(): boolean {
-    const policy = this.findPolicyWithEntityNull(this.authService.userInfo.user_policy);
+    console.log("auth", this.authService.userInfo);
+
+    const policy = this.findPolicyWithEntityNull(this.authService.userInfo?.user_policy);
     return policy && policy.entity?.some(
       (entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Active'
     );

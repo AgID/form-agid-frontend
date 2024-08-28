@@ -64,7 +64,7 @@ export class NavbarTopComponent implements OnInit {
 
   public isRTD(): boolean {
     const userInfo = this.authService.userInfo;
-    const policy = userInfo.user_policy.find(userPolicy => userPolicy.entity === null)?.policy;
+    const policy = userInfo.user_policy.find(userPolicy => userPolicy?.entity === null)?.policy;
     if (!userInfo || !userInfo.user_policy || !policy || !policy.entity) {
       return false
     }
