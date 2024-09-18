@@ -115,7 +115,6 @@ export class RisultatiEtichetteComponent {
                       this.risultatiEtichetteService
                         .createLabel(reqBody)
                         .subscribe(() => {
-                          console.log('create');
                           this.updated.emit({ updated: true });
                         });
                     }

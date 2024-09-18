@@ -9,6 +9,7 @@ import { ElencoFormService } from '../../elenco-form.service';
 import './dettaglio-sottomissione.component.scss';
 import { IdentificaAmministrazioneService } from 'src/app/front-office/identifica-amministrazione/identifica-amministrazione.service';
 import { Title } from '@angular/platform-browser';
+import { StringService } from 'src/app/common/string.service';
 
 @Component({
   selector: 'app-dettaglio-sottomissione',
@@ -16,6 +17,16 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./dettaglio-sottomissione.component.scss'],
 })
 export class DettaglioSottomissioneComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private elencoFormService: ElencoFormService,
+    private datePipe: DatePipe,
+    private identAmmService: IdentificaAmministrazioneService,
+    private titleService: Title,
+    private stringService: StringService
+  ) { }
+
   public id: string;
   public DataInserimentoForm: string;
   public uuidLink: string = 'UUID_PLACEHOLDER';
@@ -73,14 +84,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
   public typeAlert: AlertType;
   public pubblicazioneFallita: boolean = false;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private elencoFormService: ElencoFormService,
-    private datePipe: DatePipe,
-    private identAmmService: IdentificaAmministrazioneService,
-    private titleService: Title
-  ) { }
+
 
   private overwriteRoutingBehaviour() {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -120,6 +124,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
           (!this.isPublished &&
             !this.isModifica &&
             this.response.datiPubblicati &&
+            this.response.datiBozza &&
             Object.keys(this.response.datiPubblicati).length !== 0 &&
             Object.keys(this.response.datiBozza).length === 0)
         ) {
@@ -127,24 +132,17 @@ export class DettaglioSottomissioneComponent implements OnInit {
           Object.keys(this.formData).forEach(
             (key: string): void => {
               if (typeof this.formData[key] == "string") {
-                this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
-                  .replace(/</g, "&lt;")
-                  .replace(/>/g, "&gt;")
-                  .replace(/"/g, "&quot;")
-                  .replace(/'/g, "&#39;");
+                this.formData[key] = this.stringService.replaceSpecialCharacters(this.formData[key])
               }
             }
           )
         } else {
-          this.formData = this.response.datiBozza;
+          this.formData = this.response.datiBozza || this.response.datiPubblicati;
+
           Object.keys(this.formData).forEach(
             (key: string): void => {
               if (typeof this.formData[key] == "string") {
-                this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
-                  .replace(/</g, "&lt;")
-                  .replace(/>/g, "&gt;")
-                  .replace(/"/g, "&quot;")
-                  .replace(/'/g, "&#39;");
+                this.formData[key] = this.stringService.replaceSpecialCharacters(this.formData[key])
               }
             }
           )
@@ -153,7 +151,6 @@ export class DettaglioSottomissioneComponent implements OnInit {
         this.component.title = this.response.form[0].titolo;
         this.data = this.formData;
         this.formSchema = this.response.form[0];
-        console.log("formSchema", this.formSchema);
         this.component.components = this.formSchema.components;
 
         this.isPubblicazioneAbilitata =
@@ -245,16 +242,11 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public onClickSalvaBozza() {
-    console.log("sta salvando")
     let formattedData = this.actualFormData.data;
     Object.keys(formattedData).forEach(
       (key: string): void => {
         if (typeof formattedData[key] == "string") {
-          formattedData[key] = formattedData[key].replace(/&amp;/g, "&")
-            .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">")
-            .replace(/&quot;/g, "\"")
-            .replace(/&#39;/g, "'&#39;'");
+          formattedData[key] = this.stringService.replaceSpecialCharacters(formattedData[key])
         }
       }
     )
@@ -365,16 +357,12 @@ export class DettaglioSottomissioneComponent implements OnInit {
   }
 
   public pubblicaSottomissione() {
-    console.log("sta pubblicando")
     let formattedData = this.formData;
     Object.keys(formattedData).forEach(
       (key: string): void => {
         if (typeof formattedData[key] == "string") {
-          formattedData[key] = formattedData[key].replace(/&amp;/g, "&")
-            .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">")
-            .replace(/&quot;/g, "\"")
-            .replace(/&#39;/g, "'&#39;'");
+          formattedData[key] = this.stringService.replaceSpecialCharacters(formattedData[key])
+
         }
       }
     )

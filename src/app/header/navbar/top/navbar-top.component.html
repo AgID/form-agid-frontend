@@ -66,6 +66,20 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <div class="link-list-wrapper">
             <ul class="link-list">
+              <li *ngIf="isRTD()">
+                <a class="dropdown-item list-item" href="/aggiungi-amministrazione">
+                  <span style="font-size: 14px">
+                    {{ "AG_Aggiungi_PA" | translate }}
+                  </span>
+                </a>
+              </li>
+              <li *ngIf="isRTD()">
+                <a class="dropdown-item list-item" href="/lista-amministrazioni">
+                  <span style="font-size: 14px">
+                    {{ "AG_Cambia_PA" | translate }}
+                  </span>
+                </a>
+              </li>
               <li>
                 <a (click)="logout($event)" class="dropdown-item list-item" href="#">
                   <span style="font-size: 14px">
@@ -73,6 +87,7 @@
                   </span>
                 </a>
               </li>
+
             </ul>
           </div>
         </div>

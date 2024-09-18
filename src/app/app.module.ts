@@ -21,6 +21,7 @@ import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 import { NotFoundComponent } from './public/not-found/not-found.component';
 import { FeedbackAccessibilitaModule } from './public/form/feedback-accessibilita/feedback-accessibilita.module';
 import { ProceduraAttuazioneAccessibilitaModule } from './public/form/procedura-attuazione/procedura-attuazione.module';
+import { CambioEnteModule } from './front-office/cambio-ente/cambio-ente.module';
 
 const AppConfig = {};
 
@@ -35,6 +36,7 @@ const AppConfig = {};
     FooterModule,
     CommonModule,
     AppCommonModule,
+    CambioEnteModule,
     ViewModule,
     FeedbackAccessibilitaModule,
     ProceduraAttuazioneAccessibilitaModule,

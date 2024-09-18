@@ -4,6 +4,18 @@ import { AuthService } from '../../../common/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { NavBarTopService } from '../navbar-top.service';
 
+interface Entity {
+  Codice_Categoria: string;
+  Codice_IPA: string;
+  Denominazione_ente: string;
+  email: string;
+  isActiveEntity: boolean;
+  status: "Active" | "Pending" | "Disabled";
+  role: "RTD"  | "AMMINISTRATORE_DELEGATO"  | "DIRIGENTE_SCOLATISCO"  | "ADMIN"  | "SUPER_ADMIN";
+  valid_from: string;
+  valid_to: null
+}
+
 @Component({
   selector: 'app-navbar-top',
   templateUrl: './navbar-top.component.html',
@@ -49,6 +61,16 @@ export class NavbarTopComponent implements OnInit {
   public isLoggedIn(): boolean {
     return !!this.authService.userInfo;
   }
+
+  public isRTD(): boolean {
+    const userInfo = this.authService.userInfo;
+    const policy = userInfo.user_policy.find(userPolicy => userPolicy?.entity === null)?.policy;
+    if (!userInfo || !userInfo.user_policy || !policy || !policy.entity) {
+      return false
+    }
+    return policy.entity.some((el: Entity) => el.role === "RTD");
+  }
+  
 
   public firstName(): string {
     return this.authService.userInfo?.firstname ?? '-';
