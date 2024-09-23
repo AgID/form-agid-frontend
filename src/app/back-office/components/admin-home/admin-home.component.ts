@@ -16,9 +16,10 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit() {
     this.authService.canActivateProtectedRoutes$.subscribe((ev) => {
+      
       if (this.authService.userInfo.user_policy?.length) {
         if (this.anonymousUser()) {
-          this.routerNavigate('identifica-amministrazione');
+      this.routerNavigate('identifica-amministrazione');
           // this.routerNavigate('scelta-utente');
         } else if (this.checkPendingRTD()) {
           this.routerNavigate('identifica-amministrazione');
@@ -35,7 +36,7 @@ export class AdminHomeComponent implements OnInit {
 
   public anonymousUser() {    
     const policy = this.findPolicyWithEntityNull(this.authService.userInfo.user_policy);
-    return policy && policy.entity?.length === 0;
+    return this.authService.userInfo.user_policy || policy && policy.entity?.length === 0;
   }
 
   public checkPendingRTD() {
@@ -46,8 +47,6 @@ export class AdminHomeComponent implements OnInit {
   }
 
   public viewFrontOffice(): boolean {
-    console.log("auth", this.authService.userInfo);
-
     const policy = this.findPolicyWithEntityNull(this.authService.userInfo?.user_policy);
     return policy && policy.entity?.some(
       (entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Active'
@@ -55,6 +54,9 @@ export class AdminHomeComponent implements OnInit {
   }
 
   public viewSuperAdminPages(): boolean {
+    if(!this.authService?.userInfo?.user_policy){
+      return false
+    }
     const policy = this.findPolicyWithEntityNull(this.authService.userInfo.user_policy);
     return policy && policy.entity?.some(
       (entity: { role: string; }) => entity.role === 'SUPER_ADMIN'

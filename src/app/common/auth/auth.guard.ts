@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, CanActivate, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, Router, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from './auth.service';
 import { UserRole } from './role.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const usersAllowed: Array<{ role: UserRole; status: string; firstAccess?: boolean }> = route.data['usersAllowed'];
     const loggedUserInfo = this.authService.userInfo;
-    
     if (loggedUserInfo && loggedUserInfo.user_policy?.length) {
       const nullEntityPolicy = loggedUserInfo.user_policy.find(userPolicy => userPolicy.entity === null);
 
@@ -21,15 +20,15 @@ export class AuthGuard implements CanActivate {
           const firstAccessAllowed = usersAllowed.some(allowed => allowed.firstAccess === true);
           return firstAccessAllowed;
         }
+        if (entities) {
+          const found = entities.find((policy: { role: UserRole; status: string }) =>
+            usersAllowed.some(allowed =>
+              allowed.role === policy.role && allowed.status.toLowerCase() === policy.status.toLowerCase()
+            )
+          );
+          return !!found;
+        }
 
-        const found = entities.find((policy: { role: UserRole; status: string; isActiveEntity: boolean }) =>
-          policy.isActiveEntity && usersAllowed.some(allowed =>
-            allowed.role === policy.role && allowed.status.toLowerCase() === policy.status.toLowerCase()
-          )
-        );
-        return !!found;
-      } else {
-        return false;
       }
     }
     return !!loggedUserInfo;

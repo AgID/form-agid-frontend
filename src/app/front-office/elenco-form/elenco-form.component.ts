@@ -101,6 +101,7 @@ export class ElencoFormFoComponent implements OnInit {
     }
   }
 
+  // NON MI PARE SI USI DA NESSUNA PARTE
   // public isAdmin(): boolean {
   //   return this.authService.userInfo?.user_policy.some(
   //     (el) => el.policy.is_admin
