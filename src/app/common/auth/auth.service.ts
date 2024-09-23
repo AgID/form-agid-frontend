@@ -52,30 +52,32 @@ export class AuthService {
     this.canActivateProtectedRoutes$.subscribe((_) => {
       this.userInfo = this.oauthService.getIdentityClaims() as User;
       const userProvider = this.getUserProvider();
-      const policy = this.userInfo.user_policy.find(userPolicy => userPolicy.entity === null)?.policy;;
+      let policy = null
+      if(this.userInfo?.user_policy){
+        policy = this.userInfo.user_policy.find(userPolicy => userPolicy.entity === null)?.policy;
+      }
       if (
         this.checkRoleStatus(policy, 'RTD', 'Active') && window.location.pathname.includes('/aggiungi-amministrazione')) {
-        this.router.navigate(['/aggiungi-amministrazione']);
+      this.router.navigate(['/aggiungi-amministrazione']);
       }
       else if (
         this.checkRoleStatus(policy, 'RTD', 'Active') && window.location.pathname.includes('/lista-amministrazioni')) {
-        this.router.navigate(['/lista-amministrazioni']);
+          this.router.navigate(['/lista-amministrazioni']);
       }
       //Gestione utente SPID/CIE/CNS e ha la policy vuota
       else if (
         this.checkProvider(userProvider) &&
         (this.userInfo.user_policy?.length === 0 ||
-          (this.userInfo.user_policy?.length && policy?.entity?.length === 0))
+          (this.userInfo.user_policy?.length && (policy?.entity?.length === 0 || Object.keys(policy).length === 0)))
       ) {
-        this.router.navigate(['/identifica-amministrazione']);
-        // this.router.navigate(['/scelta-utente']);
+          this.router.navigate(['/identifica-amministrazione']);
       }
       //Se è un RTD in pending deve essere dirottato sulla scelta dell'amministrazione
       else if (
         this.checkProvider(userProvider) &&
         this.checkRoleStatus(policy, 'RTD', 'Pending')
       ) {
-        this.router.navigate(['/identifica-amministrazione']);
+          this.router.navigate(['/identifica-amministrazione']);
       }
       //Se è un RTD in active deve essere dirottato sull'elenco-form'
       else if (
@@ -86,7 +88,7 @@ export class AuthService {
           !window.location.pathname.includes('/elenco-form')) {
           this.router.navigate(['/elenco-form']);
         }
-      } else if (!routerIgnoreCondition) {
+      } else if (!routerIgnoreCondition && !this.userInfo) {
         this.router.navigate(['/']);
       }
     });
@@ -103,7 +105,9 @@ export class AuthService {
   }
 
   private checkRoleStatus(policy: any, role: String, status: String) {
+    if(policy)
     return policy?.entity?.some((entity: { role: string; status: string; }) => entity.role === role && entity.status === status)
+    else return null
   }
 
   async getUserInfo() {
