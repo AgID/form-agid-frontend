@@ -1,0 +1,18 @@
+<div class="card-wrapper card-space d-flex justify-content-center pb-5">
+  <div class="card card-bg no-after w-50">
+    <div class="card-body">
+      <p class="fw-bold mb-4">Amministrazioni di cui sei RTD:</p>
+      <div *ngFor="let entity of entities" class="row mb-3">
+        <div class="col d-flex justify-content-between align-items-center">
+          <span>{{ entity.Denominazione_ente }}</span>
+          <button class="btn" (click)="!entity.isActiveEntity && onAccediClick(entity)" [ngClass]="{'btn-danger disabled': entity.isActiveEntity, 'btn-primary': !entity.isActiveEntity}">
+            {{ entity.isActiveEntity ? 'Accesso effettuato' : 'Accedi' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end mb-4">
+  <button class="btn btn-primary" (click)="goBack()">Vai a Elenco Form</button>
+</div>

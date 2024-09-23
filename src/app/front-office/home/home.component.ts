@@ -78,9 +78,9 @@ export class HomeComponent implements OnInit {
           this.pieChart.data.datasets.splice(0, 1);
           this.pieChart.data.datasets.push(statsDatasets);
           this.pieChart.data.labels = labels;
-          setTimeout(() => {
-            new Chart('statsPie', this.pieChart);
-          });
+          // setTimeout(() => {
+          //   new Chart('statsPie', this.pieChart);
+          // });
         }
       });
   }

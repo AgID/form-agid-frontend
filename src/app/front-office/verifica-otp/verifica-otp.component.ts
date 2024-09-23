@@ -34,12 +34,17 @@ export class VerificaOtpComponent {
     this.verificaOtp
       .effettuaValidazione({ codiceValidazione: this.otp })
       .subscribe(() => {
-        this.authService.userInfo.user_policy[0].policy.status = 'Active';
-        this.verificaOtp
-          .modificaProfilo(this.authService.userInfo.user_policy[0].policy)
-          .subscribe((res: any) => {
-            this.user_id = res.user_id;
+        const policy = this.authService.userInfo.user_policy.find(userPolicy => userPolicy.entity === null)?.policy;
+        if (policy) {
+          policy.entity.forEach((entity: {status: string;}) => {
+            entity.status = 'Active';
           });
+          this.verificaOtp
+            .modificaProfilo(policy)
+            .subscribe((res: any) => {
+              this.user_id = res.user_id;
+            });
+        }
       })
       .add(() => {
         this.authService.getUserInfo().then(() => {
@@ -47,6 +52,7 @@ export class VerificaOtpComponent {
         });
       });
   }
+   
 
   ngOnInit() {
     this.titleService.setTitle('AGID Form | Verifica OTP');

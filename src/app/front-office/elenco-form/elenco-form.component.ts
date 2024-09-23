@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/common/auth/auth.service';
 import { SessionStorageService } from '../../common/session-storage.service';
 import { ElencoFormService } from './elenco-form.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,7 +20,6 @@ export class ElencoFormFoComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private translate: TranslateService,
     private datePipe: DatePipe,
-    private authService: AuthService,
     private titleService: Title
   ) { }
 
@@ -34,7 +32,6 @@ export class ElencoFormFoComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.titleService.setTitle('AGID Form | Elenco form');
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.queryParams.subscribe((params) => {
@@ -58,15 +55,18 @@ export class ElencoFormFoComponent implements OnInit {
       });
     }
 
-    const userInfo = this.elencoFormService.getUserInfo()
-    let ente = userInfo?.user_policy[0]?.policy.entity["Denominazione_ente"] ?? '-';
+    const userInfo = this.elencoFormService.getUserInfo();
+    let ente = " ";
+    if (userInfo?.user_policy?.length) {
+      const entities = userInfo.user_policy.find((userPolicy: { entity: null; }) => userPolicy.entity === null)?.policy.entity;
+      const activeEntity = entities?.find((entity: { isActiveEntity: boolean; }) => entity.isActiveEntity);
+      if (activeEntity) { ente = activeEntity.Denominazione_ente ?? "Dato non disponibile" }
+    }
+    
     this.enteAssociatoUtente = this.translate
       .instant('AG_RTD_Associato')
       .replace('{{ente}}', `<b>${ente}</b>`);
-    this.alertMessages.push({ htmlContent: this.enteAssociatoUtente })
-
-
-
+    this.alertMessages.push({ htmlContent: this.enteAssociatoUtente });
   }
 
   public goToRender(item: any) {
@@ -101,11 +101,12 @@ export class ElencoFormFoComponent implements OnInit {
     }
   }
 
-  public isAdmin(): boolean {
-    return this.authService.userInfo?.user_policy.some(
-      (el) => el.policy.is_admin
-    );
-  }
+  // NON MI PARE SI USI DA NESSUNA PARTE
+  // public isAdmin(): boolean {
+  //   return this.authService.userInfo?.user_policy.some(
+  //     (el) => el.policy.is_admin
+  //   );
+  // }
 
   // public goToNuovaSottomissione(item: any) {
   //   this.sessionStorageService.setItem('titoloSottomissione', item.titolo);

@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { ViewService } from './view.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
+import { StringService } from 'src/app/common/string.service';
 
 @Component({
   selector: 'app-view',
@@ -15,7 +16,8 @@ export class ViewComponent implements OnInit {
     private route: ActivatedRoute,
     private viewService: ViewService,
     private translate: TranslateService,
-    private titleService: Title
+    private titleService: Title,
+    private stringService: StringService
   ) { }
 
   public actualFormData: any;
@@ -58,11 +60,8 @@ export class ViewComponent implements OnInit {
       Object.keys(this.formData).forEach(
         (key: string): void => {
           if (typeof this.formData[key] == "string") {
-            this.formData[key] = this.formData[key].replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
+            this.formData[key] = this.stringService.replaceSpecialCharacters(this.formData[key])
+
           }
         }
       )

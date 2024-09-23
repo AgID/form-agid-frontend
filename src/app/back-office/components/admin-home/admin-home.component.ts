@@ -16,10 +16,10 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit() {
     this.authService.canActivateProtectedRoutes$.subscribe((ev) => {
-
+      
       if (this.authService.userInfo.user_policy?.length) {
         if (this.anonymousUser()) {
-          this.routerNavigate('identifica-amministrazione');
+      this.routerNavigate('identifica-amministrazione');
           // this.routerNavigate('scelta-utente');
         } else if (this.checkPendingRTD()) {
           this.routerNavigate('identifica-amministrazione');
@@ -30,39 +30,40 @@ export class AdminHomeComponent implements OnInit {
     });
   }
 
-  public anonymousUser() {
-    return (
-      this.authService.userInfo &&
-      this.authService.userInfo.user_policy?.length &&
-      Object.keys(this.authService.userInfo.user_policy[0].policy).length === 0
-    );
+  private findPolicyWithEntityNull(userPolicyArray: any[]) {
+    return userPolicyArray ? userPolicyArray.find(userPolicy => userPolicy?.entity === null)?.policy : null;
+  }
+
+  public anonymousUser() {    
+    const policy = this.findPolicyWithEntityNull(this.authService.userInfo.user_policy);
+    return this.authService.userInfo.user_policy || policy && policy.entity?.length === 0;
   }
 
   public checkPendingRTD() {
-    return (
-      this.authService.userInfo &&
-      this.authService.userInfo.user_policy?.length &&
-      Object.keys(this.authService.userInfo.user_policy[0].policy).length &&
-      (this.authService.userInfo.user_policy?.[0]?.policy?.status === 'PENDING' || this.authService.userInfo.user_policy?.[0]?.policy?.status === 'Pending')
+    const policy = this.findPolicyWithEntityNull(this.authService.userInfo.user_policy);
+    return policy && policy.entity?.some(
+      (entity: { status: string; }) => entity.status === 'PENDING' || entity.status === 'Pending'
     );
   }
 
   public viewFrontOffice(): boolean {
-    if (this.authService.userInfo &&
-      this.authService.userInfo.user_policy?.length &&
-      (this.authService.userInfo.user_policy[0].policy.role === 'RTD' && this.authService.userInfo.user_policy[0].policy.status === 'Active')) {
-      return true
-    }
-    return false;
+    const policy = this.findPolicyWithEntityNull(this.authService.userInfo?.user_policy);
+    return policy && policy.entity?.some(
+      (entity: { role: string; status: string; }) => entity.role === 'RTD' && entity.status === 'Active'
+    );
   }
 
   public viewSuperAdminPages(): boolean {
-    return (
-      this.authService.userInfo &&
-      this.authService.userInfo.user_policy?.length &&
-      this.authService.userInfo.user_policy[0].policy.role === 'SUPER_ADMIN'
+    if(!this.authService?.userInfo?.user_policy){
+      return false
+    }
+    const policy = this.findPolicyWithEntityNull(this.authService.userInfo.user_policy);
+    return policy && policy.entity?.some(
+      (entity: { role: string; }) => entity.role === 'SUPER_ADMIN'
     );
   }
+
+
 
   routerNavigate(path: string) {
     this.router.navigate([`/`.concat(path)], {

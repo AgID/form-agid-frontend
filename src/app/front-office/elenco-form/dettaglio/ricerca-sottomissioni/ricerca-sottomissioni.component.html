@@ -38,7 +38,7 @@
       </td>
       <td>{{ item.dataUltimaModifica }}</td>
       <td *ngIf="item.idForm === '633a9e4a435bb1b2ad44be35' || item.idForm === '633aa0471332d9221c08a2ea'">
-        <a [href]="getLocation() + '/view/' + item.idPubblicazione">
+        <a [href]="getLocation() + '/view/' + item.idPubblicazione" [ngClass]="{ 'icon-disabled': item.stato !== 'Pubblicato' }">
           <svg
           class="icon cursor-pointer"
         >
