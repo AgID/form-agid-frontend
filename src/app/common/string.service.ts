@@ -11,4 +11,13 @@ export class StringService {
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
     }
+
+    public reverseSpecialCharacters(input: String): String {
+
+        return input.replace(/&amp;/g, "&" )
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, "\"")
+            .replace(/&#39;/g, "'");
+    }
 }

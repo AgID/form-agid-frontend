@@ -132,7 +132,12 @@ export class DettaglioSottomissioneComponent implements OnInit {
           Object.keys(this.formData).forEach(
             (key: string): void => {
               if (typeof this.formData[key] == "string") {
-                this.formData[key] = this.stringService.replaceSpecialCharacters(this.formData[key])
+                if (this.isModifica) {
+                  this.formData[key] = this.stringService.reverseSpecialCharacters(this.formData[key])
+
+                } else {
+                  this.formData[key] = this.stringService.replaceSpecialCharacters(this.formData[key])
+                }
               }
             }
           )
@@ -243,13 +248,6 @@ export class DettaglioSottomissioneComponent implements OnInit {
 
   public onClickSalvaBozza() {
     let formattedData = this.actualFormData.data;
-    Object.keys(formattedData).forEach(
-      (key: string): void => {
-        if (typeof formattedData[key] == "string") {
-          formattedData[key] = this.stringService.replaceSpecialCharacters(formattedData[key])
-        }
-      }
-    )
     const updateBody: ISottomissione = {
       datiBozza: formattedData,
       versioneForm: this.response.form[0].versione,
@@ -361,7 +359,7 @@ export class DettaglioSottomissioneComponent implements OnInit {
     Object.keys(formattedData).forEach(
       (key: string): void => {
         if (typeof formattedData[key] == "string") {
-          formattedData[key] = this.stringService.replaceSpecialCharacters(formattedData[key])
+          formattedData[key] = this.stringService.reverseSpecialCharacters(formattedData[key])
 
         }
       }
