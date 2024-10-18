@@ -44,3 +44,6 @@ Thumbs.db
 
 # ESLint cache
 .eslintcache
+
+/src/environments/deploy.environment.stage.ts
+/src/environments/deploy.environment.prod.ts
