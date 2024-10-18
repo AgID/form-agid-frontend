@@ -22,7 +22,8 @@ npm install -g @angular/cli npm-snapshot && \
 npm cache clean --force
 
 RUN npm i
-RUN npm run build --prod
+ARG BUILD_MODE
+RUN npm run ${BUILD_MODE} --stats-json --source-map=false
 #stage 2
 FROM nginxinc/nginx-unprivileged
 COPY default.conf /etc/nginx/conf.d/default.conf
