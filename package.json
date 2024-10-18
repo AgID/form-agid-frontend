@@ -6,6 +6,7 @@
     "dev": "ng serve --proxy-config proxy.conf.json --port 80",
     "start": "ng serve --open",
     "build": "ng build",
+    "stage": "ng build --configuration stage",
     "prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
