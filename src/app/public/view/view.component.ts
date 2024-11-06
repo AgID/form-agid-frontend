@@ -5,6 +5,7 @@ import { ViewService } from './view.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { StringService } from 'src/app/common/string.service';
+import { environment as ENV } from 'src/environments/environment';
 
 @Component({
   selector: 'app-view',
@@ -76,7 +77,7 @@ export class ViewComponent implements OnInit {
         .toLowerCase()
         .includes('obiettivi di accessibilit');
       if (this.isDichiarazioneAccessibilita) {
-        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById("669f6ce7ceb80982138a9f9a"))
+        const formSchemaResp: any = await firstValueFrom(this.viewService.findPublicFormById(ENV.FORM_ID))
         let oggettoNome = "";
         let oggettoUrl = "";
         let specsLink = "";

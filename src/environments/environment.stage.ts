@@ -11,4 +11,6 @@ export const environment = {
   AUTH_RESPONSE_TYPE: '',
   AUTH_SHOW_DEBUG_INFORMATION: true,
   AUTH_REQUIRE_HTTPS: false,
+  FORM_ID: ""
+
 };
