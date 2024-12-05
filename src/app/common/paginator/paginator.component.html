@@ -17,7 +17,7 @@
         tabindex="-1"
         aria-hidden="true"
       >
-        <svg class="icon icon-primary">
+        <svg class="icon icon-primary" aria-label="indietro">
           <use href="/assets/svg/sprite.svg#it-chevron-left"></use>
         </svg>
         <span class="sr-only">{{ "AG_Pagina_Precedente" | translate }}</span>
@@ -53,7 +53,7 @@
         (click)="changePage(selectedPage + 1)"
       >
         <span class="sr-only">{{ "AG_Pagina_Successiva" | translate }}</span>
-        <svg class="icon icon-primary">
+        <svg class="icon icon-primary" aria-label="avanti">
           <use href="/assets/svg/sprite.svg#it-chevron-right"></use>
         </svg>
       </a>

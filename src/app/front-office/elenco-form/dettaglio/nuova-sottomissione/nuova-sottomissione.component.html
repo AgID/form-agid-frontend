@@ -1,7 +1,7 @@
 <app-formio-render [form]="form" [renderOptions]="renderOptions" (changeFormio)="onChangeFormio($event)"
   [submission]="data"></app-formio-render>
 <div class="d-flex justify-content-end mb-3">
-  <button *ngIf="form._id" type="button" class="btn btn-primary" aria-label="salva bozza" role="region" (click)="salvaBozza()"
+  <button *ngIf="form._id" type="button" class="btn btn-primary" aria-label="salva bozza" id="salvaBozza" role="region" (click)="salvaBozza()"
     [disabled]="!dataForm.isValid || !dataForm.isModified">
     {{"AG_Salva_Bozza" | translate}}
   </button>
