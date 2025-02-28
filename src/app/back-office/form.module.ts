@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormioModule } from '@formio/angular';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppCommonModule } from '../common/app-common.module';
 import { RicercaFormComponent } from './components/ricerca-form/ricerca-form.component';
 import { RicercaSottomissioniComponent } from './components/ricerca-sottomissioni/ricerca-sottomissioni.component';
@@ -24,6 +25,7 @@ import { RicercaEtichetteComponent } from './components/ricerca-etichetta/ricerc
 import { ElencoEtichetteComponent } from './multilinguismo/elenco-etichette/elenco-etichette.component';
 import { RisultatiEtichetteComponent } from './components/risultati-etichette/risultati-etichette.component';
 import { InvitiComponent } from './Inviti/inviti.component';
+import { AdminEmailComponent } from './components/admin-email/admin-email.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { InvitiComponent } from './Inviti/inviti.component';
     ModificaFormComponent,
     InserimentoFormComponent,
     InvitiComponent,
+    AdminEmailComponent,
     SezioneBuilderComponent,
     SezioneMetadatiComponent,
     SezionePermessiComponent,
@@ -53,6 +56,7 @@ import { InvitiComponent } from './Inviti/inviti.component';
     HttpClientModule,
     FormioModule,
     FormsModule, // make sure FormsModule is imported to make ngModel work
+    ReactiveFormsModule,
     LMarkdownEditorModule,
   ],
   providers: [HttpClient, DatePipe, SharedService],

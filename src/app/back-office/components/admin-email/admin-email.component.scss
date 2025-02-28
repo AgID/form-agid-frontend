@@ -1,0 +1,40 @@
+.blueCard {
+  background-color: #f2f7fc;
+}
+
+.formSection {
+  margin-top: 16px;
+}
+
+.card:after {
+  content: unset !important;
+}
+
+.identifiers {
+  font-weight: bold;
+  margin-left: 24px;
+}
+
+label {
+  font-weight: 600;
+}
+.table {
+  width: 100%;
+}
+
+th,
+td {
+  vertical-align: middle;
+}
+
+td:last-child,
+th:last-child {
+  white-space: nowrap;
+}
+
+td:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
