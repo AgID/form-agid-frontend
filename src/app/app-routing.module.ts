@@ -23,6 +23,7 @@ import { ViewComponent } from './public/view/view.component';
 import { FeedbackAccessibilitaComponent } from './public/form/feedback-accessibilita/feedback-accessibilita.component';
 import { ProceduraAttuazioneAccessibilitaComponent } from './public/form/procedura-attuazione/procedura-attuazione.component';
 import { CambioEnteComponent } from './front-office/cambio-ente/cambio-ente.component';
+import { AdminEmailComponent } from './back-office/components/admin-email/admin-email.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -105,9 +106,7 @@ const routes: Routes = [
     component: CambioEnteComponent,
     data: {
       breadcrumb: 'Lista amministrazioni',
-      usersAllowed: [
-        { role: UserRole.RTD, status: 'Active' },
-      ],
+      usersAllowed: [{ role: UserRole.RTD, status: 'Active' }],
     },
     canActivate: [AuthGuard],
   },
@@ -122,15 +121,13 @@ const routes: Routes = [
       ],
     },
     canActivate: [AuthGuard],
-  },  
+  },
   {
     path: 'aggiungi-amministrazione',
     component: IdentificaAmministrazioneComponent,
     data: {
       breadcrumb: 'Identifica amministrazione',
-      usersAllowed: [
-       { role: UserRole.RTD, status: 'Active' },
-      ],
+      usersAllowed: [{ role: UserRole.RTD, status: 'Active' }],
     },
     canActivate: [AuthGuard],
   },
@@ -190,6 +187,15 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'email',
+    component: AdminEmailComponent,
+    data: {
+      breadcrumb: 'Servizio SMTP',
+      usersAllowed: [{ role: UserRole.SUPER_ADMIN, status: 'Active' }],
+    },
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'invite',
     component: InvitiComponent,
     data: {
@@ -209,4 +215,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

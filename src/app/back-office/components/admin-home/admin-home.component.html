@@ -44,6 +44,21 @@
     </div>
   </div>
 
+  <!-- EMAIL -->
+  <div
+    *ngIf="viewSuperAdminPages()"
+    class="col-12 col-lg-3 mb-3 cursor-pointer"
+    (click)="routerNavigate('email')"
+  >
+    <div class="card-wrapper">
+      <div class="card card-bg">
+        <div class="card-body align">
+          <span class="mt-5 text">{{ "AG_Servizio_email" | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- INVITI -->
   <!-- <div class="col-12 col-lg-3 mb-3 cursor-pointer" (click)="routerNavigate('invite')">
         <div class="card-wrapper">

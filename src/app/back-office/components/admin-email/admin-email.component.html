@@ -1,0 +1,322 @@
+<div class="row">
+  <h1>{{ "AG_Servizio_email" | translate }}</h1>
+  <hr />
+  <div class="card card-bg p-4 mt-4 cursor-pointer">
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <form [formGroup]="emailForm" (ngSubmit)="sendEmail()">
+      <div class="row mx-0 formSection">
+        <div class="col-12">
+          <label for="configuration"
+            >{{ "AG_Configurazione" | translate
+            }}<span class="text-danger">*</span>:</label
+          >
+          <select
+            id="configuration"
+            formControlName="configuration"
+            class="form-control"
+            style="border-bottom: 1px solid #5b6f82; height: 40px"
+          >
+            <option [ngValue]="null">-- Seleziona configurazione --</option>
+            <option *ngFor="let config of smtpAccounts" [ngValue]="config">
+              hostname: {{ config.hostname }} -- username:
+              {{ config.username }} -- port: {{ config.port }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-12 col-lg-6 formSection">
+          <label for="subject"
+            >{{ "AG_Oggetto" | translate
+            }}<span class="text-danger">*</span>:</label
+          >
+          <input id="subject" type="text" formControlName="subject" />
+        </div>
+        <div class="col-12 col-lg-6 formSection">
+          <label for="recipient"
+            >{{ "AG_Destinatario" | translate
+            }}<span class="text-danger">*</span>:</label
+          >
+          <input
+            id="recipient"
+            type="email"
+            formControlName="recipient"
+            aria-describedby="infoRecipient"
+          />
+          <small id="infoRecipient" class="form-text"
+            >Inserire un indirizzo email valido</small
+          >
+        </div>
+
+        <div class="col-12 formSection">
+          <label for="message" class="mb-2"
+            >{{ "AG_Messaggio" | translate
+            }}<span class="text-danger">*</span>:</label
+          >
+          <textarea
+            id="message"
+            type="text"
+            formControlName="message"
+          ></textarea>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end px-2">
+        <button
+          type="submit"
+          class="btn btn-primary mt-4 mb-2"
+          [disabled]="emailForm.invalid"
+        >
+          {{ "AG_Invia_Email" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card card-bg p-4 my-5 cursor-pointer">
+    <p class="fw-bold fs-4 mb-0">
+      {{ "AG_Gestione_Configurazioni" | translate }}
+    </p>
+
+    <p class="fw-semibold fs-5 mb-1 mt-4">
+      {{ "AG_Configurazioni_Esistenti" | translate }}
+    </p>
+    <div
+      *ngIf="!hasActiveConfig"
+      class="alert alert-danger fw-semibold"
+      style="color: #cc334d"
+    >
+      ATTENZIONE: Nessuna configurazione attiva per l'uso.
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>hostname</th>
+            <th>port</th>
+            <th>username</th>
+            <!-- <th>authType</th> -->
+            <th>password</th>
+            <!-- <th>clientId - clientSecret - refreshToken</th> -->
+            <th>active</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let config of smtpAccounts; let i = index">
+            <td>{{ config.hostname }}</td>
+            <td>{{ config.port }}</td>
+            <td>{{ config.username }}</td>
+            <td>{{ config.password }}</td>
+            <!-- <td>{{ config.authType }}</td>
+          <td>
+            <span *ngIf="config.authType === 'Plain'">
+              {{ config.password }}
+            </span>
+            <span *ngIf="config.authType === 'OAuth2'" class="text-muted"
+              >n/a</span
+            >
+          </td>
+          <td>
+            <span *ngIf="config.authType === 'Plain'" class="text-muted"
+              >n/a</span
+            >
+            <span *ngIf="config.authType === 'OAuth2'">
+              {{ config.clientId }} <b>-</b> {{ config.clientSecret }}
+              <b>-</b>
+              {{ config.refreshToken }}
+            </span>
+          </td> -->
+            <td>{{ config.isActive }}</td>
+            <td class="d-flex justify-content-evenly">
+              <div class="d-flex flex-column align-items-center">
+                <button
+                  class="btn btn-warning px-2 py-1 mb-2"
+                  (click)="modifySmtpAccount(i)"
+                  style="background-color: #5d7083"
+                >
+                  <svg
+                    class="icon cursor-pointer"
+                    style="width: 24px !important; fill: white !important"
+                  >
+                    <title>{{ "AG_Modifica" | translate }}</title>
+                    <use
+                      href="../../../../assets/svg/sprite.svg#it-pencil"
+                    ></use>
+                  </svg>
+                </button>
+                <button
+                  class="btn btn-danger px-2 py-1"
+                  (click)="deleteSmtpAccount(i)"
+                  style="background-color: #cc334d"
+                  [disabled]="smtpAccounts.length === 1"
+                >
+                  <svg
+                    class="icon cursor-pointer"
+                    style="width: 24px !important; fill: white !important"
+                  >
+                    <title id="elimina">{{ "AG_Elimina" | translate }}</title>
+                    <use
+                      href="../../../../assets/svg/sprite.svg#it-delete"
+                    ></use>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="accordion my-4" id="accordionExample1">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading1">
+          <button
+            class="accordion-button {{ !accordionOpen && 'collapsed' }}"
+            type="button"
+            (click)="toggleAccordion()"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse1"
+            aria-expanded="false"
+            aria-controls="collapse1"
+          >
+            {{
+              isEditing
+                ? ("AG_Modifica" | translate)
+                : ("AG_Inserisci_Nuova_Configurazione" | translate)
+            }}
+          </button>
+        </h2>
+        <div
+          id="collapse1"
+          class="accordion-collapse collapse {{ accordionOpen && 'show' }}"
+          data-bs-parent="#accordionExample1"
+          role="region"
+          aria-labelledby="heading1"
+        >
+          <div class="accordion-body">
+            <form [formGroup]="configForm" (ngSubmit)="addSmtpAccount()">
+              <div class="row mx-0">
+                <div class="col-12 col-lg-8 formSection">
+                  <label for="isActive" class="me-3"
+                    >Usare questa configurazione?
+                  </label>
+                  <input
+                    id="isActive"
+                    type="checkbox"
+                    formControlName="isActive"
+                  />
+                  <p>
+                    <small>
+                      La configurazione verrà impostata come quella
+                      <b>attiva</b> per tutto ciò che riguarda l'invio di email.
+                      <br />
+                      Può esserci una sola configurazione attiva per
+                      volta.</small
+                    >
+                  </p>
+                </div>
+
+                <!-- <div class="col-12 col-lg-4 formSection">
+                  <label for="authType">Tipo autenticazione:</label>
+                  <select
+                    id="authType"
+                    formControlName="authType"
+                    class="form-control"
+                  >
+                    <option value="Plain">Plain</option>
+                    <option value="OAuth2">OAuth2</option>
+                  </select>
+                </div> -->
+
+                <div class="col-12 col-lg-6">
+                  <label for="hostname"
+                    >hostname<span class="text-danger">*</span></label
+                  >
+                  <input id="hostname" type="text" formControlName="hostname" />
+                </div>
+                <div class="col-12 col-lg-6">
+                  <label for="port"
+                    >port<span class="text-danger">*</span></label
+                  >
+                  <input id="port" type="number" formControlName="port" />
+                </div>
+
+                <div class="col-12 col-lg-6 formSection">
+                  <label for="username"
+                    >username<span class="text-danger">*</span></label
+                  >
+                  <input id="username" type="text" formControlName="username" />
+                </div>
+
+                <div class="col-12 col-lg-6 formSection">
+                  <label for="password"
+                    >password<span class="text-danger">*</span></label
+                  >
+                  <input id="password" type="text" formControlName="password" />
+                </div>
+                <!--
+                password ->> *ngIf="configForm.get('authType').value === 'Plain'"
+
+                <div
+                  *ngIf="configForm.get('authType').value === 'OAuth2'"
+                  class="row mx-0 px-0"
+                >
+                  <div class="col-12 col-lg-4 formSection">
+                    <label for="clientId">client ID</label>
+                    <input
+                      id="clientId"
+                      type="text"
+                      formControlName="clientId"
+                    />
+                  </div>
+                  <div class="col-12 col-lg-4 formSection">
+                    <label for="clientSecret">client secret</label>
+                    <input
+                      id="clientSecret"
+                      type="text"
+                      formControlName="clientSecret"
+                    />
+                  </div>
+                  <div class="col-12 col-lg-4 formSection">
+                    <label for="refreshToken">refresh token</label>
+                    <input
+                      id="refreshToken"
+                      type="text"
+                      formControlName="refreshToken"
+                    />
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="d-flex justify-content-end px-2">
+                <button
+                  type="button"
+                  class="btn btn-secondary mt-4 mb-2 me-3"
+                  (click)="cancelEditing()"
+                >
+                  {{ "AG_Annulla" | translate }}
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary mt-4 mb-2"
+                  [disabled]="configForm.invalid"
+                >
+                  {{
+                    isEditing
+                      ? ("AG_Modifica" | translate)
+                      : ("AG_Aggiungi" | translate)
+                  }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
